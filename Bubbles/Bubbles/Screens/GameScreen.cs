@@ -23,7 +23,7 @@ namespace Bubbles
 
         public void StartGame()
         {
-            Ball.InitializeTextures(4);
+            Ball.InitializeTextures(9);
             mAim = new Aim();
         }
 

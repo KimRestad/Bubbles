@@ -10,12 +10,14 @@ namespace Bubbles
     abstract class Core
     {
         private static Game1 sGame;
+        private static Random sRandom;
 
         #region Methods
 
         public static void Initialize(Game1 game)
         {
             sGame = game;
+            sRandom = new Random();
         }
 
         public static void Exit()
@@ -32,6 +34,11 @@ namespace Bubbles
         #endregion Methods
 
         #region Properties
+
+        public static Random RandomGen
+        {
+            get { return sRandom; }
+        }
 
         public static Rectangle ClientBounds
         {

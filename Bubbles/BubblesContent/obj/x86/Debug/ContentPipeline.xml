@@ -47,22 +47,31 @@
       <Time>2012-06-16T23:41:59.9739+02:00</Time>
     </Item>
     <Item>
-      <Source>Textures\blueBall.png</Source>
-      <Name>Textures\blueBall</Name>
+      <Source>Textures\ballBlue.png</Source>
+      <Name>Textures\ballBlue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\blueBall.xnb</Output>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballBlue.xnb</Output>
       <Time>2012-06-16T23:54:01.62965+02:00</Time>
     </Item>
     <Item>
-      <Source>Textures\redBall.png</Source>
-      <Name>Textures\redBall</Name>
+      <Source>Textures\ballRed.png</Source>
+      <Name>Textures\ballRed</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\redBall.xnb</Output>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballRed.xnb</Output>
       <Time>2012-06-17T00:34:17.86165+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\ballWhite.png</Source>
+      <Name>Textures\ballWhite</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb</Output>
+      <Time>2012-06-17T20:37:06.54565+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

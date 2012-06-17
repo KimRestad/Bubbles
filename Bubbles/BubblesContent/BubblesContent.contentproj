@@ -77,15 +77,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\blueBall.png">
-      <Name>blueBall</Name>
+    <Compile Include="Textures\ballBlue.png">
+      <Name>ballBlue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\redBall.png">
-      <Name>redBall</Name>
+    <Compile Include="Textures\ballRed.png">
+      <Name>ballRed</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\ballWhite.png">
+      <Name>ballWhite</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

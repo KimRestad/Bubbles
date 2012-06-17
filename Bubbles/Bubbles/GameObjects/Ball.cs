@@ -37,10 +37,11 @@ namespace Bubbles
         #region StaticVariables
 
         // Static variables
-        private static List<Texture2D> sTextures = new List<Texture2D>();
+        private static Texture2D sTexture;
+        private static List<Color> sColours;
         private static Vector2 sSize;
 
-        private float sScale = 1.0f;
+        private static float sScale = 1.0f;
 
         #endregion StaticVariables
         
@@ -48,10 +49,10 @@ namespace Bubbles
 
         public Ball(BallColour colour, Vector2 position)
         {
-            if (sTextures.Count <= 0)
+            if (sColours.Count <= 0)
                 throw new Exception("Textures not initialized");
 
-            mColour = (BallColour)MathHelper.Clamp((float)colour, 0, sTextures.Count - 1);
+            mColour = (BallColour)MathHelper.Clamp((float)colour, 0, sColours.Count - 1);
             mOrigin = sSize * 0.5f;
             sScale = 1.0f;
 
@@ -76,7 +77,7 @@ namespace Bubbles
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sTextures[(int)mColour], mPosition, null, Color.White, 0.0f, 
+            spriteBatch.Draw(sTexture, mPosition, null, sColours[(int)mColour], 0.0f,
                              mOrigin, sScale, SpriteEffects.None, 0.0f);
         }
 
@@ -122,44 +123,50 @@ namespace Bubbles
         #region StaticMethods
         public static void InitializeTextures(int numColours)
         {
-            sTextures.Clear();
+            sColours = new List<Color>();
             numColours = (int)MathHelper.Clamp(numColours, 4, 9);
 
             switch (numColours)
             {
                 case 4:
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\blueBall"));
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\blueBall"));
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\blueBall"));
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\redBall"));
+                    sColours.Insert(0, Color.Yellow);
+                    sColours.Insert(0, Color.Green);
+                    sColours.Insert(0, Color.Blue);
+                    sColours.Insert(0, Color.Red);
                     break;
                 case 5:
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\blueBall"));
+                    sColours.Insert(0, Color.Aqua);
                     goto case 4;
                 case 6:
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\blueBall"));
+                    sColours.Insert(0, Color.Purple);
                     goto case 5;
                 case 7:
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\blueBall"));
+                    sColours.Insert(0, Color.Pink);
                     goto case 6;
                 case 8:
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\blueBall"));
+                    sColours.Insert(0, Color.Orange);
                     goto case 7;
                 case 9:
-                    sTextures.Insert(0, Core.Content.Load<Texture2D>(@"Textures\blueBall"));
+                    sColours.Insert(0, Color.DarkGray);
                     goto case 8;
             }
 
-            sSize = new Vector2(sTextures[0].Width, sTextures[0].Height);
+            sTexture = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
+            sSize = new Vector2(sTexture.Width, sTexture.Height);
         }
         #endregion StaticMethods
 
         #region StaticProperties
 
-        public float Scale
+        public static float Scale
         {
             get { return sScale; }
             set { sScale = value; }
+        }
+
+        public static int NumColours
+        {
+            get { return sColours.Count; }
         }
 
         #endregion StaticProperties

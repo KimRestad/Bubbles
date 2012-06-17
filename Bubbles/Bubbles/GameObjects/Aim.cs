@@ -59,7 +59,7 @@ namespace Bubbles
                 mShotBalls.Add(mShot);
                 mShot = mNextShot;
                 mShot.Position = mPosition;
-                mNextShot = new Ball(BallColour.Red, mNextShotPos);
+                mNextShot = new Ball((BallColour)Core.RandomGen.Next(Ball.NumColours), mNextShotPos);
             }
 
             mMousePrev = mouseCurr;
