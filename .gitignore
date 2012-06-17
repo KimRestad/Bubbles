@@ -1,12 +1,6 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
+# Ignore compiled files
+Bubbles\Bubbles\bin\
+Bubbles\Bubbles\obj\
 
-# Compiled Dynamic libraries
-*.so
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+# Ignore Visual Studio session files
+*.suo

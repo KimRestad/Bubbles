@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Textures\background.jpg</Source>
+      <Name>Textures\background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb</Output>
+      <Time>2012-05-30T21:41:36.08745+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\default.spritefont</Source>
+      <Name>Fonts\default</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb</Output>
+      <Time>2012-06-16T00:28:04.0535+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\button.spritefont</Source>
+      <Name>Fonts\button</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb</Output>
+      <Time>2012-06-16T18:00:03.5459+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\aim.png</Source>
+      <Name>Textures\aim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb</Output>
+      <Time>2012-06-16T23:39:49.0369+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\whitepixel.png</Source>
+      <Name>Textures\whitepixel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb</Output>
+      <Time>2012-06-16T23:41:59.9739+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\blueBall.png</Source>
+      <Name>Textures\blueBall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\blueBall.xnb</Output>
+      <Time>2012-06-16T23:54:01.62965+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\redBall.png</Source>
+      <Name>Textures\redBall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\redBall.xnb</Output>
+      <Time>2012-06-17T00:34:17.86165+02:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\BubblesContent\</RootDirectory>
+      <LoggerRootDirectory>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\</LoggerRootDirectory>
+      <IntermediateDirectory>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\BubblesContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2012-06-16T00:03:09.6425+02:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>
