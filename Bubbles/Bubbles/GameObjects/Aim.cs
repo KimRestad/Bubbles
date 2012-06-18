@@ -25,14 +25,14 @@ namespace Bubbles
 
         private MouseState mMousePrev;
 
-        public Aim()
+        public Aim(Rectangle board)
         {
             mTexture = Core.Content.Load<Texture2D>(@"Textures\aim");
-            mPosition = new Vector2(Core.ClientBounds.Width * 0.5f, Core.ClientBounds.Height - 50);
+            mPosition = new Vector2(board.Left + board.Width * 0.5f, board.Top + board.Height - mTexture.Height * 0.5f);
             mOrigin = new Vector2(0, mTexture.Height * 0.5f);
             mRotation = 0.0f;
 
-            mNextShotPos = new Vector2(900, mPosition.Y);
+            mNextShotPos = new Vector2(board.Left + board.Width - Ball.Size.X * 0.5f, mPosition.Y);
             mShot = new Ball(BallColour.Red, mPosition);
             mNextShot = new Ball(BallColour.Blue, mNextShotPos);
             mShotBalls = new List<Ball>();

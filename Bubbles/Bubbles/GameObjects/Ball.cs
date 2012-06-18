@@ -42,6 +42,7 @@ namespace Bubbles
         private static Vector2 sSize;
 
         private static float sScale = 1.0f;
+        private static Rectangle sBoard;
 
         #endregion StaticVariables
         
@@ -53,8 +54,8 @@ namespace Bubbles
                 throw new Exception("Textures not initialized");
 
             mColour = (BallColour)MathHelper.Clamp((float)colour, 0, sColours.Count - 1);
-            mOrigin = sSize * 0.5f;
             sScale = 1.0f;
+            mOrigin = sSize * 0.5f;
 
             mState = BallState.Still;
             mDirection = Vector2.Zero;
@@ -92,13 +93,13 @@ namespace Bubbles
         {
             mPosition += mDirection * C_SPEED;
 
-            if (mPosition.X - mOrigin.X < 0 || mPosition.X + mOrigin.X > Core.ClientBounds.Width)
+            if (mPosition.X - Size.X * 0.5f < sBoard.X || mPosition.X + Size.X * 0.5f > sBoard.X + sBoard.Width)
                 mDirection.X = -mDirection.X;
 
-            if (mPosition.Y - mOrigin.Y < 0)
+            if (mPosition.Y - Size.Y * 0.5f < 0)
             {
                 mState = BallState.Still;
-                mPosition.Y = mOrigin.Y;
+                mPosition.Y = Size.Y * 0.5f;
             }
         }
 
@@ -121,7 +122,7 @@ namespace Bubbles
 
 
         #region StaticMethods
-        public static void InitializeTextures(int numColours)
+        public static void InitializeTextures(int numColours, Rectangle board)
         {
             sColours = new List<Color>();
             numColours = (int)MathHelper.Clamp(numColours, 4, 9);
@@ -153,6 +154,7 @@ namespace Bubbles
 
             sTexture = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
             sSize = new Vector2(sTexture.Width, sTexture.Height);
+            sBoard = board;
         }
         #endregion StaticMethods
 
@@ -162,6 +164,11 @@ namespace Bubbles
         {
             get { return sScale; }
             set { sScale = value; }
+        }
+
+        public static Vector2 Size
+        {
+            get { return new Vector2(sTexture.Width * sScale, sTexture.Height * sScale); }
         }
 
         public static int NumColours

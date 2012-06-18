@@ -1,8 +1,8 @@
 Content\Textures\background.xnb
-Content\Fonts\default.xnb
-Content\Fonts\button.xnb
 Content\Textures\aim.xnb
 Content\Textures\whitepixel.xnb
 Content\Textures\ballBlue.xnb
 Content\Textures\ballRed.xnb
 Content\Textures\ballWhite.xnb
+Content\Fonts\default.xnb
+Content\Fonts\button.xnb

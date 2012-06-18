@@ -12,19 +12,21 @@ namespace Bubbles
     {
         private Texture2D mBackground;
         private Rectangle mBGPosition;
+        private Rectangle mBoard;
 
         private Aim mAim;
 
         public GameScreen()
         {
             mBackground = Core.Content.Load<Texture2D>(@"Textures\background");
-            mBGPosition = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);    
+            mBGPosition = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);
+            mBoard = new Rectangle(0, 0, 900, 600);
         }
 
         public void StartGame()
         {
-            Ball.InitializeTextures(9);
-            mAim = new Aim();
+            Ball.InitializeTextures(9, mBoard);
+            mAim = new Aim(mBoard);
         }
 
         public void Update(GameTime gameTime)
@@ -34,7 +36,7 @@ namespace Bubbles
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(mBackground, mBGPosition, Color.Red);
+            spriteBatch.Draw(mBackground, mBoard, Color.Red);
             mAim.Draw(spriteBatch);
         }
     }
