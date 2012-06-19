@@ -33,8 +33,8 @@ namespace Bubbles
             mRotation = 0.0f;
 
             mNextShotPos = new Vector2(board.Left + board.Width - Ball.Size.X * 0.5f, mPosition.Y);
-            mShot = new Ball(BallColour.Red, mPosition);
-            mNextShot = new Ball(BallColour.Blue, mNextShotPos);
+            mShot = CreateRandomBall(mPosition);
+            mNextShot = CreateRandomBall(mNextShotPos);
             mShotBalls = new List<Ball>();
 
             mMousePrev = Mouse.GetState();
@@ -59,7 +59,7 @@ namespace Bubbles
                 mShotBalls.Add(mShot);
                 mShot = mNextShot;
                 mShot.Position = mPosition;
-                mNextShot = new Ball((BallColour)Core.RandomGen.Next(Ball.NumColours), mNextShotPos);
+                mNextShot = CreateRandomBall(mNextShotPos);
             }
 
             mMousePrev = mouseCurr;
@@ -70,9 +70,12 @@ namespace Bubbles
             for (int i = mShotBalls.Count - 1; i >= 0; --i)
             {
                 if (mShotBalls[i].State == BallState.Still)
+                {
                     // Insert into ball structure
                     //mShotBalls.RemoveAt(i);
+
                     mShotBalls[i].Update();
+                }
                 else
                     mShotBalls[i].Update();
             }
@@ -89,5 +92,15 @@ namespace Bubbles
                 ball.Draw(spriteBatch);
             }
         }
+
+        private Ball CreateRandomBall(Vector2 position)
+        {
+            return new Ball((BallColour)Core.RandomGen.Next(Ball.NumColours), position);
+        }
+
+        //public List<Ball> Shots
+        //{
+        //    get { return mShotBalls; }
+        //}
     }
 }

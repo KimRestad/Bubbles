@@ -10,7 +10,7 @@ namespace Bubbles
 {
     enum BallColour
     {
-        Red, Blue, Green, Yellow, Turquoise, Purple, Pink, Orange, Black, Count
+        Red, Blue, Green, Yellow, Purple, Turquoise, Orange, Pink, Black, Count
     }
     enum BallState
     {
@@ -41,8 +41,9 @@ namespace Bubbles
         private static List<Color> sColours;
         private static Vector2 sSize;
 
-        private static float sScale = 1.0f;
-        private static Rectangle sBoard;
+        private static float sScale = 0.6f;
+        private static Rectangle sBounds;
+        private static Board sBallBoard;
 
         #endregion StaticVariables
         
@@ -92,14 +93,11 @@ namespace Bubbles
         {
             mPosition += mDirection * C_SPEED;
 
-            if (mPosition.X - Size.X * 0.5f < sBoard.X || mPosition.X + Size.X * 0.5f > sBoard.X + sBoard.Width)
+            if (mPosition.X - Size.X * 0.5f < sBounds.X || mPosition.X + Size.X * 0.5f > sBounds.X + sBounds.Width)
                 mDirection.X = -mDirection.X;
 
-            if (mPosition.Y - Size.Y * 0.5f < 0)
-            {
+            if (sBallBoard.Collision(this))
                 mState = BallState.Still;
-                mPosition.Y = Size.Y * 0.5f;
-            }
         }
 
         #endregion Methods
@@ -115,13 +113,13 @@ namespace Bubbles
         public BallState State
         {
             get { return mState; }
+            set { mState = value; }
         }
 
         #endregion Properties
 
-
         #region StaticMethods
-        public static void InitializeTextures(int numColours, Rectangle board)
+        public static void InitializeTextures(int numColours)
         {
             sColours = new List<Color>();
             numColours = (int)MathHelper.Clamp(numColours, 4, 9);
@@ -129,31 +127,36 @@ namespace Bubbles
             switch (numColours)
             {
                 case 4:
-                    sColours.Insert(0, Color.Yellow);
-                    sColours.Insert(0, Color.Green);
-                    sColours.Insert(0, Color.Blue);
-                    sColours.Insert(0, Color.Red);
+                    sColours.Insert(0, Color.Gold);             // Yellow
+                    sColours.Insert(0, Color.LawnGreen);        // Green
+                    sColours.Insert(0, Color.RoyalBlue);        // Blue
+                    sColours.Insert(0, Color.Red);              // Red
                     break;
                 case 5:
-                    sColours.Insert(0, Color.Aqua);
+                    sColours.Insert(0, Color.Fuchsia);          // Purple
                     goto case 4;
-                case 6:
-                    sColours.Insert(0, Color.Purple);
+                case 6: 
+                    sColours.Insert(0, Color.Aqua);             // Turquoise
                     goto case 5;
                 case 7:
-                    sColours.Insert(0, Color.Pink);
+                    sColours.Insert(0, Color.DarkOrange);       // Orange
                     goto case 6;
                 case 8:
-                    sColours.Insert(0, Color.Orange);
+                    sColours.Insert(0, Color.LightPink);        // Pink
                     goto case 7;
                 case 9:
-                    sColours.Insert(0, Color.DarkGray);
+                    sColours.Insert(0, Color.DimGray);          // Black
                     goto case 8;
             }
 
             sTexture = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
             sSize = new Vector2(sTexture.Width, sTexture.Height);
-            sBoard = board;
+        }
+
+        public static void InitializeBoard(Board board, Rectangle bounds)
+        {
+            sBallBoard = board;
+            sBounds = bounds;
         }
         #endregion StaticMethods
 

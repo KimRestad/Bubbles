@@ -39,8 +39,8 @@ namespace Bubbles
             mGraphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            mGraphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            mGraphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            mGraphics.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9f);
+            mGraphics.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9f);
             mGraphics.ApplyChanges();
         }
 

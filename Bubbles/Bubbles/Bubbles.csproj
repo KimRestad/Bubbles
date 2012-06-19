@@ -110,7 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BallTable.cs" />
+    <Compile Include="Board.cs" />
     <Compile Include="GameObjects\Ball.cs" />
     <Compile Include="GameObjects\Aim.cs" />
     <Compile Include="Button.cs" />
