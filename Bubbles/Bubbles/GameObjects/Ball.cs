@@ -54,7 +54,6 @@ namespace Bubbles
                 throw new Exception("Textures not initialized");
 
             mColour = (BallColour)MathHelper.Clamp((float)colour, 0, sColours.Count - 1);
-            sScale = 1.0f;
             mOrigin = sSize * 0.5f;
 
             mState = BallState.Still;
