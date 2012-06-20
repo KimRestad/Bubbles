@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb</Output>
-      <Time>2012-06-19T17:39:10.68265+02:00</Time>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb</Output>
+      <Time>2012-06-18T11:35:15.4210897+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\aim.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb</Output>
-      <Time>2012-06-19T17:39:10.68165+02:00</Time>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb</Output>
+      <Time>2012-06-18T11:35:15.4200896+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\whitepixel.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb</Output>
-      <Time>2012-06-19T17:39:10.68665+02:00</Time>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb</Output>
+      <Time>2012-06-18T11:35:15.4230898+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\ballBlue.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballBlue.xnb</Output>
-      <Time>2012-06-19T17:40:20.23865+02:00</Time>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballBlue.xnb</Output>
+      <Time>2012-06-18T11:37:31.5428754+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\ballRed.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballRed.xnb</Output>
-      <Time>2012-06-19T17:40:20.23965+02:00</Time>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballRed.xnb</Output>
+      <Time>2012-06-18T11:37:31.5438755+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\ballWhite.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb</Output>
-      <Time>2012-06-19T17:40:20.23965+02:00</Time>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb</Output>
+      <Time>2012-06-18T11:37:31.5438755+02:00</Time>
     </Item>
     <Item>
       <Source>Fonts\default.spritefont</Source>
@@ -61,8 +61,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb</Output>
-      <Time>2012-06-19T17:39:10.67965+02:00</Time>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb</Output>
+      <Time>2012-06-18T11:35:15.4190896+02:00</Time>
     </Item>
     <Item>
       <Source>Fonts\button.spritefont</Source>
@@ -70,8 +70,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb</Output>
-      <Time>2012-06-19T17:39:10.67965+02:00</Time>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb</Output>
+      <Time>2012-06-18T11:35:15.4180895+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -79,10 +79,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\BubblesContent\</RootDirectory>
-      <LoggerRootDirectory>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\</LoggerRootDirectory>
-      <IntermediateDirectory>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\BubblesContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\BubblesContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\BubblesContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -111,7 +111,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2012-06-16T00:03:09.6425+02:00</Value>
+        <Value>2011-10-23T13:59:12.3203722+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

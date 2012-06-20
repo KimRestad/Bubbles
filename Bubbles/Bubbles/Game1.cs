@@ -91,9 +91,17 @@ namespace Bubbles
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            // If the game is not the active application, do not update (but keep drawing)
+            if (!IsActive)
+                return;
+
+            // DEBUG
+            //if (Keyboard.GetState().IsKeyUp(Keys.R))
+            //    return;
+
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                this.Exit();
+                Exit();
 
             switch (mCurrentState)
             {

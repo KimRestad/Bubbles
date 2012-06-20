@@ -40,7 +40,7 @@ namespace Bubbles
             mMousePrev = Mouse.GetState();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Board board)
         {
             MouseState mouseCurr = Mouse.GetState();
 
@@ -64,20 +64,15 @@ namespace Bubbles
 
             mMousePrev = mouseCurr;
 
-            mShot.Update();
-            mNextShot.Update();
+            mShot.Update(board);
+            mNextShot.Update(board);
 
             for (int i = mShotBalls.Count - 1; i >= 0; --i)
             {
                 if (mShotBalls[i].State == BallState.Still)
-                {
-                    // Insert into ball structure
-                    //mShotBalls.RemoveAt(i);
-
-                    mShotBalls[i].Update();
-                }
+                    mShotBalls.RemoveAt(i);
                 else
-                    mShotBalls[i].Update();
+                    mShotBalls[i].Update(board);
             }
         }
 
@@ -97,10 +92,5 @@ namespace Bubbles
         {
             return new Ball((BallColour)Core.RandomGen.Next(Ball.NumColours), position);
         }
-
-        //public List<Ball> Shots
-        //{
-        //    get { return mShotBalls; }
-        //}
     }
 }

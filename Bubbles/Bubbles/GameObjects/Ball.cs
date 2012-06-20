@@ -29,21 +29,22 @@ namespace Bubbles
         private Vector2 mDirection;
         private Vector2 mPosition;
 
-        // Constants
-        private const float C_SPEED = 10.0f;
-
         #endregion Variables
 
         #region StaticVariables
 
-        // Static variables
+        // Appearance variables
         private static Texture2D sTexture;
         private static List<Color> sColours;
         private static Vector2 sSize;
+        private static float sScale = 1.0f;
 
-        private static float sScale = 0.6f;
+        // Environment variables
         private static Rectangle sBounds;
         private static Board sBallBoard;
+
+        // Constants
+        public const float C_SPEED = 10.0f;
 
         #endregion StaticVariables
         
@@ -62,14 +63,14 @@ namespace Bubbles
             mPosition = position;
         }
 
-        public void Update()
+        public void Update(Board board)
         {
             switch (mState)
             {
                 case BallState.Still:
                     break;
                 case BallState.Shot:
-                    Move();
+                    Move(board);
                     break;
                 case BallState.Falling:
                     break;
@@ -89,14 +90,14 @@ namespace Bubbles
             mDirection.Normalize();
         }
 
-        private void Move()
+        private void Move(Board board)
         {
             mPosition += mDirection * C_SPEED;
 
             if (mPosition.X - Size.X * 0.5f < sBounds.X || mPosition.X + Size.X * 0.5f > sBounds.X + sBounds.Width)
                 mDirection.X = -mDirection.X;
 
-            if (sBallBoard.Collision(this))
+            if (board.Collision(this))
                 mState = BallState.Still;
         }
 
@@ -113,13 +114,17 @@ namespace Bubbles
         public BallState State
         {
             get { return mState; }
-            set { mState = value; }
+        }
+
+        public Vector2 Direction
+        {
+            get { return mDirection; }
         }
 
         #endregion Properties
 
         #region StaticMethods
-        public static void InitializeTextures(int numColours)
+        public static void Initialize(int numColours, Rectangle bounds)
         {
             sColours = new List<Color>();
             numColours = (int)MathHelper.Clamp(numColours, 4, 9);
@@ -151,11 +156,6 @@ namespace Bubbles
 
             sTexture = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
             sSize = new Vector2(sTexture.Width, sTexture.Height);
-        }
-
-        public static void InitializeBoard(Board board, Rectangle bounds)
-        {
-            sBallBoard = board;
             sBounds = bounds;
         }
         #endregion StaticMethods

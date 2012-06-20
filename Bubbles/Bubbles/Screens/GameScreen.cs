@@ -13,9 +13,9 @@ namespace Bubbles
     {
         private Texture2D mBackground;
         private Rectangle mBGPosition;
-        private Rectangle mBoard;
+        private Rectangle mBounds;
 
-        private Board mBalls;
+        private Board mBoard;
         private Aim mAim;
 
         // DEBUG
@@ -25,32 +25,15 @@ namespace Bubbles
         {
             mBackground = Core.Content.Load<Texture2D>(@"Textures\background");
             mBGPosition = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);
-            mBoard = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);
+            mBounds = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);
         }
 
         public void StartGame()
         {
-            Ball.InitializeTextures(9);
-            mAim = new Aim(mBoard);
+            Ball.Initialize(9, mBounds);
+            mAim = new Aim(mBounds);
 
-            mBalls = new Board(mBoard);
-            Ball.InitializeBoard(mBalls, mBoard);
-        }
-
-        private void AddRowOfBalls()
-        {
-            List<Ball> ballList = new List<Ball>();
-
-            for (int i = 0; i < mBalls.RowSizeTop; ++i)
-            {
-                ballList.Add(new Ball((BallColour)Core.RandomGen.Next(Ball.NumColours), Vector2.Zero));
-            }
-
-            ballList[5] = null;
-            ballList[6] = null;
-            ballList[7] = null;
-
-            mBalls.AddRowTop(ballList);
+            mBoard = new Board(mBounds);
         }
 
         public void Update(GameTime gameTime)
@@ -58,17 +41,27 @@ namespace Bubbles
             KeyboardState currKeyboard = Keyboard.GetState();
 
             if (currKeyboard.IsKeyDown(Keys.A) && mPrevKeyboard.IsKeyUp(Keys.A))
-                AddRowOfBalls();
+                mBoard.AddRowTop();
+
+            //if (currKeyboard.IsKeyDown(Keys.F1) && mPrevKeyboard.IsKeyUp(Keys.F1))
+            //{
+            //    List<Point> neighbours = mBoard.GetNeighbours(new Point(0, 0));
+
+            //    foreach (Point pos in neighbours)
+            //    {
+            //        mBoard.mBalls[pos.Y].Row[pos.X].mColour = BallColour.Red;
+            //    }
+            //}
 
             mPrevKeyboard = currKeyboard;
             
-            mAim.Update(gameTime);
+            mAim.Update(gameTime, mBoard);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(mBackground, mBoard, Color.PapayaWhip);
-            mBalls.DrawAll(spriteBatch);
+            spriteBatch.Draw(mBackground, mBounds, Color.PapayaWhip);
+            mBoard.DrawAll(spriteBatch);
             mAim.Draw(spriteBatch);
         }
     }
