@@ -16,7 +16,7 @@ namespace Bubbles
         private SettingObject mSettings;
         
         // Graphics
-        private SpriteFont mDefault;
+        private SpriteFont mDebugFont;
         private Texture2D mBackground;
         private Rectangle mBGPosition;
 
@@ -32,13 +32,23 @@ namespace Bubbles
             mSettings = new SettingObject();
             mSettingsWindow = new SettingsMain(mSettings);
 
-            mDefault = Core.Content.Load<SpriteFont>(@"Fonts\default");
-            mBackground = Core.Content.Load<Texture2D>(@"Textures\background");
-            mBGPosition = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);
+            mDebugFont = Core.Content.Load<SpriteFont>(@"Fonts\default");
+            mBackground = Core.Content.Load<Texture2D>(@"Textures\background2big");
+            if (Core.ClientBounds.Width > mBackground.Width && Core.ClientBounds.Height > mBackground.Height)
+            {
+                mBGPosition = new Rectangle((int)((Core.ClientBounds.Width - mBackground.Width) * 0.5f),
+                                            (int)((Core.ClientBounds.Height - mBackground.Height) * 0.5f),
+                                            mBackground.Width, mBackground.Height);
+            }
+            else
+            {
+                // TODO: calculate correct ratio for smaller screens
+                mBGPosition = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);
+            }
 
-            int buttonWidth = 300;
-            int buttonHeight = 100;
-            int buttonStartY = (int)((Core.ClientBounds.Height + buttonHeight) * 0.5);
+            int buttonWidth = 256;
+            int buttonHeight = 64;
+            int buttonStartY = (int)(mBGPosition.Y + (mBGPosition.Height * 0.5));
 
             int x = (int)((Core.ClientBounds.Width - buttonWidth) * 0.5);
 
@@ -77,7 +87,7 @@ namespace Bubbles
         public void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(mBackground, mBGPosition, Color.White);
-            spritebatch.DrawString(mDefault, "Settings is visible: "  + mSettingsWindow.Visible, Vector2.Zero, Color.White);
+            spritebatch.DrawString(mDebugFont, "Settings is visible: "  + mSettingsWindow.Visible, Vector2.Zero, Color.White);
 
             mBtnPlay.Draw(spritebatch);
             mBtnSettings.Draw(spritebatch);

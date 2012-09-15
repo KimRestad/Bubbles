@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb</Output>
-      <Time>2012-06-18T11:35:15.4210897+02:00</Time>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb</Output>
+      <Time>2012-05-30T21:41:36.08745+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\aim.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb</Output>
-      <Time>2012-06-18T11:35:15.4200896+02:00</Time>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb</Output>
+      <Time>2012-06-16T23:39:49.0369+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\whitepixel.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb</Output>
-      <Time>2012-06-18T11:35:15.4230898+02:00</Time>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb</Output>
+      <Time>2012-06-16T23:41:59.9739+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\ballBlue.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballBlue.xnb</Output>
-      <Time>2012-06-18T11:37:31.5428754+02:00</Time>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballBlue.xnb</Output>
+      <Time>2012-08-26T16:53:32.569+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\ballRed.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballRed.xnb</Output>
-      <Time>2012-06-18T11:37:31.5438755+02:00</Time>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballRed.xnb</Output>
+      <Time>2012-08-26T16:53:32.57+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\ballWhite.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb</Output>
-      <Time>2012-06-18T11:37:31.5438755+02:00</Time>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb</Output>
+      <Time>2012-08-26T16:53:32.582+02:00</Time>
     </Item>
     <Item>
       <Source>Fonts\default.spritefont</Source>
@@ -61,8 +61,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb</Output>
-      <Time>2012-06-18T11:35:15.4190896+02:00</Time>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb</Output>
+      <Time>2012-06-16T00:28:04.0535+02:00</Time>
     </Item>
     <Item>
       <Source>Fonts\button.spritefont</Source>
@@ -70,8 +70,35 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb</Output>
-      <Time>2012-06-18T11:35:15.4180895+02:00</Time>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb</Output>
+      <Time>2012-08-28T15:21:19.504+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\background2.jpg</Source>
+      <Name>Textures\background2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb</Output>
+      <Time>2012-08-28T12:45:44.747+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\background2big.jpg</Source>
+      <Name>Textures\background2big</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb</Output>
+      <Time>2012-08-28T12:52:07.7+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\button.png</Source>
+      <Name>Textures\button</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb</Output>
+      <Time>2012-08-28T15:17:10.658+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -79,10 +106,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\BubblesContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\BubblesContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\BubblesContent\</RootDirectory>
+      <LoggerRootDirectory>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\</LoggerRootDirectory>
+      <IntermediateDirectory>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\BubblesContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -111,7 +138,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-10-23T13:59:12.3203722+02:00</Value>
+        <Value>2012-06-16T00:03:09.6425+02:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

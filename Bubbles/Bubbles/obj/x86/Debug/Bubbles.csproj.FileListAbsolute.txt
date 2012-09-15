@@ -3,10 +3,6 @@ D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.write.1.tlog
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb
-D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe
-D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.pdb
-D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe
-D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.pdb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGame.resources
@@ -55,3 +51,10 @@ D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\ob
 D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.write.1.tlog
 D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe
 D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.pdb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.pdb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.pdb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb

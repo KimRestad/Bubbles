@@ -28,6 +28,7 @@ namespace Bubbles
         // Graphics variables
         private GraphicsDeviceManager mGraphics;
         private SpriteBatch mSpriteBatch;
+        private Color mBGColour;
 
         // Gamestate variables
         private GameState mCurrentState;
@@ -38,6 +39,8 @@ namespace Bubbles
         {
             mGraphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            mBGColour = new Color(2, 84, 85);
 
             mGraphics.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9f);
             mGraphics.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9f);
@@ -95,10 +98,6 @@ namespace Bubbles
             if (!IsActive)
                 return;
 
-            // DEBUG
-            //if (Keyboard.GetState().IsKeyUp(Keys.R))
-            //    return;
-
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -124,7 +123,7 @@ namespace Bubbles
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(mBGColour);
 
             mSpriteBatch.Begin();
 

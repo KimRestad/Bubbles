@@ -31,6 +31,9 @@ namespace Bubbles
 
         private Vector2 mOffset;
 
+        // Constants
+        private const int C_BALL_POINTS = 10;
+        private const int C_DANGLING_POINTS = 15;
 
         #region Methods
         /// <summary>
@@ -39,6 +42,9 @@ namespace Bubbles
         /// <param name="bounds">The boundaries of the board</param>
         public Board(Rectangle bounds)
         {
+            // TODO: Add bounds graphics (and adjust row length accordingly)
+            // TODO: Add points
+
             mColumns[0] = (int)Math.Floor(bounds.Width / Ball.Size.X);
             mColumns[1] = (int)Math.Floor((bounds.Width / Ball.Size.X) - 0.5f);
 
@@ -181,7 +187,7 @@ namespace Bubbles
             // If the requested cell is in an existing row, make sure the cell is empty, else
             // adjust position backwards along the direction it came in and request new cell
             if(cell.Y < mBalls.Count)
-                while(mBalls[cell.Y].Row[cell.X] != null)
+                while(HasBall(cell))
                 {
                     movingBall.Position += Ball.C_SPEED * -movingBall.Direction;
                     cell = CalculateCell(movingBall.Position);
@@ -199,6 +205,17 @@ namespace Bubbles
 
             // Add ball to the requested cell
             mBalls[cell.Y].Row[cell.X] = movingBall;
+
+            // Get a sequence of all the balls connected to the shot ball, that have the same colour as the shot ball
+            List<Point> sequence = GetSequence(cell);
+
+            // If sequence is of at last 3 balls, remove all balls in the sequence
+            if (sequence.Count > 2)
+            {
+                RemoveBall(ref sequence);
+
+                ClearDanglingBalls(ref sequence);
+            }
         }
 
         /// <summary>
@@ -233,8 +250,13 @@ namespace Bubbles
             return returnList;
         }
 
-        // DEBUG
-        public List<Point> GetNeighbours(Point cell)
+        /// <summary>
+        /// Get a list of all the cells that are neighbours to the chosen cell (maximum 6 cells) regardless of whether there
+        /// is something in the cell or not.
+        /// </summary>
+        /// <param name="cell">The cell to get the neighbours of</param>
+        /// <returns>A list of points indicating which cells are neighbours to the chosen cell (maximum size is 6)</returns>
+        private List<Point> GetNeighbours(Point cell)
         {
             List<Point> returnList = new List<Point>();
 
@@ -251,13 +273,13 @@ namespace Bubbles
             if (cell.Y > 0)
             {
                 // Only add indices if they are within the bounds
-                if (cell.X + otherRowsLower > 0)
+                if (cell.X + otherRowsLower >= 0)
                     returnList.Add(new Point(cell.X + otherRowsLower, cell.Y - 1));
                 if (cell.X + otherRowsUpper < maxIndexOthers)
                     returnList.Add(new Point(cell.X + otherRowsUpper, cell.Y - 1));
             }
 
-            // Only add indices if they are within the bounds
+            // Only add indices on same row if they are within the bounds
             if (cell.X > 0)
                 returnList.Add(new Point(cell.X - 1, cell.Y));
             if (cell.X + 1 < mColumns[(int)mBalls[cell.Y].RowType])
@@ -267,13 +289,72 @@ namespace Bubbles
             if (cell.Y + 1 < mBalls.Count)
             {
                 // Only add indices if they are within the bounds
-                if (cell.X + otherRowsLower > 0)
+                if (cell.X + otherRowsLower >= 0)
                     returnList.Add(new Point(cell.X + otherRowsLower, cell.Y + 1));
                 if (cell.X + otherRowsUpper < maxIndexOthers)
                     returnList.Add(new Point(cell.X + otherRowsUpper, cell.Y + 1));
             }
 
             return returnList;
+        }
+
+        /// <summary>
+        /// Get a sequence of cells that are connected to and cointains balls of the same colour as the start cell
+        /// </summary>
+        /// <param name="startCell">The cell where the sequence starts</param>
+        /// <returns>A list of cells connected to and containing balls with the same colour as the start cell</returns>
+        private List<Point> GetSequence(Point startCell)
+        {
+            // If there is no ball in the start cell, exit function
+            if (!HasBall(startCell))
+                return null;
+
+            // Create a new list and add the start cell to it
+            List<Point> returnList = new List<Point>();
+            returnList.Add(startCell);
+
+            // Create lists to contain the neighbours at the current "radius" from the start cell
+            List<Point> neighbours = GetNeighbours(startCell);
+            List<Point> nextNeighbours = new List<Point>();
+
+            // Continue the search as long as there are unchecked neighbours
+            while (neighbours.Count > 0)
+            {
+                // Check each neighbour
+                foreach (Point neighbourPoint in neighbours)
+                {
+                    // If the neighbouring cell contains a ball and is not already on the returnlist, check if it is of the same colour as the ball in the start cell
+                    if (HasBall(neighbourPoint) && !returnList.Contains(neighbourPoint))
+                        if (mBalls[neighbourPoint.Y].Row[neighbourPoint.X].Colour == mBalls[startCell.Y].Row[startCell.X].Colour)
+                        {
+                            // If the correct colour, add all its neighbours to the list of neighbours to check and add cell to the return list
+                            nextNeighbours.AddRange(GetNeighbours(neighbourPoint));
+                            returnList.Add(neighbourPoint);
+                        }
+                }
+
+                // Move all neighbours to be checked to the neighbour list and clear the temporary list
+                neighbours.Clear();
+                neighbours.AddRange(nextNeighbours);
+                nextNeighbours.Clear();
+            }
+
+            return returnList;
+        }
+
+        /// <summary>
+        /// Returns whether the specified cell contains a ball or not
+        /// </summary>
+        /// <param name="cell">The cell to search</param>
+        /// <returns>True if there is a ball in the cell, else false</returns>
+        private bool HasBall(Point cell)
+        {
+            int maxIndex = mColumns[(int)CalculateRowType(cell.Y)];
+
+            if (cell.X < 0 || cell.X >= maxIndex || cell.Y < 0 || cell.Y >= mBalls.Count)
+                return false;
+
+            return mBalls[cell.Y].Row[cell.X] != null;
         }
 
         /// <summary>
@@ -326,7 +407,7 @@ namespace Bubbles
             column = (float)Math.Floor(column);
 
             // Make sure the column is a valid one
-            column = MathHelper.Clamp(column, 0, mColumns[(int)rowType]);
+            column = MathHelper.Clamp(column, 0, mColumns[(int)rowType] - 1);
 
             return new Point((int)column, (int)row);
         }
@@ -348,6 +429,162 @@ namespace Bubbles
                 rowType = NextTypeBottom;
 
             return rowType;
+        }
+
+        /// <summary>
+        /// Checks the cleared cells for neighbours, then checks all neighbour to see if there is a sequence not
+        /// connected to the roof. If there is, those balls are removed.
+        /// </summary>
+        /// <param name="clearedCells">The cells that were just cleared, that might have caused dangling balls</param>
+        private void ClearDanglingBalls(ref List<Point> clearedCells)
+        {
+            List<Point> allNeighbours = new List<Point>();
+
+            foreach (Point cell in clearedCells)
+            {
+                allNeighbours.AddRange(GetNeighbours(cell));
+            }
+
+            IEnumerable<Point> neighbours = allNeighbours.Distinct<Point>();
+            List<Point> checkedCells = new List<Point>();
+
+            foreach (Point cell in neighbours)
+            {
+                if (!checkedCells.Contains(cell))
+                {
+                    List<Point> newCheckedCells = new List<Point>();
+                    bool isConnected = IsConnectedToRoof(cell, ref newCheckedCells);
+
+                    if(!isConnected)
+                        checkedCells.AddRange(newCheckedCells);
+                }
+            }
+
+            RemoveDanglingBall(ref checkedCells);
+        }
+
+        /// <summary>
+        /// Starts at the specified start cell and tries to reach the roof. Returns whether the roof was reached
+        /// or not. The checkedCells list contains all the searched cells, i.e. the return value applies to all
+        /// cells in this list.
+        /// </summary>
+        /// <param name="startCell">The cell to start the search from</param>
+        /// <param name="checkedCells">A list containing all already searched cells</param>
+        /// <returns>True if the roof was reached, else false</returns>
+        private bool IsConnectedToRoof(Point startCell, ref List<Point> checkedCells)
+        {
+            checkedCells.Add(startCell);
+
+            // Escape condition: if on the top row, it is connected to roof
+            if (startCell.Y == 0)
+                return true;
+
+            // Save the index of the upper left and upper right balls
+            int leftDiffIndex = (int)mBalls[startCell.Y].RowType - 1;
+            int rightDiffIndex = (int)mBalls[startCell.Y].RowType;
+            int upDownMaxIndex = mColumns[(int)CalculateRowType(startCell.Y + 1)];
+
+            // Escape condition: if on the second row and either of the cells above contain balls, it is connected to roof
+            if (startCell.Y == 1)
+                if (HasBall(new Point(startCell.X + leftDiffIndex, startCell.Y - 1)) ||
+                    HasBall(new Point(startCell.X + rightDiffIndex, startCell.Y - 1)))
+                    return true;
+
+            // Else check all surrounding balls, top (left, right), (left, right), down (left, right)
+            
+            // Check top left
+            Point currPoint = new Point(startCell.X + leftDiffIndex, startCell.Y - 1);
+
+            if (currPoint.X >= 0) // Make sure index is valid
+                if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
+                {
+                    if(IsConnectedToRoof(currPoint, ref checkedCells))
+                        return true;
+                }
+
+            // Check top right
+            currPoint = new Point(startCell.X + rightDiffIndex, startCell.Y - 1);
+
+            if (currPoint.X < upDownMaxIndex) // Make sure index is valid
+                if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
+                {
+                    if (IsConnectedToRoof(currPoint, ref checkedCells))
+                        return true;
+                }
+
+            // Check left
+            currPoint = new Point(startCell.X - 1, startCell.Y);
+
+            if (currPoint.X >= 0) // Make sure index is valid
+                if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
+                {
+                    if (IsConnectedToRoof(currPoint, ref checkedCells))
+                        return true;
+                }
+
+            // Check right
+            currPoint = new Point(startCell.X + 1, startCell.Y);
+
+            if (currPoint.X < mColumns[(int)mBalls[currPoint.Y].RowType])
+                if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
+                {
+                    if (IsConnectedToRoof(currPoint, ref checkedCells))
+                        return true;
+                }
+
+            // Only check below row if this one is not the bottom row
+            if (startCell.Y + 1 < mBalls.Count)
+            {
+                // Check bottom left
+                currPoint = new Point(startCell.X + leftDiffIndex, startCell.Y + 1);
+
+                if (currPoint.X >= 0) // Make sure index is valid
+                    if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
+                    {
+                        if (IsConnectedToRoof(currPoint, ref checkedCells))
+                            return true;
+                    }
+
+                // Check bottom right
+                currPoint = new Point(startCell.X + rightDiffIndex, startCell.Y + 1);
+
+                if (currPoint.X < upDownMaxIndex) // Make sure index is valid
+                    if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
+                    {
+                        if (IsConnectedToRoof(currPoint, ref checkedCells))
+                            return true;
+                    }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Remove all the balls in the cell list by setting their cells to null.
+        /// </summary>
+        /// <param name="cells">The list of cells to clear</param>
+        private void RemoveBall(ref List<Point> cells)
+        {
+            foreach (Point ballCell in cells)
+            {
+                // Remove them
+                mBalls[ballCell.Y].Row[ballCell.X] = null;
+            }
+        }
+
+        /// <summary>
+        /// Remove all the balls in the cell list by setting their cells to null.
+        /// </summary>
+        /// <param name="cells">The list of "dangling ball" cells to clear</param>
+        private void RemoveDanglingBall(ref List<Point> cells)
+        {
+            foreach (Point cell in cells)
+            {
+                if (HasBall(cell))
+                    mBalls[cell.Y].Row[cell.X].Colour = BallColour.Yellow;
+
+                //mBalls[cell.Y].Row[cell.X] = null;
+            }
         }
 
         #endregion Methods

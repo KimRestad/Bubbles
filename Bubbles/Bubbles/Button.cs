@@ -17,11 +17,12 @@ namespace Bubbles
         private string mCaption;
         private SpriteFont mFont;
         private Vector2 mTextPosition;
-        private Color mTextColour = Color.LawnGreen;
+        private Vector2 mShadowPosition;
+        private Color mTextColour = Color.Ivory;
 
         private Texture2D mBackground;
         private Color mTint;
-        private Color mHighlight = new Color(0, 255, 0, 60);
+        private Color mHighlight = new Color(2, 84, 85, 30); //new Color(0, 255, 0, 60);
 
         public Button(Rectangle position, string caption)
         {
@@ -34,10 +35,9 @@ namespace Bubbles
             Vector2 textSize = mFont.MeasureString(mCaption);
             mTextPosition = new Vector2(mPosition.X + (mPosition.Width - textSize.X) * 0.5f, 
                                         mPosition.Y + (mPosition.Height - textSize.Y) * 0.5f);
+            mShadowPosition = mTextPosition + new Vector2(3, 3);
 
-            mBackground = Core.Content.Load<Texture2D>(@"Textures\background");
-
-            
+            mBackground = Core.Content.Load<Texture2D>(@"Textures\button");  
         }
 
         public void Update()
@@ -50,12 +50,13 @@ namespace Bubbles
             if (mHovered)
                 mTint = mHighlight;
             else
-                mTint = Color.Blue;
+                mTint = Color.White;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(mBackground, mPosition, mTint);
+            spriteBatch.DrawString(mFont, mCaption, mShadowPosition, Color.Black);
             spriteBatch.DrawString(mFont, mCaption, mTextPosition, mTextColour);
         }
 

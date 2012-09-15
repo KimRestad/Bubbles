@@ -41,7 +41,6 @@ namespace Bubbles
 
         // Environment variables
         private static Rectangle sBounds;
-        private static Board sBallBoard;
 
         // Constants
         public const float C_SPEED = 10.0f;
@@ -119,6 +118,13 @@ namespace Bubbles
         public Vector2 Direction
         {
             get { return mDirection; }
+        }
+
+        public BallColour Colour
+        {
+            get { return mColour; }
+            // DEBUG: public?
+            set { mColour = value; }
         }
 
         #endregion Properties
