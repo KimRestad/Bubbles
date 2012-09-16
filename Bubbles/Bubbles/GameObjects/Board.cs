@@ -28,10 +28,20 @@ namespace Bubbles
 
         private List<BoardRow> mBalls;
         private int[] mColumns = new int[2];
+        private Rectangle mInnerBounds;
 
+        private int mScore;
+
+        // Graphics variables
         private Vector2 mOffset;
+        private Texture2D mWallTopTex;
+        private Texture2D mWallSideTex;
+        private Rectangle mWallLeftRect;
+        private Rectangle mWallRightRect;
+        private Rectangle mWallTopRect;
 
         // Constants
+        private const int C_WALL_THICKNESS = 50;
         private const int C_BALL_POINTS = 10;
         private const int C_DANGLING_POINTS = 15;
 
@@ -42,19 +52,33 @@ namespace Bubbles
         /// <param name="bounds">The boundaries of the board</param>
         public Board(Rectangle bounds)
         {
-            // TODO: Add bounds graphics (and adjust row length accordingly)
-            // TODO: Add points
+            // Load wall textures
+            mWallSideTex = Core.Content.Load<Texture2D>(@"Textures\wallSide");
+            mWallTopTex = Core.Content.Load<Texture2D>(@"Textures\wallTop");
 
-            mColumns[0] = (int)Math.Floor(bounds.Width / Ball.Size.X);
-            mColumns[1] = (int)Math.Floor((bounds.Width / Ball.Size.X) - 0.5f);
+            // Calculate wall positions and the inner bounds rectangle (excluding walls)
+            mWallLeftRect = new Rectangle(bounds.X, bounds.Y + C_WALL_THICKNESS, C_WALL_THICKNESS, bounds.Height - C_WALL_THICKNESS);
+            mWallRightRect = new Rectangle(bounds.X + bounds.Width - C_WALL_THICKNESS, bounds.Y + C_WALL_THICKNESS, 
+                                           C_WALL_THICKNESS, bounds.Height - C_WALL_THICKNESS);
+            mWallTopRect = new Rectangle(bounds.X, bounds.Y, bounds.Width, C_WALL_THICKNESS);
+
+            mInnerBounds = new Rectangle(bounds.X + C_WALL_THICKNESS, bounds.Y + C_WALL_THICKNESS,
+                                         bounds.Width - (C_WALL_THICKNESS * 2), bounds.Height - C_WALL_THICKNESS);
+
+            mScore = 0;
+
+            int width = bounds.Width - (C_WALL_THICKNESS * 2);
+
+            mColumns[0] = (int)Math.Floor(width / Ball.Size.X);
+            mColumns[1] = (int)Math.Floor((width / Ball.Size.X) - 0.5f);
 
             // Calculate the offset based on which row is the longest, the length of that row and board width.
             // Subtract row length from board width and divide remainder by 2 to get a centered offset.
-            float xOffset = bounds.Width;
+            float xOffset = width;
             xOffset -= (mColumns[0] > mColumns[1] ? mColumns[0] : mColumns[1] + 0.5f) * Ball.Size.X;
             xOffset *= 0.5f;
 
-            mOffset = new Vector2(bounds.X + xOffset, bounds.Y);
+            mOffset = new Vector2(bounds.X + xOffset + C_WALL_THICKNESS, bounds.Y + C_WALL_THICKNESS);
             mBalls = new List<BoardRow>();
         }
 
@@ -64,6 +88,10 @@ namespace Bubbles
         /// <param name="spriteBatch">The sprite batch with which to draw the balls</param>
         public void DrawAll(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(mWallTopTex, mWallTopRect, Color.White);
+            spriteBatch.Draw(mWallSideTex, mWallLeftRect, Color.White);
+            spriteBatch.Draw(mWallSideTex, mWallRightRect, Color.White);
+
             foreach (BoardRow row in mBalls)
                 foreach (Ball ball in row.Row)
                     if (ball != null)
@@ -78,7 +106,7 @@ namespace Bubbles
         public bool Collision(Ball movingBall)
         {
             // If the ball hits the roof, there is a collision. Handle it and quit method returning true
-            if (movingBall.Position.Y - Ball.Size.Y * 0.5 < 0)
+            if (movingBall.Position.Y - Ball.Size.Y * 0.5 < (mOffset.Y))
             {
                 HandleCollision(movingBall);
                 return true;
@@ -567,6 +595,9 @@ namespace Bubbles
         {
             foreach (Point ballCell in cells)
             {
+                if (HasBall(ballCell))
+                    mScore += C_BALL_POINTS;
+
                 // Remove them
                 mBalls[ballCell.Y].Row[ballCell.X] = null;
             }
@@ -580,10 +611,13 @@ namespace Bubbles
         {
             foreach (Point cell in cells)
             {
-                if (HasBall(cell))
-                    mBalls[cell.Y].Row[cell.X].Colour = BallColour.Yellow;
+                //if (HasBall(cell))
+                //    mBalls[cell.Y].Row[cell.X].Colour = BallColour.Yellow;
 
-                //mBalls[cell.Y].Row[cell.X] = null;
+                if (HasBall(cell))
+                    mScore += C_DANGLING_POINTS;
+
+                mBalls[cell.Y].Row[cell.X] = null;
             }
         }
 
@@ -592,7 +626,23 @@ namespace Bubbles
         #region Properties
 
         /// <summary>
-        /// Get the number of rows on the board
+        /// Read only. Get the inner bounds rectangle (excluding the walls)
+        /// </summary>
+        public Rectangle InnerBounds
+        {
+            get { return mInnerBounds; }
+        }
+
+        /// <summary>
+        /// Read only. The current score at the board.
+        /// </summary>
+        public int Score
+        {
+            get { return mScore; }
+        }
+
+        /// <summary>
+        /// Read only. Get the number of rows on the board
         /// </summary>
         private int RowCount
         {
@@ -600,7 +650,7 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Get the type of the row below the current last row
+        /// Read only. Get the type of the row below the current last row
         /// </summary>
         private BoardRow.Type NextTypeBottom
         {
@@ -616,7 +666,7 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Get the type of the row above the current top row
+        /// Read only. Get the type of the row above the current top row
         /// </summary>
         private BoardRow.Type NextTypeTop
         {

@@ -15,6 +15,11 @@ namespace Bubbles
         private Rectangle mBGPosition;
         private Rectangle mBounds;
 
+        private Texture2D mPanelBG;
+        private Texture2D mChalkBoard;
+        private SpriteFont mChalkFont;
+        private Vector2 mScorePosition;
+
         private Board mBoard;
         private Aim mAim;
 
@@ -24,24 +29,30 @@ namespace Bubbles
         private SpriteFont mDebugFont;
 
         // Constants
-        private const int C_TOP_OFFSET = 24;
+        private const int C_TOP_OFFSET = 0;
 
         public GameScreen()
         {
             mBackground = Core.Content.Load<Texture2D>(@"Textures\background2");
             mBGPosition = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);
-            mBounds = new Rectangle(0, C_TOP_OFFSET, Core.ClientBounds.Width, Core.ClientBounds.Height - C_TOP_OFFSET);
+            mBounds = new Rectangle(0, C_TOP_OFFSET, Core.ClientBounds.Width - 500, Core.ClientBounds.Height - C_TOP_OFFSET);
+            //mBounds = new Rectangle(0, C_TOP_OFFSET, 767, 512);
+
+            mPanelBG = Core.Content.Load<Texture2D>(@"Textures\bricks");
+            mChalkBoard = Core.Content.Load<Texture2D>(@"Textures\chalkBoard");
+            mChalkFont = Core.Content.Load<SpriteFont>(@"Fonts\chalk");
+            mScorePosition = new Vector2(mBounds.X + mBounds.Width + 90, 150);
 
             // DEBUG
             mDebugFont = Core.Content.Load<SpriteFont>(@"Fonts\default");
+            mDebugString = "Keys: 'F2' starts a new game, 'A' adds a new row of balls and 'ESC' quits.";
         }
 
         public void StartGame()
         {
-            Ball.Initialize(9, mBounds);
-            mAim = new Aim(mBounds);
-
+            Ball.Initialize(9);
             mBoard = new Board(mBounds);
+            mAim = new Aim(mBounds, mBoard.InnerBounds.X - mBounds.X);
         }
 
         public void Update(GameTime gameTime)
@@ -89,7 +100,7 @@ namespace Bubbles
 
             mPrevKeyboard = currKeyboard;
             
-            mAim.Update(gameTime, mBoard);
+            mAim.Update(gameTime, ref mBoard);
         }
 
         // DEBUG
@@ -125,10 +136,16 @@ namespace Bubbles
         public void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(mBackground, mBounds, Color.White);
+            spritebatch.Draw(mPanelBG, new Vector2(mBounds.X + mBounds.Width, 0), Color.White);
+            spritebatch.Draw(mChalkBoard, new Vector2(mBounds.X + mBounds.Width + 30, 100), Color.White);
             mBoard.DrawAll(spritebatch);
             mAim.Draw(spritebatch);
 
-            spritebatch.DrawString(mDebugFont, "F2 starts a new game, A adds a new row of balls.", Vector2.Zero, Color.White);
+            string scoreText = "Score: " + mBoard.Score + "\n\n\nHigh Score: 3675";
+
+            spritebatch.DrawString(mChalkFont, scoreText, mScorePosition, Color.White);
+
+            spritebatch.DrawString(mDebugFont, mDebugString, Vector2.Zero, Color.White);
         }
     }
 }

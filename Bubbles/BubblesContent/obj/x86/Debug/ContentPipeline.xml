@@ -17,7 +17,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb</Output>
-      <Time>2012-06-16T23:39:49.0369+02:00</Time>
+      <Time>2012-09-16T17:57:51.359+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\whitepixel.png</Source>
@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballBlue.xnb</Output>
-      <Time>2012-08-26T16:53:32.569+02:00</Time>
+      <Time>2012-09-15T10:58:24.109+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\ballRed.png</Source>
@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballRed.xnb</Output>
-      <Time>2012-08-26T16:53:32.57+02:00</Time>
+      <Time>2012-09-15T10:58:24.109+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\ballWhite.png</Source>
@@ -53,7 +53,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb</Output>
-      <Time>2012-08-26T16:53:32.582+02:00</Time>
+      <Time>2012-09-15T10:58:24.124+02:00</Time>
     </Item>
     <Item>
       <Source>Fonts\default.spritefont</Source>
@@ -71,7 +71,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb</Output>
-      <Time>2012-08-28T15:21:19.504+02:00</Time>
+      <Time>2012-09-15T10:58:24.03+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\background2.jpg</Source>
@@ -80,7 +80,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb</Output>
-      <Time>2012-08-28T12:45:44.747+02:00</Time>
+      <Time>2012-09-15T10:58:24.106+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\background2big.jpg</Source>
@@ -89,7 +89,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb</Output>
-      <Time>2012-08-28T12:52:07.7+02:00</Time>
+      <Time>2012-09-15T10:58:24.108+02:00</Time>
     </Item>
     <Item>
       <Source>Textures\button.png</Source>
@@ -98,7 +98,61 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb</Output>
-      <Time>2012-08-28T15:17:10.658+02:00</Time>
+      <Time>2012-09-15T10:58:24.125+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\wallSide.jpg</Source>
+      <Name>Textures\wallSide</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallSide.xnb</Output>
+      <Time>2012-09-16T16:28:24.887+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\wallTop.jpg</Source>
+      <Name>Textures\wallTop</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallTop.xnb</Output>
+      <Time>2012-09-16T16:29:13.287+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\aimArrow.png</Source>
+      <Name>Textures\aimArrow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aimArrow.xnb</Output>
+      <Time>2012-06-16T23:39:49.0369+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\bricks.png</Source>
+      <Name>Textures\bricks</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb</Output>
+      <Time>2012-09-17T00:47:53.274+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\chalk.spritefont</Source>
+      <Name>Fonts\chalk</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb</Output>
+      <Time>2012-09-17T01:13:01.431+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\chalkBoard.png</Source>
+      <Name>Textures\chalkBoard</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb</Output>
+      <Time>2012-09-17T01:05:18.253+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

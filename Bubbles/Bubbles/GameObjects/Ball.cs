@@ -12,6 +12,7 @@ namespace Bubbles
     {
         Red, Blue, Green, Yellow, Purple, Turquoise, Orange, Pink, Black, Count
     }
+
     enum BallState
     {
         Still, Shot, Falling
@@ -39,9 +40,6 @@ namespace Bubbles
         private static Vector2 sSize;
         private static float sScale = 1.0f;
 
-        // Environment variables
-        private static Rectangle sBounds;
-
         // Constants
         public const float C_SPEED = 10.0f;
 
@@ -62,14 +60,14 @@ namespace Bubbles
             mPosition = position;
         }
 
-        public void Update(Board board)
+        public void Update(ref Board board)
         {
             switch (mState)
             {
                 case BallState.Still:
                     break;
                 case BallState.Shot:
-                    Move(board);
+                    Move(ref board);
                     break;
                 case BallState.Falling:
                     break;
@@ -89,11 +87,12 @@ namespace Bubbles
             mDirection.Normalize();
         }
 
-        private void Move(Board board)
+        private void Move(ref Board board)
         {
             mPosition += mDirection * C_SPEED;
 
-            if (mPosition.X - Size.X * 0.5f < sBounds.X || mPosition.X + Size.X * 0.5f > sBounds.X + sBounds.Width)
+            if (mPosition.X - Size.X * 0.5f < (board.InnerBounds.X) ||
+                mPosition.X + Size.X * 0.5f > (board.InnerBounds.X + board.InnerBounds.Width))
                 mDirection.X = -mDirection.X;
 
             if (board.Collision(this))
@@ -130,7 +129,7 @@ namespace Bubbles
         #endregion Properties
 
         #region StaticMethods
-        public static void Initialize(int numColours, Rectangle bounds)
+        public static void Initialize(int numColours)
         {
             sColours = new List<Color>();
             numColours = (int)MathHelper.Clamp(numColours, 4, 9);
@@ -162,7 +161,6 @@ namespace Bubbles
 
             sTexture = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
             sSize = new Vector2(sTexture.Width, sTexture.Height);
-            sBounds = bounds;
         }
         #endregion StaticMethods
 

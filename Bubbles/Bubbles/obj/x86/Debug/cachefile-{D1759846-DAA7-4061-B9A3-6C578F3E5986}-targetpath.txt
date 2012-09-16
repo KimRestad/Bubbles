@@ -9,3 +9,9 @@ Content\Fonts\button.xnb
 Content\Textures\background2.xnb
 Content\Textures\background2big.xnb
 Content\Textures\button.xnb
+Content\Textures\wallSide.xnb
+Content\Textures\wallTop.xnb
+Content\Textures\aimArrow.xnb
+Content\Textures\bricks.xnb
+Content\Fonts\chalk.xnb
+Content\Textures\chalkBoard.xnb

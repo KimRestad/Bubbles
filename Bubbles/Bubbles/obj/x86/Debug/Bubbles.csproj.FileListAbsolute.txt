@@ -58,3 +58,13 @@ D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallSide.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallTop.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aimArrow.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe.manifest
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.application
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe.manifest
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.application
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb

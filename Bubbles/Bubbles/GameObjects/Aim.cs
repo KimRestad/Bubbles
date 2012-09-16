@@ -25,14 +25,14 @@ namespace Bubbles
 
         private MouseState mMousePrev;
 
-        public Aim(Rectangle board)
+        public Aim(Rectangle board, int wallThickness)
         {
             mTexture = Core.Content.Load<Texture2D>(@"Textures\aim");
-            mPosition = new Vector2(board.Left + board.Width * 0.5f, board.Top + board.Height - mTexture.Height * 0.5f);
+            mPosition = new Vector2(board.Left + board.Width * 0.5f, board.Top + board.Height - Ball.Size.X * 0.5f);
             mOrigin = new Vector2(0, mTexture.Height * 0.5f);
             mRotation = 0.0f;
 
-            mNextShotPos = new Vector2(board.Left + board.Width - Ball.Size.X * 0.5f, mPosition.Y);
+            mNextShotPos = new Vector2(board.Left + board.Width - Ball.Size.X * 0.5f - wallThickness, mPosition.Y);
             mShot = CreateRandomBall(mPosition);
             mNextShot = CreateRandomBall(mNextShotPos);
             mShotBalls = new List<Ball>();
@@ -40,7 +40,7 @@ namespace Bubbles
             mMousePrev = Mouse.GetState();
         }
 
-        public void Update(GameTime gameTime, Board board)
+        public void Update(GameTime gameTime, ref Board board)
         {
             MouseState mouseCurr = Mouse.GetState();
 
@@ -64,15 +64,15 @@ namespace Bubbles
 
             mMousePrev = mouseCurr;
 
-            mShot.Update(board);
-            mNextShot.Update(board);
+            mShot.Update(ref board);
+            mNextShot.Update(ref board);
 
             for (int i = mShotBalls.Count - 1; i >= 0; --i)
             {
                 if (mShotBalls[i].State == BallState.Still)
                     mShotBalls.RemoveAt(i);
                 else
-                    mShotBalls[i].Update(board);
+                    mShotBalls[i].Update(ref board);
             }
         }
 
