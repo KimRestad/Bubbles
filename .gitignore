@@ -2,5 +2,9 @@
 Bubbles\Bubbles\bin\
 Bubbles\Bubbles\obj\
 
+# Ignore graphics work files
+Bubbles\BubblesContent\Textures\Old Images
+Bubbles\BubblesContent\Textures\Raw Images
+
 # Ignore Visual Studio session files
 *.suo
