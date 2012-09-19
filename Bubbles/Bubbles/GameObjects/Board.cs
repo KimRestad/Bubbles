@@ -31,6 +31,8 @@ namespace Bubbles
         private Rectangle mInnerBounds;
 
         private int mScore;
+        private float mAddRowTime;
+        private float mAddRowModifier;
 
         // Graphics variables
         private Vector2 mOffset;
@@ -44,6 +46,8 @@ namespace Bubbles
         private const int C_WALL_THICKNESS = 50;
         private const int C_BALL_POINTS = 10;
         private const int C_DANGLING_POINTS = 15;
+
+        private const float C_TIME_BONUS_PC = 0.5f;
 
         #region Methods
         /// <summary>
@@ -66,6 +70,8 @@ namespace Bubbles
                                          bounds.Width - (C_WALL_THICKNESS * 2), bounds.Height - C_WALL_THICKNESS);
 
             mScore = 0;
+            mAddRowTime = 1.0f;
+            mAddRowModifier = 0.05f;
 
             int width = bounds.Width - (C_WALL_THICKNESS * 2);
 
@@ -75,7 +81,7 @@ namespace Bubbles
             // Calculate the offset based on which row is the longest, the length of that row and board width.
             // Subtract row length from board width and divide remainder by 2 to get a centered offset.
             float xOffset = width;
-            xOffset -= (mColumns[0] > mColumns[1] ? mColumns[0] : mColumns[1] + 0.5f) * Ball.Size.X;
+            xOffset -= ((mColumns[0] > mColumns[1]) ? mColumns[0] : (mColumns[1] + 0.5f)) * Ball.Size.X;
             xOffset *= 0.5f;
 
             mOffset = new Vector2(bounds.X + xOffset + C_WALL_THICKNESS, bounds.Y + C_WALL_THICKNESS);
@@ -243,6 +249,15 @@ namespace Bubbles
                 RemoveBall(ref sequence);
 
                 ClearDanglingBalls(ref sequence);
+            }
+
+            // TODO: Add logic for when a new row is added.
+            mAddRowTime -= mAddRowModifier;
+
+            if (mAddRowTime <= 0)
+            {
+                AddRowTop();
+                mAddRowTime = 1.0f;
             }
         }
 
@@ -615,7 +630,10 @@ namespace Bubbles
                 //    mBalls[cell.Y].Row[cell.X].Colour = BallColour.Yellow;
 
                 if (HasBall(cell))
+                {
                     mScore += C_DANGLING_POINTS;
+                    mAddRowTime += mAddRowModifier * C_TIME_BONUS_PC;
+                }
 
                 mBalls[cell.Y].Row[cell.X] = null;
             }
@@ -634,11 +652,19 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Read only. The current score at the board.
+        /// Read only. The current score at the board
         /// </summary>
         public int Score
         {
             get { return mScore; }
+        }
+
+        /// <summary>
+        /// Read only. The time (in percent) until a new row is added
+        /// </summary>
+        public float AddRowTime
+        {
+            get { return mAddRowTime; }
         }
 
         /// <summary>

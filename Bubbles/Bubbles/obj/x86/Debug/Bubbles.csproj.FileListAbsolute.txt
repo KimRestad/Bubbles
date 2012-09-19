@@ -68,3 +68,16 @@ D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallSide.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallTop.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aimArrow.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe.manifest
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.application
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe.manifest
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.application

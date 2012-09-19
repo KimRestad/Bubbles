@@ -93,14 +93,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Bubbles.exe" size="39424">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Bubbles.exe" size="39936">
       <assemblyIdentity name="Bubbles" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>FUOezVP5r6o/ESRVrn0Lm19ZkDQ=</dsig:DigestValue>
+        <dsig:DigestValue>l6V61BdYIuI+j5QnmTRQbRdqhkY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -17,8 +17,10 @@ namespace Bubbles
 
         private Texture2D mPanelBG;
         private Texture2D mChalkBoard;
+        private Texture2D mProgressBar;
         private SpriteFont mChalkFont;
         private Vector2 mScorePosition;
+        private Rectangle mProgressPosition;
 
         private Board mBoard;
         private Aim mAim;
@@ -40,17 +42,19 @@ namespace Bubbles
 
             mPanelBG = Core.Content.Load<Texture2D>(@"Textures\bricks");
             mChalkBoard = Core.Content.Load<Texture2D>(@"Textures\chalkBoard");
+            mProgressBar = Core.Content.Load<Texture2D>(@"Textures\wallTop");
             mChalkFont = Core.Content.Load<SpriteFont>(@"Fonts\chalk");
             mScorePosition = new Vector2(mBounds.X + mBounds.Width + 90, 150);
+            mProgressPosition = new Rectangle(mBounds.X + mBounds.Width + 30, 500, mChalkBoard.Width, 50);
 
             // DEBUG
             mDebugFont = Core.Content.Load<SpriteFont>(@"Fonts\default");
-            mDebugString = "Keys: 'F2' starts a new game, 'A' adds a new row of balls and 'ESC' quits.";
+            mDebugString = "Keys: 'F2' starts a new game, 'A' adds a new row of balls and 'ESC' quits. AddRowTime: ";
         }
 
         public void StartGame()
         {
-            Ball.Initialize(9);
+            Ball.Initialize(6);
             mBoard = new Board(mBounds);
             mAim = new Aim(mBounds, mBoard.InnerBounds.X - mBounds.X);
         }
@@ -62,6 +66,13 @@ namespace Bubbles
             if (currKeyboard.IsKeyDown(Keys.A) && mPrevKeyboard.IsKeyUp(Keys.A))
                 mBoard.AddRowTop();
 
+            if (currKeyboard.IsKeyDown(Keys.F2) && mPrevKeyboard.IsKeyUp(Keys.F2))
+            {
+                StartGame();
+            }
+
+            mProgressPosition.Width = (int)(mChalkBoard.Width * mBoard.AddRowTime);
+
             //if (currKeyboard.IsKeyDown(Keys.F1) && mPrevKeyboard.IsKeyUp(Keys.F1))
             //{
             //    List<Point> neighbours = mBoard.GetNeighbours(new Point(0, 0));
@@ -71,11 +82,6 @@ namespace Bubbles
             //        mBoard.mBalls[pos.Y].Row[pos.X].mColour = BallColour.Red;
             //    }
             //}
-
-            if (currKeyboard.IsKeyDown(Keys.F2) && mPrevKeyboard.IsKeyUp(Keys.F2))
-            {
-                StartGame();
-            }
 
             //if (currKeyboard.IsKeyDown(Keys.D0) && mPrevKeyboard.IsKeyUp(Keys.D0))
             //    HandleDigitPress(0);
@@ -138,6 +144,7 @@ namespace Bubbles
             spritebatch.Draw(mBackground, mBounds, Color.White);
             spritebatch.Draw(mPanelBG, new Vector2(mBounds.X + mBounds.Width, 0), Color.White);
             spritebatch.Draw(mChalkBoard, new Vector2(mBounds.X + mBounds.Width + 30, 100), Color.White);
+            spritebatch.Draw(mProgressBar, mProgressPosition, Color.White);
             mBoard.DrawAll(spritebatch);
             mAim.Draw(spritebatch);
 
@@ -145,7 +152,7 @@ namespace Bubbles
 
             spritebatch.DrawString(mChalkFont, scoreText, mScorePosition, Color.White);
 
-            spritebatch.DrawString(mDebugFont, mDebugString, Vector2.Zero, Color.White);
+            spritebatch.DrawString(mDebugFont, mDebugString + mBoard.AddRowTime, Vector2.Zero, Color.White);
         }
     }
 }
