@@ -25,16 +25,19 @@ namespace Bubbles
 
         private MouseState mMousePrev;
 
-        public Aim(Rectangle board, int wallThickness)
+        public Aim(ref Board board/*, Rectangle boardRec, int wallThickness*/)
         {
+            Rectangle boardBounds = board.InnerBounds;
             mTexture = Core.Content.Load<Texture2D>(@"Textures\aim");
-            mPosition = new Vector2(board.Left + board.Width * 0.5f, board.Top + board.Height - Ball.Size.X * 0.5f);
+            //mPosition = new Vector2(boardRec.Left + boardRec.Width * 0.5f, boardRec.Top + boardRec.Height - Ball.Size.X * 0.5f);
+            mPosition = new Vector2(boardBounds.Left + boardBounds.Width * 0.5f, boardBounds.Top + boardBounds.Height - Ball.Size.X * 0.5f);
             mOrigin = new Vector2(0, mTexture.Height * 0.5f);
             mRotation = 0.0f;
 
-            mNextShotPos = new Vector2(board.Left + board.Width - Ball.Size.X * 0.5f - wallThickness, mPosition.Y);
-            mShot = CreateRandomBall(mPosition);
-            mNextShot = CreateRandomBall(mNextShotPos);
+            //mNextShotPos = new Vector2(boardRec.Left + boardRec.Width - Ball.Size.X * 0.5f - wallThickness, mPosition.Y);
+            mNextShotPos = new Vector2(boardBounds.Left + boardBounds.Width - Ball.Size.X * 0.5f, mPosition.Y);
+            mShot = CreateRandomBall(mPosition, ref board);
+            mNextShot = CreateRandomBall(mNextShotPos, ref board);
             mShotBalls = new List<Ball>();
 
             mMousePrev = Mouse.GetState();
@@ -59,7 +62,7 @@ namespace Bubbles
                 mShotBalls.Add(mShot);
                 mShot = mNextShot;
                 mShot.Position = mPosition;
-                mNextShot = CreateRandomBall(mNextShotPos);
+                mNextShot = CreateRandomBall(mNextShotPos, ref board);
             }
 
             mMousePrev = mouseCurr;
@@ -88,9 +91,9 @@ namespace Bubbles
             }
         }
 
-        private Ball CreateRandomBall(Vector2 position)
+        private Ball CreateRandomBall(Vector2 position, ref Board board)
         {
-            return new Ball((BallColour)Core.RandomGen.Next(Ball.NumColours), position);
+            return new Ball(board.GetColourInPlay(), position);
         }
     }
 }

@@ -93,14 +93,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Bubbles.exe" size="39936">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Bubbles.exe" size="40960">
       <assemblyIdentity name="Bubbles" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>l6V61BdYIuI+j5QnmTRQbRdqhkY=</dsig:DigestValue>
+        <dsig:DigestValue>IEU7EOCiDH4s/nOBKt7QK5i4Ig4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -149,15 +149,6 @@
       <dsig:DigestValue>5JmGVJ1SXTX4mO7Uqdl1bBz91q8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Textures\background.xnb" size="1920187">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>d0uc+PpfV3BKT7+dH2A9qKi9QD0=</dsig:DigestValue>
-    </hash>
-  </file>
   <file name="Content\Textures\background2.xnb" size="1920187">
     <hash>
       <dsig:Transforms>
@@ -174,24 +165,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>os2Zv/xFYPCZXqtiesfl4lGWi1s=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Content\Textures\ballBlue.xnb" size="16571">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>fwT1ZuTcPu4zGjaRAX/8yhhmbGg=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Content\Textures\ballRed.xnb" size="16571">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>BezNVY3dPG61UIPSJ1t8YdMUXRk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Textures\ballWhite.xnb" size="16571">

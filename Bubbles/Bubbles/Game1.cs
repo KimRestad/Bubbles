@@ -34,6 +34,7 @@ namespace Bubbles
         private GameState mCurrentState;
         private StartScreen mStartScreen;
         private GameScreen mGameScreen;
+        private EndScreen mEndScreen;
 
         public Game1()
         {
@@ -60,6 +61,7 @@ namespace Bubbles
             mCurrentState = GameState.Start;
             mStartScreen = new StartScreen();
             mGameScreen = new GameScreen();
+            mEndScreen = new EndScreen();
 
             IsMouseVisible = true;
             
@@ -111,6 +113,7 @@ namespace Bubbles
                     mGameScreen.Update(gameTime);
                     break;
                 case GameState.End:
+                    mEndScreen.Update();
                     break;
             }
 
@@ -136,6 +139,7 @@ namespace Bubbles
                     mGameScreen.Draw(mSpriteBatch);
                     break;
                 case GameState.End:
+                    mEndScreen.Draw(mSpriteBatch);
                     break;
             }
 
@@ -158,6 +162,10 @@ namespace Bubbles
         {
             get { return mGameScreen; }
         }
+
+        //public EndScreen EndScreen
+        //{
+        //}
 
         public Vector2 UserResolution
         {

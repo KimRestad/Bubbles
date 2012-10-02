@@ -54,9 +54,12 @@ namespace Bubbles
 
         public void StartGame()
         {
-            Ball.Initialize(6);
+            Ball.Initialize(4);
             mBoard = new Board(mBounds);
-            mAim = new Aim(mBounds, mBoard.InnerBounds.X - mBounds.X);
+            mBoard.AddRowTop();
+            //mAim = new Aim(mBounds, mBoard.InnerBounds.X - mBounds.X);
+            mAim = new Aim(ref mBoard);
+            
         }
 
         public void Update(GameTime gameTime)
@@ -71,8 +74,11 @@ namespace Bubbles
                 StartGame();
             }
 
+            mPrevKeyboard = currKeyboard;
+
             mProgressPosition.Width = (int)(mChalkBoard.Width * mBoard.AddRowTime);
 
+            #region DebugCode
             //if (currKeyboard.IsKeyDown(Keys.F1) && mPrevKeyboard.IsKeyUp(Keys.F1))
             //{
             //    List<Point> neighbours = mBoard.GetNeighbours(new Point(0, 0));
@@ -103,10 +109,12 @@ namespace Bubbles
             //    HandleDigitPress(8);
             //if (currKeyboard.IsKeyDown(Keys.D9) && mPrevKeyboard.IsKeyUp(Keys.D9))
             //    HandleDigitPress(9);
-
-            mPrevKeyboard = currKeyboard;
+            #endregion DebugCode
             
             mAim.Update(gameTime, ref mBoard);
+
+            if (mBoard.BallsLeft <= 0)
+                Core.EndGame();
         }
 
         // DEBUG
@@ -152,7 +160,15 @@ namespace Bubbles
 
             spritebatch.DrawString(mChalkFont, scoreText, mScorePosition, Color.White);
 
+            // DEBUG
             spritebatch.DrawString(mDebugFont, mDebugString + mBoard.AddRowTime, Vector2.Zero, Color.White);
+
+            for (int i = 0; i < (int)BallColour.Count; i++)
+            {
+                spritebatch.DrawString(mDebugFont, ((BallColour)i).ToString() + ": " + mBoard.mColoursInPlay[i], new Vector2(mScorePosition.X, 600 + 20 * i), Color.Red);
+            }
+
+            spritebatch.DrawString(mDebugFont, "Total: " + mBoard.BallsLeft, new Vector2(mScorePosition.X, 600 + 20 * (int)BallColour.Count), Color.Red);
         }
     }
 }

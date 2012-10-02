@@ -1,8 +1,8 @@
-Content\Textures\background.xnb
+Content\Fonts\default.xnb
+Content\Fonts\button.xnb
+Content\Fonts\chalk.xnb
 Content\Textures\aim.xnb
 Content\Textures\whitepixel.xnb
-Content\Textures\ballBlue.xnb
-Content\Textures\ballRed.xnb
 Content\Textures\ballWhite.xnb
 Content\Textures\background2.xnb
 Content\Textures\background2big.xnb
@@ -12,6 +12,3 @@ Content\Textures\wallTop.xnb
 Content\Textures\aimArrow.xnb
 Content\Textures\bricks.xnb
 Content\Textures\chalkBoard.xnb
-Content\Fonts\default.xnb
-Content\Fonts\button.xnb
-Content\Fonts\chalk.xnb

@@ -29,7 +29,10 @@ namespace Bubbles
         private List<BoardRow> mBalls;
         private int[] mColumns = new int[2];
         private Rectangle mInnerBounds;
+        public int[] mColoursInPlay = new int[(int)BallColour.Count]; // DEBUG: public
+        private int mNumberOfBalls;
 
+        // Score variables
         private int mScore;
         private float mAddRowTime;
         private float mAddRowModifier;
@@ -77,6 +80,12 @@ namespace Bubbles
 
             mColumns[0] = (int)Math.Floor(width / Ball.Size.X);
             mColumns[1] = (int)Math.Floor((width / Ball.Size.X) - 0.5f);
+
+            for (int i = 0; i < mColoursInPlay.Length; i++)
+            {
+                mColoursInPlay[i] = 0;
+            }
+            mNumberOfBalls = 0;
 
             // Calculate the offset based on which row is the longest, the length of that row and board width.
             // Subtract row length from board width and divide remainder by 2 to get a centered offset.
@@ -147,6 +156,30 @@ namespace Bubbles
         }
 
         /// <summary>
+        /// Generates a colour from the ones on the board. If there are no balls on the board, a random
+        /// color is chosen from the ones allowed on the board (set at initialization of the balls)
+        /// </summary>
+        /// <returns>A random, valid ball colour</returns>
+        public BallColour GetColourInPlay()
+        {
+            BallColour randomCol;
+
+            // If there are balls, make sure the colour generated is in play, else
+            // generate random colour from the ones set for the game.
+            if (mNumberOfBalls > 0)
+            {
+                do
+                {
+                    randomCol = (BallColour)Core.RandomGen.Next(Ball.ColourCount);
+                } while (mColoursInPlay[(int)randomCol] == 0);
+            }
+            else
+                randomCol = (BallColour)Core.RandomGen.Next(Ball.ColourCount);
+
+            return randomCol;
+        }
+
+        /// <summary>
         /// Add a row of random balls to the top of the board
         /// </summary>
         public void AddRowTop()
@@ -188,13 +221,27 @@ namespace Bubbles
             }
 
             // Insert row at the top or bottom based on atTop, if at top - update all the positions
+
+            BoardRow newRow;
             if (atTop)
             {
-                mBalls.Insert(0, new BoardRow(NextTypeTop, balls));
+                newRow = new BoardRow(NextTypeTop, balls);
+                mBalls.Insert(0, newRow);
                 UpdatePositions();
             }
             else
-                mBalls.Insert(mBalls.Count, new BoardRow(NextTypeBottom, balls));
+            {
+                newRow = new BoardRow(NextTypeBottom, balls);
+                mBalls.Insert(mBalls.Count, newRow);
+            }
+
+            // Update the number of balls array with the newly added balls
+            foreach (Ball ball in newRow.Row)
+            {
+                if(ball != null)
+                    ChangeNumberOfBalls(ball.Colour, true);
+            }
+
         }
 
         /// <summary>
@@ -237,8 +284,9 @@ namespace Bubbles
             if (cell.Y == mBalls.Count)
                 AddRowBottom(GenerateNullRow(mColumns[(int)NextTypeBottom]));
 
-            // Add ball to the requested cell
+            // Add ball to the requested cell and update the number of balls
             mBalls[cell.Y].Row[cell.X] = movingBall;
+            ChangeNumberOfBalls(movingBall.Colour, true);
 
             // Get a sequence of all the balls connected to the shot ball, that have the same colour as the shot ball
             List<Point> sequence = GetSequence(cell);
@@ -246,7 +294,7 @@ namespace Bubbles
             // If sequence is of at last 3 balls, remove all balls in the sequence
             if (sequence.Count > 2)
             {
-                RemoveBall(ref sequence);
+                RemoveBalls(ref sequence);
 
                 ClearDanglingBalls(ref sequence);
             }
@@ -285,9 +333,10 @@ namespace Bubbles
         {
             List<Ball> returnList = new List<Ball>();
 
+            // Generate a new row. The colours are randomized from the ones allowed (set at initialization of the balls)
             for (int i = 0; i < size; ++i)
             {
-                returnList.Add(new Ball((BallColour)Core.RandomGen.Next(Ball.NumColours), Vector2.Zero));
+                returnList.Add(new Ball((BallColour)Core.RandomGen.Next(Ball.ColourCount), Vector2.Zero));
             }
 
             return returnList;
@@ -503,7 +552,7 @@ namespace Bubbles
                 }
             }
 
-            RemoveDanglingBall(ref checkedCells);
+            RemoveDanglingBalls(ref checkedCells);
         }
 
         /// <summary>
@@ -606,14 +655,18 @@ namespace Bubbles
         /// Remove all the balls in the cell list by setting their cells to null.
         /// </summary>
         /// <param name="cells">The list of cells to clear</param>
-        private void RemoveBall(ref List<Point> cells)
+        private void RemoveBalls(ref List<Point> cells)
         {
             foreach (Point ballCell in cells)
             {
+                // If the cell contains a ball to be removed, add points for it and update the number of balls
                 if (HasBall(ballCell))
+                {
                     mScore += C_BALL_POINTS;
+                    ChangeNumberOfBalls(mBalls[ballCell.Y].Row[ballCell.X].Colour, false);
+                }
 
-                // Remove them
+                // Clear cell
                 mBalls[ballCell.Y].Row[ballCell.X] = null;
             }
         }
@@ -622,20 +675,47 @@ namespace Bubbles
         /// Remove all the balls in the cell list by setting their cells to null.
         /// </summary>
         /// <param name="cells">The list of "dangling ball" cells to clear</param>
-        private void RemoveDanglingBall(ref List<Point> cells)
+        private void RemoveDanglingBalls(ref List<Point> cells)
         {
             foreach (Point cell in cells)
             {
                 //if (HasBall(cell))
                 //    mBalls[cell.Y].Row[cell.X].Colour = BallColour.Yellow;
 
+
+                // If the cell contains a ball to be removed, add points for it and update the number of balls
                 if (HasBall(cell))
                 {
                     mScore += C_DANGLING_POINTS;
                     mAddRowTime += mAddRowModifier * C_TIME_BONUS_PC;
+                    ChangeNumberOfBalls(mBalls[cell.Y].Row[cell.X].Colour, false);
                 }
 
+                // Clear cell
                 mBalls[cell.Y].Row[cell.X] = null;
+            }
+        }
+
+        /// <summary>
+        /// Increase or decrease, as indicated by the increase parameter, the number of balls of a certain
+        /// colour, specified by colour, that is still in play.
+        /// </summary>
+        /// <param name="colour">The colour of the added or removed ball</param>
+        /// <param name="increase">Whether a ball of the specified was added or removed. True if it was 
+        /// added, else false</param>
+        private void ChangeNumberOfBalls(BallColour colour, bool increase)
+        {
+            // Based on whether the ball was added or removed, update the colours in play
+            // and the total number of balls in the game variables
+            if (increase)
+            {
+                mColoursInPlay[(int)colour]++;
+                mNumberOfBalls++;
+            }
+            else
+            {
+                mColoursInPlay[(int)colour]--;
+                mNumberOfBalls--;
             }
         }
 
@@ -665,6 +745,14 @@ namespace Bubbles
         public float AddRowTime
         {
             get { return mAddRowTime; }
+        }
+
+        /// <summary>
+        /// Read only. The number of balls left on the board
+        /// </summary>
+        public float BallsLeft
+        {
+            get { return mNumberOfBalls; }
         }
 
         /// <summary>

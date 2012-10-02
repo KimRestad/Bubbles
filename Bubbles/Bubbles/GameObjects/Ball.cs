@@ -177,7 +177,7 @@ namespace Bubbles
             get { return new Vector2(sTexture.Width * sScale, sTexture.Height * sScale); }
         }
 
-        public static int NumColours
+        public static int ColourCount
         {
             get { return sColours.Count; }
         }

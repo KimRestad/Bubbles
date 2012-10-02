@@ -31,6 +31,11 @@ namespace Bubbles
             sGame.GameScreen.StartGame();
         }
 
+        public static void EndGame()
+        {
+            sGame.GameState = GameState.End;
+        }
+
         #endregion Methods
 
         #region Properties

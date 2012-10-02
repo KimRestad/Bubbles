@@ -2,7 +2,6 @@ D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.write.1.tlog
-D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGame.resources
@@ -10,8 +9,6 @@ D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGraphics.resources
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb
-D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballBlue.xnb
-D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballRed.xnb
 D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb
