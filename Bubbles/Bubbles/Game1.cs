@@ -43,6 +43,7 @@ namespace Bubbles
 
             mBGColour = new Color(2, 84, 85);
 
+            // Minimum: Width ~1229; Height ~691
             mGraphics.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9f);
             mGraphics.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9f);
             mGraphics.ApplyChanges();
@@ -62,6 +63,9 @@ namespace Bubbles
             mStartScreen = new StartScreen();
             mGameScreen = new GameScreen();
             mEndScreen = new EndScreen();
+
+            // DEBUG
+            Core.EndGame(300, true);
 
             IsMouseVisible = true;
             
@@ -163,9 +167,10 @@ namespace Bubbles
             get { return mGameScreen; }
         }
 
-        //public EndScreen EndScreen
-        //{
-        //}
+        public EndScreen EndScreen
+        {
+            get { return mEndScreen; }
+        }
 
         public Vector2 UserResolution
         {

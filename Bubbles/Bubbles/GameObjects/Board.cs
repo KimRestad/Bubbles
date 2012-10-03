@@ -31,6 +31,7 @@ namespace Bubbles
         private Rectangle mInnerBounds;
         public int[] mColoursInPlay = new int[(int)BallColour.Count]; // DEBUG: public
         private int mNumberOfBalls;
+        private int mMaxRows;
 
         // Score variables
         private int mScore;
@@ -49,8 +50,7 @@ namespace Bubbles
         private const int C_WALL_THICKNESS = 50;
         private const int C_BALL_POINTS = 10;
         private const int C_DANGLING_POINTS = 15;
-
-        private const float C_TIME_BONUS_PC = 0.5f;
+        private const float C_TIME_BONUS_PC = 0.5f; // Time bonus % of time modifier gotten from dangling balls
 
         #region Methods
         /// <summary>
@@ -72,24 +72,28 @@ namespace Bubbles
             mInnerBounds = new Rectangle(bounds.X + C_WALL_THICKNESS, bounds.Y + C_WALL_THICKNESS,
                                          bounds.Width - (C_WALL_THICKNESS * 2), bounds.Height - C_WALL_THICKNESS);
 
+            // Calculate max number of rows
+            mMaxRows = (int)(mInnerBounds.Height / Ball.Size.Y);
+
+            // Reset score, time and time modifier
             mScore = 0;
             mAddRowTime = 1.0f;
             mAddRowModifier = 0.05f;
 
-            int width = bounds.Width - (C_WALL_THICKNESS * 2);
-
-            mColumns[0] = (int)Math.Floor(width / Ball.Size.X);
-            mColumns[1] = (int)Math.Floor((width / Ball.Size.X) - 0.5f);
-
+            // Reset ball and colour counters
             for (int i = 0; i < mColoursInPlay.Length; i++)
             {
                 mColoursInPlay[i] = 0;
             }
             mNumberOfBalls = 0;
 
+            // Calculate the number of balls in whole and half rows respectively
+            mColumns[0] = (int)Math.Floor(mInnerBounds.Width / Ball.Size.X);
+            mColumns[1] = (int)Math.Floor((mInnerBounds.Width / Ball.Size.X) - 0.5f);
+
             // Calculate the offset based on which row is the longest, the length of that row and board width.
             // Subtract row length from board width and divide remainder by 2 to get a centered offset.
-            float xOffset = width;
+            float xOffset = mInnerBounds.Width;
             xOffset -= ((mColumns[0] > mColumns[1]) ? mColumns[0] : (mColumns[1] + 0.5f)) * Ball.Size.X;
             xOffset *= 0.5f;
 
@@ -750,9 +754,17 @@ namespace Bubbles
         /// <summary>
         /// Read only. The number of balls left on the board
         /// </summary>
-        public float BallsLeft
+        public int BallsLeft
         {
             get { return mNumberOfBalls; }
+        }
+
+        /// <summary>
+        /// Read only. If there are more rows than allowed, true is returned, else false.
+        /// </summary>
+        public bool HasLost
+        {
+            get { return mBalls.Count > mMaxRows; }
         }
 
         /// <summary>

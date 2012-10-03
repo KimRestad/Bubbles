@@ -114,7 +114,10 @@ namespace Bubbles
             mAim.Update(gameTime, ref mBoard);
 
             if (mBoard.BallsLeft <= 0)
-                Core.EndGame();
+                Core.EndGame(mBoard.Score, true);
+
+            if (mBoard.HasLost)
+                Core.EndGame(mBoard.Score, false);
         }
 
         // DEBUG
