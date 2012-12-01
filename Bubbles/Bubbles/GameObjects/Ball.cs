@@ -38,7 +38,7 @@ namespace Bubbles
         private static Texture2D sTexture;
         private static List<Color> sColours;
         private static Vector2 sSize;
-        private static float sScale = 1.0f;
+        private static float sScale = 1.1f;
 
         // Constants
         public const float C_SPEED = 10.0f;

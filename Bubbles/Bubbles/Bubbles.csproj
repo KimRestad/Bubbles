@@ -128,7 +128,6 @@
     <Compile Include="GameObjects\Aim.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="GameObjects\MovingBall.cs" />
     <Compile Include="Screens\EndScreen.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

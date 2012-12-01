@@ -93,7 +93,7 @@ namespace Bubbles
 
         private Ball CreateRandomBall(Vector2 position, ref Board board)
         {
-            return new Ball(board.GetColourInPlay(), position);
+            return new Ball(board.GenerateColourInPlay(), position);
         }
     }
 }

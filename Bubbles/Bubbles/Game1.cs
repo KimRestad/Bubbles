@@ -65,7 +65,7 @@ namespace Bubbles
             mEndScreen = new EndScreen();
 
             // DEBUG
-            Core.EndGame(300, true);
+            //Core.EndGame(300, true);
 
             IsMouseVisible = true;
             

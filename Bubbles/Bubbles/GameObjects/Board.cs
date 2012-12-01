@@ -160,11 +160,13 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Generates a colour from the ones on the board. If there are no balls on the board, a random
+        /// Generates a random 
+        /// 
+        /// colour from the ones on the board. If there are no balls on the board, a random
         /// color is chosen from the ones allowed on the board (set at initialization of the balls)
         /// </summary>
         /// <returns>A random, valid ball colour</returns>
-        public BallColour GetColourInPlay()
+        public BallColour GenerateColourInPlay()
         {
             BallColour randomCol;
 
