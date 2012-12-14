@@ -67,7 +67,6 @@ C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bi
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallSide.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallTop.xnb
-C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aimArrow.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb
@@ -105,3 +104,5 @@ D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbl
 D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.application
 D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\credits.xnb
 D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\sign.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\credits.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\sign.xnb

@@ -1,6 +1,7 @@
 Content\Fonts\default.xnb
 Content\Fonts\button.xnb
 Content\Fonts\chalk.xnb
+Content\Fonts\credits.xnb
 Content\Textures\aim.xnb
 Content\Textures\whitepixel.xnb
 Content\Textures\ballWhite.xnb
@@ -11,6 +12,4 @@ Content\Textures\wallSide.xnb
 Content\Textures\wallTop.xnb
 Content\Textures\bricks.xnb
 Content\Textures\chalkBoard.xnb
-Content\Fonts\credits.xnb
-Content\Textures\signTemp.xnb
 Content\Textures\sign.xnb

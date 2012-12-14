@@ -22,6 +22,9 @@ namespace Bubbles
             }
         }
 
+        // Constants
+        private const int C_MAX_LIST_COUNT = 9;
+
         // Highscore board and sign
         private Texture2D mHSSign;
         private Texture2D mHSBoard;
@@ -94,6 +97,8 @@ namespace Bubbles
 
         public void SetInfo(Difficulty difficulty, Level level, int score, bool gameWasWon)
         {
+            Core.IsMouseVisible = true;
+
             mScore = score.ToString();
             mGameWasWon = gameWasWon;
             mDifficulty = difficulty;
@@ -153,7 +158,7 @@ namespace Bubbles
         {
             mHighscores = new List<HighscorePair>();
             string filename = GetFilename();
-            string name = DateTime.Today.ToShortDateString();
+            string name = DateTime.Today.ToString("yyyy-MM-dd");
             mHighlightIndex = -1;
 
             if (!File.Exists(filename))
@@ -168,15 +173,16 @@ namespace Bubbles
 
             string line = reader.ReadLine();
 
-            while (line != null && mHighscores.Count < 9)
+            while (line != null && mHighscores.Count < C_MAX_LIST_COUNT)
             {
                 string[] split = line.Split('|');
 
-                if (newScore > int.Parse(split[1]))
+                if (newScore > int.Parse(split[1]) && mHighlightIndex < 0)
                 {
                     mHighscores.Add(new HighscorePair(name, newScore.ToString()));
+                    mHighlightIndex = mHighscores.Count - 1;
 
-                    if (mHighscores.Count == 9)
+                    if (mHighscores.Count == C_MAX_LIST_COUNT)
                         break;
                 }
 
@@ -186,6 +192,13 @@ namespace Bubbles
 
             reader.Close();
             file.Close();
+
+            // If the new high score is not on the list and the list is not full, add it anyway.
+            if (mHighlightIndex == -1 && mHighscores.Count < C_MAX_LIST_COUNT)
+            {
+                mHighscores.Add(new HighscorePair(name, newScore.ToString()));
+                mHighlightIndex = mHighscores.Count - 1;
+            }
         }
 
         private void SaveHighscore()
