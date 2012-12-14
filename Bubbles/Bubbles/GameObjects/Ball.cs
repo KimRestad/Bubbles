@@ -42,6 +42,7 @@ namespace Bubbles
 
         // Constants
         public const float C_SPEED = 10.0f;
+        public const BallColour C_NON_SHOOTABLE_COLOUR = BallColour.Red;
 
         #endregion StaticVariables
         
@@ -122,8 +123,7 @@ namespace Bubbles
         public BallColour Colour
         {
             get { return mColour; }
-            // DEBUG: public?
-            set { mColour = value; }
+            private set { mColour = value; }
         }
 
         #endregion Properties

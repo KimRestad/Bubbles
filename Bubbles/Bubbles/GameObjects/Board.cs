@@ -105,7 +105,7 @@ namespace Bubbles
         /// Draw all the balls on the board
         /// </summary>
         /// <param name="spriteBatch">The sprite batch with which to draw the balls</param>
-        public void DrawAll(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(mWallTopTex, mWallTopRect, Color.White);
             spriteBatch.Draw(mWallSideTex, mWallLeftRect, Color.White);
@@ -170,14 +170,16 @@ namespace Bubbles
         {
             BallColour randomCol;
 
-            // If there are balls, make sure the colour generated is in play, else
+            // If there are balls on the board, make sure the colour generated is 
+            // in play, and that it is not of the non shootable colour else
             // generate random colour from the ones set for the game.
             if (mNumberOfBalls > 0)
             {
                 do
                 {
                     randomCol = (BallColour)Core.RandomGen.Next(Ball.ColourCount);
-                } while (mColoursInPlay[(int)randomCol] == 0);
+                } while (mColoursInPlay[(int)randomCol] == 0); // || 
+                         //randomCol == Ball.C_NON_SHOOTABLE_COLOUR); // Infinite loop when only non shootable colour left
             }
             else
                 randomCol = (BallColour)Core.RandomGen.Next(Ball.ColourCount);

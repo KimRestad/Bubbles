@@ -173,7 +173,7 @@ namespace Bubbles
             
             mAim.Update(gameTime, ref mBoard);
 
-            // If there ar no balls left on the board, the level is finished
+            // If there are no balls left on the board, the level is finished
             if (mBoard.BallsLeft <= 0)
             {
                 if (mSingleLevelGame)       // If it was a single level game, go to end screen
@@ -232,7 +232,7 @@ namespace Bubbles
             spritebatch.Draw(mProgressBar, new Rectangle(mProgressPosition.X, mProgressPosition.Y, mChalkBoardPosition.Width, mProgressPosition.Height),
                              Color.Black * 0.7f);
             spritebatch.Draw(mProgressBar, mProgressPosition, Color.White);
-            mBoard.DrawAll(spritebatch);
+            mBoard.Draw(spritebatch);
             mAim.Draw(spritebatch);
 
             string scoreText = mChalkText;
@@ -242,23 +242,14 @@ namespace Bubbles
             mBtnMenu.Draw(spritebatch);
         }
 
-        public Difficulty Difficulty
-        {
-            get { return mCurrentDiff; }
-        }
-
-        public Level Level
-        {
-            get { return mCurrentLevel; }
-        }
-
         private void HandleInput()
         {
             KeyboardState currKeyboard = Keyboard.GetState();
 
             MouseState ms = Mouse.GetState();
             Rectangle mouseRect = new Rectangle(ms.X, ms.Y, 1, 1);
-            if (mBoard.InnerBounds.Intersects(mouseRect))
+            
+            if (mBoard.InnerBounds.Intersects(mouseRect)) // TODO: Include board walls
                 Core.IsMouseVisible = false;
             else
                 Core.IsMouseVisible = true;
@@ -277,6 +268,16 @@ namespace Bubbles
         private void BtnMenuClick()
         {
             Core.ReturnToMenu();
+        }
+
+        public Difficulty Difficulty
+        {
+            get { return mCurrentDiff; }
+        }
+
+        public Level Level
+        {
+            get { return mCurrentLevel; }
         }
     }
 }
