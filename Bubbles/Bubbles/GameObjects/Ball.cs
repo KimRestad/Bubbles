@@ -38,7 +38,7 @@ namespace Bubbles
         private static Texture2D sTexture;
         private static List<Color> sColours;
         private static Vector2 sSize;
-        private static float sScale = 1.1f;
+        private static float sScale = 1.0f;
 
         // Constants
         public const float C_SPEED = 10.0f;
@@ -129,7 +129,7 @@ namespace Bubbles
         #endregion Properties
 
         #region StaticMethods
-        public static void Initialize(int numColours)
+        public static void Initialize(int numColours, float ballSize)
         {
             sColours = new List<Color>();
             numColours = (int)MathHelper.Clamp(numColours, 4, 9);
@@ -161,6 +161,7 @@ namespace Bubbles
 
             sTexture = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
             sSize = new Vector2(sTexture.Width, sTexture.Height);
+            sScale = ballSize;
         }
         #endregion StaticMethods
 

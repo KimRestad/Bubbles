@@ -9,6 +9,7 @@ Content\Textures\background2big.xnb
 Content\Textures\button.xnb
 Content\Textures\wallSide.xnb
 Content\Textures\wallTop.xnb
-Content\Textures\aimArrow.xnb
 Content\Textures\bricks.xnb
 Content\Textures\chalkBoard.xnb
+Content\Fonts\credits.xnb
+Content\Textures\sign.xnb

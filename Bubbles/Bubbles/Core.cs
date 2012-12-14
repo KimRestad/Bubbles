@@ -35,10 +35,10 @@ namespace Bubbles
         /// <summary>
         /// Start the game.
         /// </summary>
-        public static void StartGame()
+        public static void StartGame(Difficulty levelDifficulty, Level levelToPlay)
         {
             sGame.GameState = GameState.InGame;
-            sGame.GameScreen.StartGame();
+            sGame.GameScreen.StartGame(levelDifficulty, levelToPlay);
         }
 
         /// <summary>
@@ -49,7 +49,12 @@ namespace Bubbles
         public static void EndGame(int score, bool won)
         {
             sGame.GameState = GameState.End;
-            sGame.EndScreen.SetInfo(score, won);
+            sGame.EndScreen.SetInfo(sGame.GameScreen.Difficulty, sGame.GameScreen.Level, score, won);
+        }
+
+        public static void ReturnToMenu()
+        {
+            sGame.GameState = GameState.Start;
         }
 
         #endregion Methods
@@ -88,11 +93,11 @@ namespace Bubbles
             get { return sGame.UserResolution; }
         }
 
-        //public static GameState Gamestate
-        //{
-        //    get { return sGame.GameState; }
-        //    set { sGame.GameState = value; }
-        //}
+        public static bool IsMouseVisible
+        {
+            get { return sGame.IsMouseVisible; }
+            set { sGame.IsMouseVisible = value; }
+        }
 
         #endregion Properties
     }

@@ -9,24 +9,46 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Bubbles
 {
+    public enum Difficulty
+    {
+        Easy, Normal, Hard
+    }
+
+    public enum Level
+    {
+        Deca, Hecto, Kilo, Mega, Giga, Tera, All
+    }
+
     public class GameScreen
     {
+        // Draw
         private Texture2D mBackground;
         private Rectangle mBGPosition;
         private Rectangle mBounds;
 
+        // Game information
         private Texture2D mPanelBG;
         private Texture2D mChalkBoard;
         private Texture2D mProgressBar;
         private SpriteFont mChalkFont;
-        private Vector2 mScorePosition;
+        private Rectangle mChalkBoardPosition;
         private Rectangle mProgressPosition;
+        private Vector2 mInfoPosition;
+        private Vector2 mScorePosition;
+        private string mChalkText;
+        private Button mBtnMenu;
 
+        // Gameplay objects
         private Board mBoard;
         private Aim mAim;
+        private bool mSingleLevelGame;
+        private Level mCurrentLevel;
+        private Difficulty mCurrentDiff;
 
-        // DEBUG
+        
         private KeyboardState mPrevKeyboard;
+        
+        // DEBUG
         private string mDebugString = "";
         private SpriteFont mDebugFont;
 
@@ -37,46 +59,84 @@ namespace Bubbles
         {
             mBackground = Core.Content.Load<Texture2D>(@"Textures\background2");
             mBGPosition = new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height);
-            mBounds = new Rectangle(0, C_TOP_OFFSET, Core.ClientBounds.Width - 500, Core.ClientBounds.Height - C_TOP_OFFSET);
+            mBounds = new Rectangle(0, C_TOP_OFFSET, Core.ClientBounds.Width - 400, Core.ClientBounds.Height - C_TOP_OFFSET);
             //mBounds = new Rectangle(0, C_TOP_OFFSET, 767, 512);
 
             mPanelBG = Core.Content.Load<Texture2D>(@"Textures\bricks");
             mChalkBoard = Core.Content.Load<Texture2D>(@"Textures\chalkBoard");
             mProgressBar = Core.Content.Load<Texture2D>(@"Textures\wallTop");
             mChalkFont = Core.Content.Load<SpriteFont>(@"Fonts\chalk");
-            mScorePosition = new Vector2(mBounds.X + mBounds.Width + 90, 150);
-            mProgressPosition = new Rectangle(mBounds.X + mBounds.Width + 30, 500, mChalkBoard.Width, 50);
+
+            int padding = 30;
+            int boardwidth = (Core.ClientBounds.Width - (mBounds.X + mBounds.Width)) - padding * 2;
+            int boardheight = (int)(mChalkBoard.Height / ((float)mChalkBoard.Width / boardwidth));
+            int textHeight = (int)mChalkFont.MeasureString("Score").Y;
+            mChalkBoardPosition = new Rectangle(mBounds.X + mBounds.Width + padding, 100, boardwidth, boardheight);
+            mProgressPosition = new Rectangle(mChalkBoardPosition.X, 500, 200, 50);
+            mInfoPosition = new Vector2(mChalkBoardPosition.X + padding, mChalkBoardPosition.Y + padding);
+            mScorePosition = new Vector2(mChalkBoardPosition.X + padding, 
+                                         mChalkBoardPosition.Y + mChalkBoardPosition.Height - padding - textHeight);
+
+            mBtnMenu = new Button(BtnMenuClick, new Rectangle(mChalkBoardPosition.X, 660, mChalkBoardPosition.Width, 64), "Return to menu");
 
             // DEBUG
             mDebugFont = Core.Content.Load<SpriteFont>(@"Fonts\default");
             mDebugString = "Keys: 'F2' starts a new game, 'A' adds a new row of balls and 'ESC' quits. AddRowTime: ";
         }
 
-        public void StartGame()
+        public void StartGame(Difficulty levelDifficulty, Level levelToPlay, int startScore = 0)
         {
-            Ball.Initialize(4);
-            mBoard = new Board(mBounds);
-            mBoard.AddRowTop();
-            //mAim = new Aim(mBounds, mBoard.InnerBounds.X - mBounds.X);
+            LevelDetails levelSettings;
+
+            mCurrentDiff = levelDifficulty;
+
+            if (levelToPlay == Level.All)
+            {
+                mCurrentLevel = Level.Deca;
+                mSingleLevelGame = false;
+            }
+            else
+            {
+                mCurrentLevel = levelToPlay;
+                if(startScore == 0)
+                    mSingleLevelGame = true;
+            }
+
+            switch (mCurrentDiff)
+            {
+                case Difficulty.Easy:
+                    levelSettings = LevelInformation.Easy(mCurrentLevel);
+                    break;
+                case Difficulty.Normal:
+                    levelSettings = LevelInformation.Normal(mCurrentLevel);
+                    break;
+                case Difficulty.Hard:
+                    levelSettings = LevelInformation.Hard(mCurrentLevel);
+                    break;
+                default:
+                    return;
+            }
+
+            mChalkText = "Difficulty: " + mCurrentDiff.ToString() + "\nLevel: " + mCurrentLevel.ToString();
+
+            Ball.Initialize(levelSettings.NumColours, levelSettings.BallSize);
+            mBoard = new Board(mBounds, startScore);
+
+            for (int i = 0; i < levelSettings.NumRowsStart; ++i)
+            {
+                mBoard.AddRowTop();
+            }
+
             mAim = new Aim(ref mBoard);
-            
+
+            Core.IsMouseVisible = false;
         }
 
         public void Update(GameTime gameTime)
         {
-            KeyboardState currKeyboard = Keyboard.GetState();
+            HandleInput();
 
-            if (currKeyboard.IsKeyDown(Keys.A) && mPrevKeyboard.IsKeyUp(Keys.A))
-                mBoard.AddRowTop();
-
-            if (currKeyboard.IsKeyDown(Keys.F2) && mPrevKeyboard.IsKeyUp(Keys.F2))
-            {
-                StartGame();
-            }
-
-            mPrevKeyboard = currKeyboard;
-
-            mProgressPosition.Width = (int)(mChalkBoard.Width * mBoard.AddRowTime);
+            mProgressPosition.Width = (int)(mChalkBoardPosition.Width * mBoard.AddRowTime);
 
             #region DebugCode
             //if (currKeyboard.IsKeyDown(Keys.F1) && mPrevKeyboard.IsKeyUp(Keys.F1))
@@ -113,11 +173,25 @@ namespace Bubbles
             
             mAim.Update(gameTime, ref mBoard);
 
+            // If there ar no balls left on the board, the level is finished
             if (mBoard.BallsLeft <= 0)
-                Core.EndGame(mBoard.Score, true);
+            {
+                if (mSingleLevelGame)       // If it was a single level game, go to end screen
+                    Core.EndGame(mBoard.Score, true);
+                else                        // Else, go to next level unless on the last level
+                {
+                    mCurrentLevel++;
+                    if(mCurrentLevel == Level.All)
+                        Core.EndGame(mBoard.Score, true);
+                    else
+                        StartGame(mCurrentDiff, mCurrentLevel, mBoard.Score);
+                }
+            }
 
             if (mBoard.HasLost)
                 Core.EndGame(mBoard.Score, false);
+
+            mBtnMenu.Update();
         }
 
         // DEBUG
@@ -152,26 +226,57 @@ namespace Bubbles
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(mBackground, mBounds, Color.White);
+            //spritebatch.Draw(mBackground, mBounds, Color.White);
             spritebatch.Draw(mPanelBG, new Vector2(mBounds.X + mBounds.Width, 0), Color.White);
-            spritebatch.Draw(mChalkBoard, new Vector2(mBounds.X + mBounds.Width + 30, 100), Color.White);
+            spritebatch.Draw(mChalkBoard, mChalkBoardPosition, Color.White);
+            spritebatch.Draw(mProgressBar, new Rectangle(mProgressPosition.X, mProgressPosition.Y, mChalkBoardPosition.Width, mProgressPosition.Height),
+                             Color.Black * 0.7f);
             spritebatch.Draw(mProgressBar, mProgressPosition, Color.White);
             mBoard.DrawAll(spritebatch);
             mAim.Draw(spritebatch);
 
-            string scoreText = "Score: " + mBoard.Score + "\n\n\nHigh Score: 3675";
+            string scoreText = mChalkText;
+            spritebatch.DrawString(mChalkFont, scoreText, mInfoPosition, Color.LightBlue, 0.0f, Vector2.Zero, 0.8f, SpriteEffects.None, 0.0f);
+            spritebatch.DrawString(mChalkFont, "Score: " + mBoard.Score, mScorePosition, Color.White);
 
-            spritebatch.DrawString(mChalkFont, scoreText, mScorePosition, Color.White);
+            mBtnMenu.Draw(spritebatch);
+        }
+
+        public Difficulty Difficulty
+        {
+            get { return mCurrentDiff; }
+        }
+
+        public Level Level
+        {
+            get { return mCurrentLevel; }
+        }
+
+        private void HandleInput()
+        {
+            KeyboardState currKeyboard = Keyboard.GetState();
+
+            MouseState ms = Mouse.GetState();
+            Rectangle mouseRect = new Rectangle(ms.X, ms.Y, 1, 1);
+            if (mBoard.InnerBounds.Intersects(mouseRect))
+                Core.IsMouseVisible = false;
+            else
+                Core.IsMouseVisible = true;
 
             // DEBUG
-            spritebatch.DrawString(mDebugFont, mDebugString + mBoard.AddRowTime, Vector2.Zero, Color.White);
+            if (currKeyboard.IsKeyDown(Keys.A) && mPrevKeyboard.IsKeyUp(Keys.A))
+                mBoard.AddRowTop();
 
-            for (int i = 0; i < (int)BallColour.Count; i++)
-            {
-                spritebatch.DrawString(mDebugFont, ((BallColour)i).ToString() + ": " + mBoard.mColoursInPlay[i], new Vector2(mScorePosition.X, 600 + 20 * i), Color.Red);
-            }
+            if (currKeyboard.IsKeyDown(Keys.Space) && mPrevKeyboard.IsKeyUp(Keys.Space))
+                Mouse.SetPosition(mChalkBoardPosition.X + (int)(mChalkBoardPosition.Width * 0.5f),
+                                  mChalkBoardPosition.Y + (int)(mChalkBoardPosition.Height * 0.5f));
 
-            spritebatch.DrawString(mDebugFont, "Total: " + mBoard.BallsLeft, new Vector2(mScorePosition.X, 600 + 20 * (int)BallColour.Count), Color.Red);
+            mPrevKeyboard = currKeyboard;
+        }
+
+        private void BtnMenuClick()
+        {
+            Core.ReturnToMenu();
         }
     }
 }

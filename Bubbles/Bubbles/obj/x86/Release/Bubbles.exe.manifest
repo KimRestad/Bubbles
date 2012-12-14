@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1">
-  <asmv1:assemblyIdentity name="Bubbles.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
+  <asmv1:assemblyIdentity name="Bubbles.exe" version="1.0.0.3" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
   <description asmv2:iconFile="Game.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -93,24 +93,42 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Bubbles.exe" size="36864">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Bubbles.exe" size="51200">
       <assemblyIdentity name="Bubbles" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>R4qPita/n+0JY42Qh8XzaArWhpA=</dsig:DigestValue>
+        <dsig:DigestValue>IaiJWq6ZYVSecbn8VsdqvZ3zowc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Content\Fonts\button.xnb" size="10734">
+  <file name="Content\Fonts\button.xnb" size="10136">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>HJftBsiQTC2Dn+nDViOhPv/UezE=</dsig:DigestValue>
+      <dsig:DigestValue>wkmgpfHZfjStAN8i2tso6DSw8x8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\Fonts\chalk.xnb" size="13660">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>bASAJ1Tt8J3bNvqn2noXusz6UjE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\Fonts\credits.xnb" size="9100">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>LQEdAw/WfSmvscIUq8I2vJTB6qc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Fonts\default.xnb" size="5312">
@@ -140,15 +158,6 @@
       <dsig:DigestValue>g1Kpw8ua04WwCVcxaR/W4fD3jQA=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Textures\background.xnb" size="149110">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>8joYfLqrdNsZ6eyApEQ3MdkjR/8=</dsig:DigestValue>
-    </hash>
-  </file>
   <file name="Content\Textures\background2.xnb" size="248418">
     <hash>
       <dsig:Transforms>
@@ -167,24 +176,6 @@
       <dsig:DigestValue>m4Wd85xMlJgEFj/BElCGR8lIsa8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Textures\ballBlue.xnb" size="4500">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>XjocZ1Vvq2CpuHXepZc/OxnvGwE=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Content\Textures\ballRed.xnb" size="4516">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>i/Z48vbQzWZkr9tyOA5CSLCHjsg=</dsig:DigestValue>
-    </hash>
-  </file>
   <file name="Content\Textures\ballWhite.xnb" size="4842">
     <hash>
       <dsig:Transforms>
@@ -194,6 +185,15 @@
       <dsig:DigestValue>CAwKo7onOZq67+Pj5zwNisgfHYE=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Content\Textures\bricks.xnb" size="51926">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>yq2l8EdsId+1fDiTLUtxeiXqZI0=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Content\Textures\button.xnb" size="2912">
     <hash>
       <dsig:Transforms>
@@ -201,6 +201,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>lkJrD0vJkU+pzacTRUafpenLb/I=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\Textures\chalkBoard.xnb" size="1188">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>zKr0Ql3gH79ZXyD9nwU0dgoa6hI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Textures\wallSide.xnb" size="48790">

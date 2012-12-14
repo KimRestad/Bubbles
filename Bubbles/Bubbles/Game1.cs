@@ -12,7 +12,6 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Bubbles
 {
-
     public enum GameState
     {
         Start,
@@ -35,6 +34,9 @@ namespace Bubbles
         private StartScreen mStartScreen;
         private GameScreen mGameScreen;
         private EndScreen mEndScreen;
+        
+        private bool mIsPaused;
+        private PauseScreen mPauseScreen;
 
         public Game1()
         {
@@ -44,8 +46,11 @@ namespace Bubbles
             mBGColour = new Color(2, 84, 85);
 
             // Minimum: Width ~1229; Height ~691
-            mGraphics.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9f);
-            mGraphics.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9f);
+            //mGraphics.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9f);
+            //mGraphics.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9f);
+            //mGraphics.IsFullScreen = true;
+            mGraphics.PreferredBackBufferWidth = 1280;
+            mGraphics.PreferredBackBufferHeight = 768;
             mGraphics.ApplyChanges();
         }
 
@@ -58,6 +63,9 @@ namespace Bubbles
         protected override void Initialize()
         {
             Core.Initialize(this);
+
+            mPauseScreen = new PauseScreen();
+            UnPause();
 
             mCurrentState = GameState.Start;
             mStartScreen = new StartScreen();
@@ -100,13 +108,25 @@ namespace Bubbles
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // If the game is not the active application, do not update (but keep drawing)
+            // If the game is not the active application or is paused, do not update (but keep drawing)
             if (!IsActive)
+            {
+                Pause();
+                return;
+            }
+
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                mIsPaused = false;
+
+            if (mIsPaused)
                 return;
 
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+                Pause();
 
             switch (mCurrentState)
             {
@@ -147,9 +167,27 @@ namespace Bubbles
                     break;
             }
 
+            if (mIsPaused)
+                mPauseScreen.Draw(mSpriteBatch);
+
             mSpriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void Pause()
+        {
+            if (mCurrentState == GameState.InGame)
+            {
+                mIsPaused = true;
+                mPauseScreen.Visible = true;
+            }
+        }
+
+        private void UnPause()
+        {
+            mIsPaused = false;
+            mPauseScreen.Visible = false;
         }
 
         public GameWindow GameWindow

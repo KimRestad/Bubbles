@@ -11,26 +11,30 @@ namespace Bubbles
 {
     public class StartScreen
     {
-        // Settings objects
-        private SettingsMain mSettingsWindow;
+        // Settings objects - UNUSED
+        private SettingsGraphics mSettingsWindow;
         private SettingObject mSettings;
-        
+
         // Graphics
         private SpriteFont mDebugFont;
         private Texture2D mBackground;
         private Rectangle mBGPosition;
 
-        Button mBtnPlay;
-        Button mBtnSettings;
-        Button mBtnExit;
+        private ChoiceScreen mGameChoices;
+        private CreditsScreen mCredits;
 
-        MouseState mPrevMouse;
+        private List<Button> mButtons;
+
+        private MouseState mPrevMouse;
 
         public StartScreen()
         {
             // Create settings objects
             mSettings = new SettingObject();
-            mSettingsWindow = new SettingsMain(mSettings);
+            mSettingsWindow = new SettingsGraphics();
+
+            mGameChoices = new ChoiceScreen();
+            mCredits = new CreditsScreen();
 
             mDebugFont = Core.Content.Load<SpriteFont>(@"Fonts\default");
             mBackground = Core.Content.Load<Texture2D>(@"Textures\background2big");
@@ -49,49 +53,59 @@ namespace Bubbles
             int buttonWidth = 256;
             int buttonHeight = 64;
             int buttonStartY = (int)(mBGPosition.Y + (mBGPosition.Height * 0.5));
+            int buttonStrideY = buttonHeight + 25;
 
             int x = (int)((Core.ClientBounds.Width - buttonWidth) * 0.5);
 
-            mBtnPlay = new Button(new Rectangle(x, buttonStartY, buttonWidth, buttonHeight), "Play");
-            mBtnSettings = new Button(new Rectangle(x, buttonStartY + buttonHeight + 25, buttonWidth, buttonHeight),
-                                  "Settings");
-            mBtnExit = new Button(new Rectangle(x, buttonStartY + (buttonHeight + 25) * 2, buttonWidth, buttonHeight),
-                                  "Exit");
+            mButtons = new List<Button>();
+            mButtons.Add(new Button(BtnPlayClicked, new Rectangle(x, buttonStartY, buttonWidth, buttonHeight), "Play"));
+            mButtons.Add(new Button(BtnCreditsClicked, new Rectangle(x, buttonStartY + buttonStrideY, buttonWidth, buttonHeight), "Credits"));
+            mButtons.Add(new Button(BtnExitClicked, new Rectangle(x, buttonStartY + buttonStrideY * 2, buttonWidth, buttonHeight), "Exit"));
+
         }
 
         public void Update()
         {
             MouseState currMouse = Mouse.GetState();
 
-            mBtnPlay.Update();
-            mBtnSettings.Update();
-            mBtnExit.Update();
-
-            // If the mousebutton just has been pressed, and the settings window is not showing, then find out if
-            // a button was clicked and act accordingly.
-            if (currMouse.LeftButton == ButtonState.Pressed && mPrevMouse.LeftButton == ButtonState.Released
-                && !mSettingsWindow.Visible)
-            {
-                if (mBtnPlay.IsHovered())
-                    Core.StartGame();
-                    //Core.Gamestate = GameState.InGame;
-                else if (mBtnSettings.IsHovered())
-                    mSettingsWindow.Show();
-                else if (mBtnExit.IsHovered())
-                    Core.Exit();
-            }
+            // Only update buttons if the choices window is not showing
+            if (!mGameChoices.Visible && !mCredits.Visible)
+                foreach (Button btn in mButtons)
+                    btn.Update();
 
             mPrevMouse = currMouse;
+
+            mGameChoices.Update();
+            mCredits.Update();
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(mBackground, mBGPosition, Color.White);
-            spritebatch.DrawString(mDebugFont, "Settings is visible: "  + mSettingsWindow.Visible, Vector2.Zero, Color.White);
+            //spritebatch.DrawString(mDebugFont, "Settings is visible: " + mSettingsWindow.Visible, Vector2.Zero, Color.White);
 
-            mBtnPlay.Draw(spritebatch);
-            mBtnSettings.Draw(spritebatch);
-            mBtnExit.Draw(spritebatch);
+            // Only draw buttons if the choices window is not showing
+            if (!mGameChoices.Visible && !mCredits.Visible)
+                foreach (Button btn in mButtons)
+                    btn.Draw(spritebatch);
+
+            mGameChoices.Draw(spritebatch);
+            mCredits.Draw(spritebatch);
+        }
+
+        private void BtnPlayClicked()
+        {
+            mGameChoices.Visible = true;
+        }
+
+        private void BtnCreditsClicked()
+        {
+            mCredits.Visible = true;
+        }
+
+        private void BtnExitClicked()
+        {
+            Core.Exit();
         }
     }
 }

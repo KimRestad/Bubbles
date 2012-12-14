@@ -50,14 +50,14 @@ namespace Bubbles
         private const int C_WALL_THICKNESS = 50;
         private const int C_BALL_POINTS = 10;
         private const int C_DANGLING_POINTS = 15;
-        private const float C_TIME_BONUS_PC = 0.5f; // Time bonus % of time modifier gotten from dangling balls
+        private const float C_TIME_BONUS_PC = 1.5f; // Time bonus % of time modifier gotten from dangling balls
 
         #region Methods
         /// <summary>
         /// Create the board that contains all the balls and takes care of the collision checking
         /// </summary>
         /// <param name="bounds">The boundaries of the board</param>
-        public Board(Rectangle bounds)
+        public Board(Rectangle bounds, int startScore = 0)
         {
             // Load wall textures
             mWallSideTex = Core.Content.Load<Texture2D>(@"Textures\wallSide");
@@ -76,7 +76,7 @@ namespace Bubbles
             mMaxRows = (int)(mInnerBounds.Height / Ball.Size.Y);
 
             // Reset score, time and time modifier
-            mScore = 0;
+            mScore = startScore;
             mAddRowTime = 1.0f;
             mAddRowModifier = 0.05f;
 
@@ -305,14 +305,14 @@ namespace Bubbles
                 ClearDanglingBalls(ref sequence);
             }
 
-            // TODO: Add logic for when a new row is added.
-            mAddRowTime -= mAddRowModifier;
-
             if (mAddRowTime <= 0)
             {
                 AddRowTop();
                 mAddRowTime = 1.0f;
             }
+
+            // TODO: Add logic for when a new row is added.
+            mAddRowTime -= mAddRowModifier;
         }
 
         /// <summary>
@@ -685,15 +685,14 @@ namespace Bubbles
         {
             foreach (Point cell in cells)
             {
-                //if (HasBall(cell))
-                //    mBalls[cell.Y].Row[cell.X].Colour = BallColour.Yellow;
-
-
                 // If the cell contains a ball to be removed, add points for it and update the number of balls
                 if (HasBall(cell))
                 {
                     mScore += C_DANGLING_POINTS;
                     mAddRowTime += mAddRowModifier * C_TIME_BONUS_PC;
+                    if (mAddRowTime > 1.0f)     // Make sure time never exceeds 1.
+                        mAddRowTime = 1.0f;
+
                     ChangeNumberOfBalls(mBalls[cell.Y].Row[cell.X].Colour, false);
                 }
 
