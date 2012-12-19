@@ -6,5 +6,12 @@ Bubbles\Bubbles\obj\
 Bubbles\BubblesContent\Textures\Old Images
 Bubbles\BubblesContent\Textures\Raw Images
 
+
+
+# Ignore saved data
+\Bubbles\Bubbles\bin\x86\Debug\Content\Data
+\Bubbles\Bubbles\bin\x86\Release\Content\Data
+
 # Ignore Visual Studio session files
+
 *.suo

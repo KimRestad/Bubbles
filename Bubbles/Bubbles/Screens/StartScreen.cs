@@ -81,13 +81,16 @@ namespace Bubbles
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(mBackground, mBGPosition, Color.White);
-            //spritebatch.DrawString(mDebugFont, "Settings is visible: " + mSettingsWindow.Visible, Vector2.Zero, Color.White);
+            //spritebatch.Draw(mBackground, mBGPosition, Color.White);
 
             // Only draw buttons if the choices window is not showing
             if (!mGameChoices.Visible && !mCredits.Visible)
+            {
+                // DEBUG
+                spritebatch.Draw(mBackground, mBGPosition, Color.White);
                 foreach (Button btn in mButtons)
                     btn.Draw(spritebatch);
+            }
 
             mGameChoices.Draw(spritebatch);
             mCredits.Draw(spritebatch);

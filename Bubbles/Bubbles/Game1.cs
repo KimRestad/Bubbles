@@ -46,8 +46,6 @@ namespace Bubbles
             mBGColour = new Color(2, 84, 85);
 
             // Minimum: Width ~1229; Height ~691
-            //mGraphics.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9f);
-            //mGraphics.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9f);
             //mGraphics.IsFullScreen = true;
             mGraphics.PreferredBackBufferWidth = 1280;
             mGraphics.PreferredBackBufferHeight = 768;
@@ -71,9 +69,6 @@ namespace Bubbles
             mStartScreen = new StartScreen();
             mGameScreen = new GameScreen();
             mEndScreen = new EndScreen();
-
-            // DEBUG
-            //Core.EndGame(300, true);
 
             IsMouseVisible = true;
             
@@ -121,9 +116,9 @@ namespace Bubbles
             if (mIsPaused)
                 return;
 
-            // Allows the game to exit
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            // Reset to start screen.
+            if (Keyboard.GetState().IsKeyDown(Keys.F2))
+                mCurrentState = GameState.Start;
 
             if (Keyboard.GetState().IsKeyDown(Keys.P))
                 Pause();

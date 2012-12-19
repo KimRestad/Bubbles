@@ -56,7 +56,7 @@ namespace Bubbles
 
             offset.Y += padding.Y * 3 + 32;
             mButtons.Add(new Button(BtnExitClick, new Rectangle(offset.X - padding.X, offset.Y, size.X, size.Y), "Close"));
-            mButtons.Add(new Button(BtnPlayClick, new Rectangle(offset.X + padding.X, offset.Y, size.X, size.Y), "PLAY"));
+            mButtons.Add(new Button(BtnPlayClick, new Rectangle(offset.X + padding.X, offset.Y, size.X, size.Y), "Start Game"));
 
             LoadLastChoice();
         }

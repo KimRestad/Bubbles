@@ -100,7 +100,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>v8Lyg12ecLuNknnJiTwf9MLTXGc=</dsig:DigestValue>
+        <dsig:DigestValue>FxBjn/FKTzY5FEVrfzMM7P6+JgU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -138,6 +138,42 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>VW5q7hvoVSsp/M3t/RXbF8f7h8w=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\Sounds\bubblePop.xnb" size="17747">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>AHwbx/OaT8owfxtYP+DpqKw6olw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\Sounds\bubblePopAlt.xnb" size="63465">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>DD1yp8JEOZQY+vV0QlerLmGf3nA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\Sounds\dangling.xnb" size="215397">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>0hZRQ5TJGAPUo+9VuGOmcGJless=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\Sounds\danglingAlt.xnb" size="183881">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>eniNwR/AlrHrc3xhK7U2logUp6o=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Textures\aim.xnb" size="31387">

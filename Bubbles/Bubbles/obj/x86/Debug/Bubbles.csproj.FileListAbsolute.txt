@@ -106,3 +106,7 @@ D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbl
 D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\sign.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\credits.xnb
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\sign.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePop.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePopAlt.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\dangling.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\danglingAlt.xnb

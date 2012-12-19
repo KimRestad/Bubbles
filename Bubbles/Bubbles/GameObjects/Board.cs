@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Bubbles
@@ -26,6 +27,7 @@ namespace Bubbles
             }
         }
 
+        // Function variables
         private List<BoardRow> mBalls;
         private int[] mColumns = new int[2];
         private Rectangle mInnerBounds;
@@ -46,11 +48,15 @@ namespace Bubbles
         private Rectangle mWallRightRect;
         private Rectangle mWallTopRect;
 
+        // Sound variables
+        private SoundEffect mSoundPop;
+        private SoundEffect mSoundDangling;
+
         // Constants
         private const int C_WALL_THICKNESS = 50;
         private const int C_BALL_POINTS = 10;
         private const int C_DANGLING_POINTS = 15;
-        private const float C_TIME_BONUS_PC = 1.5f; // Time bonus % of time modifier gotten from dangling balls
+        private const float C_TIME_BONUS_PC = 1.25f; // Time bonus % of time modifier gotten from dangling balls
 
         #region Methods
         /// <summary>
@@ -99,6 +105,9 @@ namespace Bubbles
 
             mOffset = new Vector2(bounds.X + xOffset + C_WALL_THICKNESS, bounds.Y + C_WALL_THICKNESS);
             mBalls = new List<BoardRow>();
+
+            mSoundPop = Core.Content.Load<SoundEffect>(@"Sounds\bubblePop");
+            mSoundDangling = Core.Content.Load<SoundEffect>(@"Sounds\dangling");
         }
 
         /// <summary>
@@ -672,6 +681,7 @@ namespace Bubbles
                 {
                     mScore += C_BALL_POINTS;
                     ChangeNumberOfBalls(mBalls[ballCell.Y].Row[ballCell.X].Colour, false);
+                    mSoundPop.Play();
                 }
 
                 // Clear cell
@@ -696,6 +706,7 @@ namespace Bubbles
                         mAddRowTime = 1.0f;
 
                     ChangeNumberOfBalls(mBalls[cell.Y].Row[cell.X].Colour, false);
+                    mSoundDangling.Play();
                 }
 
                 // Clear cell
