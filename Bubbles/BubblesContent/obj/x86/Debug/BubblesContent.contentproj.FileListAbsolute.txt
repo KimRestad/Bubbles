@@ -2,3 +2,4 @@ D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\BubblesContent\o
 C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\BubblesContent\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\BubblesContent\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\BubblesContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\BubblesContent\obj\x86\Debug\ResolveAssemblyReference.cache
