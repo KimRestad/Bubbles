@@ -10,25 +10,27 @@ namespace Bubbles
 {
     enum BallColour
     {
-        Red, Blue, Green, Yellow, Purple, Turquoise, Orange, Pink, Black, Count
+        Red, Blue, Green, Yellow, Purple, Turquoise, Orange, Pink, Black, DarkGreen, Count
     }
 
     enum BallState
     {
-        Still, Shot, Falling
+        Still, Shot, Falling, Exploding, Dead
     }
 
     class Ball
     {
         #region Variables
 
-        // 
+        // Appearance variables.
         private BallColour mColour;
         private Vector2 mOrigin;
 
+        // Behaviour variables.
         private BallState mState;
         private Vector2 mDirection;
         private Vector2 mPosition;
+        private float mExplodeScale;
 
         #endregion Variables
 
@@ -41,8 +43,8 @@ namespace Bubbles
         private static float sScale = 1.0f;
 
         // Constants
-        public const float C_SPEED = 10.0f;
-        public const BallColour C_NON_SHOOTABLE_COLOUR = BallColour.Red;
+        public const float C_SPEED = 12.0f;
+        //public const BallColour C_NON_SHOOTABLE_COLOUR = BallColour.Red;
 
         #endregion StaticVariables
         
@@ -61,22 +63,28 @@ namespace Bubbles
             mPosition = position;
         }
 
-        public void Update(ref Board board)
+        public void Update(Board board)
         {
             switch (mState)
             {
-                case BallState.Still:
-                    break;
                 case BallState.Shot:
                     Move(ref board);
                     break;
                 case BallState.Falling:
+                    AnimateJump(ref board);
+                    break;
+                case BallState.Exploding:
+                    AnimateExplosion();
                     break;
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            if(mState == BallState.Exploding)
+                spriteBatch.Draw(sTexture, mPosition, null, sColours[(int)mColour], 0.0f,
+                             mOrigin, sScale * mExplodeScale, SpriteEffects.None, 0.0f);
+            else
             spriteBatch.Draw(sTexture, mPosition, null, sColours[(int)mColour], 0.0f,
                              mOrigin, sScale, SpriteEffects.None, 0.0f);
         }
@@ -88,6 +96,23 @@ namespace Bubbles
             mDirection.Normalize();
         }
 
+        public void StartAnimation(bool goLeft)
+        {
+            mState = BallState.Falling;
+            if (goLeft)
+                mDirection = new Vector2(-1, -1);
+            else
+                mDirection = new Vector2(1, -1);
+
+            mDirection.Normalize();
+        }
+
+        public void StartExploding()
+        {
+            mState = BallState.Exploding;
+            mExplodeScale = 1.0f;
+        }
+
         private void Move(ref Board board)
         {
             mPosition += mDirection * C_SPEED;
@@ -96,8 +121,31 @@ namespace Bubbles
                 mPosition.X + Size.X * 0.5f > (board.InnerBounds.X + board.InnerBounds.Width))
                 mDirection.X = -mDirection.X;
 
-            if (board.Collision(this))
+            if (board.Collision(this) && mState == BallState.Shot)
                 mState = BallState.Still;
+        }
+
+        private void AnimateJump(ref Board board)
+        {
+            mDirection += new Vector2(0, 0.05f);
+            mPosition += mDirection * C_SPEED;
+
+            // If the ball hits any of the walls, it is dead.
+            if (mPosition.X - Size.X * 0.5f < (board.InnerBounds.X) ||
+                mPosition.X + Size.X * 0.5f > (board.InnerBounds.X + board.InnerBounds.Width) ||
+                mPosition.Y - Size.Y * 0.5f < board.InnerBounds.Y)
+                mState = BallState.Dead;
+
+            // If the ball hits the floor, it is dead.
+            if (mPosition.Y > board.InnerBounds.Y + board.InnerBounds.Height)
+                mState = BallState.Dead;
+        }
+
+        private void AnimateExplosion()
+        {
+            mExplodeScale -= 0.05f;
+            if (mExplodeScale <= 0.0f)
+                mState = BallState.Dead;
         }
 
         #endregion Methods
@@ -132,31 +180,34 @@ namespace Bubbles
         public static void Initialize(int numColours, float ballSize)
         {
             sColours = new List<Color>();
-            numColours = (int)MathHelper.Clamp(numColours, 4, 9);
+            numColours = (int)MathHelper.Clamp(numColours, 4, 10);
 
             switch (numColours)
             {
                 case 4:
-                    sColours.Insert(0, Color.Gold);             // Yellow
-                    sColours.Insert(0, Color.LawnGreen);        // Green
-                    sColours.Insert(0, Color.RoyalBlue);        // Blue
-                    sColours.Insert(0, Color.Red);              // Red
+                    sColours.Insert(0, new Color(255, 230, 0));     // Yellow
+                    sColours.Insert(0, Color.LawnGreen);            // Green
+                    sColours.Insert(0, Color.RoyalBlue);            // Blue
+                    sColours.Insert(0, Color.Red);                  // Red
                     break;
                 case 5:
-                    sColours.Insert(0, Color.Fuchsia);          // Purple
+                    sColours.Insert(0, new Color(230, 0, 230));     // Purple
                     goto case 4;
                 case 6: 
-                    sColours.Insert(0, Color.Aqua);             // Turquoise
+                    sColours.Insert(0, Color.Aqua);                 // Turquoise
                     goto case 5;
                 case 7:
-                    sColours.Insert(0, Color.DarkOrange);       // Orange
+                    sColours.Insert(0, new Color(255, 110, 0));     // Orange
                     goto case 6;
                 case 8:
-                    sColours.Insert(0, Color.LightPink);        // Pink
+                    sColours.Insert(0, Color.LightPink);            // Pink
                     goto case 7;
                 case 9:
-                    sColours.Insert(0, Color.DimGray);          // Black
+                    sColours.Insert(0, Color.DimGray);              // Black
                     goto case 8;
+                case 10:
+                    sColours.Insert(0, Color.Green);                // Dark Green
+                    goto case 9;
             }
 
             sTexture = Core.Content.Load<Texture2D>(@"Textures\ballWhite");

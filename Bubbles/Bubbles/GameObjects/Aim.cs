@@ -67,15 +67,15 @@ namespace Bubbles
 
             mMousePrev = mouseCurr;
 
-            mShot.Update(ref board);
-            mNextShot.Update(ref board);
+            mShot.Update(board);
+            mNextShot.Update(board);
 
             for (int i = mShotBalls.Count - 1; i >= 0; --i)
             {
-                if (mShotBalls[i].State == BallState.Still)
+                if (mShotBalls[i].State != BallState.Shot)
                     mShotBalls.RemoveAt(i);
                 else
-                    mShotBalls[i].Update(ref board);
+                    mShotBalls[i].Update(board);
             }
         }
 

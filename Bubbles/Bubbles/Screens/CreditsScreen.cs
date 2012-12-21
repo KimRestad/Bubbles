@@ -67,7 +67,7 @@ namespace Bubbles
             mLines.Add(new TextLine("Kim Restad", mTextColour, new Vector2(textX, textY + strideY * 4), textScale));
             mLines.Add(new TextLine("- TESTER -", mTextColour, new Vector2(textX, textY + strideY * 6), textScale));
             mLines.Add(new TextLine("Odd Restad", mTextColour, new Vector2(textX, textY + strideY * 7), textScale));
-            mLines.Add(new TextLine("Kim Restad", mTextColour, new Vector2(textX, textY + strideY * 8), textScale));
+            mLines.Add(new TextLine("Daniel Bengtsson", mTextColour, new Vector2(textX, textY + strideY * 8), textScale));
             mLines.Add(new TextLine("- SPECIAL THANKS TO -", mTextColour, new Vector2(textX, textY + strideY * 10), textScale));
             mLines.Add(new TextLine("My mother Susanne Restad for", mTextColour, new Vector2(textX, textY + strideY * 11), textScale));
             mLines.Add(new TextLine("whom this game was created.", mTextColour, new Vector2(textX, textY + strideY * 12), textScale));

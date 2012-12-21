@@ -29,9 +29,10 @@ namespace Bubbles
 
         // Function variables
         private List<BoardRow> mBalls;
+        private List<Ball> mRemovedBalls;
         private int[] mColumns = new int[2];
         private Rectangle mInnerBounds;
-        public int[] mColoursInPlay = new int[(int)BallColour.Count]; // DEBUG: public
+        private int[] mColoursInPlay = new int[(int)BallColour.Count];
         private int mNumberOfBalls;
         private int mMaxRows;
 
@@ -51,9 +52,12 @@ namespace Bubbles
         // Sound variables
         private SoundEffect mSoundPop;
         private SoundEffect mSoundDangling;
+        
+        // Static variables
+        private static bool sPlaySounds = true;
 
         // Constants
-        private const int C_WALL_THICKNESS = 50;
+        private const int C_WALL_THICKNESS = 40;
         private const int C_BALL_POINTS = 10;
         private const int C_DANGLING_POINTS = 15;
         private const float C_TIME_BONUS_PC = 1.25f; // Time bonus % of time modifier gotten from dangling balls
@@ -105,9 +109,26 @@ namespace Bubbles
 
             mOffset = new Vector2(bounds.X + xOffset + C_WALL_THICKNESS, bounds.Y + C_WALL_THICKNESS);
             mBalls = new List<BoardRow>();
+            mRemovedBalls = new List<Ball>();
 
             mSoundPop = Core.Content.Load<SoundEffect>(@"Sounds\bubblePop");
             mSoundDangling = Core.Content.Load<SoundEffect>(@"Sounds\dangling");
+        }
+
+        /// <summary>
+        /// Update the board.
+        /// </summary>
+        public void Update()
+        {
+            for (int i = 0; i < mRemovedBalls.Count; ++i)
+            {
+                mRemovedBalls[i].Update(this);
+                if (mRemovedBalls[i].State == BallState.Dead)
+                {
+                    mRemovedBalls.RemoveAt(i);
+                    --i;
+                }
+            }
         }
 
         /// <summary>
@@ -124,6 +145,9 @@ namespace Bubbles
                 foreach (Ball ball in row.Row)
                     if (ball != null)
                         ball.Draw(spriteBatch);
+
+            foreach (Ball b in mRemovedBalls)
+                b.Draw(spriteBatch);
         }
 
         /// <summary>
@@ -194,6 +218,14 @@ namespace Bubbles
                 randomCol = (BallColour)Core.RandomGen.Next(Ball.ColourCount);
 
             return randomCol;
+        }
+
+        /// <summary>
+        /// Toggle whether to play sounds.
+        /// </summary>
+        public void ToggleSound()
+        {
+            sPlaySounds = !sPlaySounds;
         }
 
         /// <summary>
@@ -312,8 +344,8 @@ namespace Bubbles
             if (sequence.Count > 2)
             {
                 RemoveBalls(ref sequence);
-
                 ClearDanglingBalls(ref sequence);
+                ClearEmptyRows();                
             }
 
             if (mAddRowTime <= 0)
@@ -541,6 +573,23 @@ namespace Bubbles
         }
 
         /// <summary>
+        /// Start at the bottom and scan for balls, if there is a ball, this row and
+        /// all above contain at least one ball, so return. If the whole row is empty,
+        /// delete it.
+        /// </summary>
+        private void ClearEmptyRows()
+        {
+            for (int i = mBalls.Count - 1; i >= 0; --i)
+            {
+                foreach (Ball b in mBalls[i].Row)
+                    if (b != null)
+                        return;
+
+                mBalls.RemoveAt(i);
+            }
+        }
+
+        /// <summary>
         /// Checks the cleared cells for neighbours, then checks all neighbour to see if there is a sequence not
         /// connected to the roof. If there is, those balls are removed.
         /// </summary>
@@ -679,9 +728,15 @@ namespace Bubbles
                 // If the cell contains a ball to be removed, add points for it and update the number of balls
                 if (HasBall(ballCell))
                 {
+                    Ball currBall = mBalls[ballCell.Y].Row[ballCell.X];
+
                     mScore += C_BALL_POINTS;
-                    ChangeNumberOfBalls(mBalls[ballCell.Y].Row[ballCell.X].Colour, false);
-                    mSoundPop.Play();
+                    ChangeNumberOfBalls(currBall.Colour, false);
+                    currBall.StartExploding();
+                    mRemovedBalls.Add(currBall);
+
+                    if(sPlaySounds)
+                        mSoundPop.Play();
                 }
 
                 // Clear cell
@@ -705,8 +760,15 @@ namespace Bubbles
                     if (mAddRowTime > 1.0f)     // Make sure time never exceeds 1.
                         mAddRowTime = 1.0f;
 
-                    ChangeNumberOfBalls(mBalls[cell.Y].Row[cell.X].Colour, false);
-                    mSoundDangling.Play();
+                    Ball currBall = mBalls[cell.Y].Row[cell.X];
+                    int rowTotal = mColumns[(int)mBalls[cell.Y].RowType];                  
+
+                    currBall.StartAnimation((bool)(((float)cell.X / rowTotal) < 0.5f));
+                    mRemovedBalls.Add(currBall);
+                    ChangeNumberOfBalls(currBall.Colour, false);
+
+                    if (sPlaySounds)
+                        mSoundDangling.Play();
                 }
 
                 // Clear cell

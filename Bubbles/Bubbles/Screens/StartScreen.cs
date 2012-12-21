@@ -11,15 +11,12 @@ namespace Bubbles
 {
     public class StartScreen
     {
-        // Settings objects - UNUSED
-        private SettingsGraphics mSettingsWindow;
-        private SettingObject mSettings;
-
         // Graphics
         private SpriteFont mDebugFont;
         private Texture2D mBackground;
         private Rectangle mBGPosition;
 
+        // Overlay screens
         private ChoiceScreen mGameChoices;
         private CreditsScreen mCredits;
 
@@ -29,10 +26,6 @@ namespace Bubbles
 
         public StartScreen()
         {
-            // Create settings objects
-            mSettings = new SettingObject();
-            mSettingsWindow = new SettingsGraphics();
-
             mGameChoices = new ChoiceScreen();
             mCredits = new CreditsScreen();
 
@@ -52,16 +45,18 @@ namespace Bubbles
 
             int buttonWidth = 256;
             int buttonHeight = 64;
-            int buttonStartY = (int)(mBGPosition.Y + (mBGPosition.Height * 0.5));
-            int buttonStrideY = buttonHeight + 25;
+            int buttonStartY = 356;
+            int buttonStrideY = buttonHeight + 16;
 
             int x = (int)((Core.ClientBounds.Width - buttonWidth) * 0.5);
 
             mButtons = new List<Button>();
             mButtons.Add(new Button(BtnPlayClicked, new Rectangle(x, buttonStartY, buttonWidth, buttonHeight), "Play"));
-            mButtons.Add(new Button(BtnCreditsClicked, new Rectangle(x, buttonStartY + buttonStrideY, buttonWidth, buttonHeight), "Credits"));
-            mButtons.Add(new Button(BtnExitClicked, new Rectangle(x, buttonStartY + buttonStrideY * 2, buttonWidth, buttonHeight), "Exit"));
+            mButtons.Add(new Button(BtnCreditsClicked, new Rectangle(x, buttonStartY + buttonStrideY, buttonWidth, buttonHeight), "Highscore"));
+            mButtons.Add(new Button(BtnCreditsClicked, new Rectangle(x, buttonStartY + buttonStrideY*2, buttonWidth, buttonHeight), "Credits"));
+            mButtons.Add(new Button(BtnExitClicked, new Rectangle(x, buttonStartY + buttonStrideY * 3, buttonWidth, buttonHeight), "Exit"));
 
+            mButtons[1].Enabled = false;
         }
 
         public void Update()

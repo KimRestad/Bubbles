@@ -37,6 +37,7 @@ namespace Bubbles
         
         private bool mIsPaused;
         private PauseScreen mPauseScreen;
+        private KeyboardState mPrevKS;
 
         public Game1()
         {
@@ -46,7 +47,6 @@ namespace Bubbles
             mBGColour = new Color(2, 84, 85);
 
             // Minimum: Width ~1229; Height ~691
-            //mGraphics.IsFullScreen = true;
             mGraphics.PreferredBackBufferWidth = 1280;
             mGraphics.PreferredBackBufferHeight = 768;
             mGraphics.ApplyChanges();
@@ -61,6 +61,7 @@ namespace Bubbles
         protected override void Initialize()
         {
             Core.Initialize(this);
+            Button.Initialize();
 
             mPauseScreen = new PauseScreen();
             UnPause();
@@ -113,28 +114,30 @@ namespace Bubbles
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
                 mIsPaused = false;
 
-            if (mIsPaused)
-                return;
+            KeyboardState currKS = Keyboard.GetState();
 
-            // Reset to start screen.
-            if (Keyboard.GetState().IsKeyDown(Keys.F2))
-                mCurrentState = GameState.Start;
+            if ((currKS.IsKeyDown(Keys.LeftControl) || currKS.IsKeyDown(Keys.RightControl)) &&
+                currKS.IsKeyDown(Keys.Enter) && mPrevKS.IsKeyUp(Keys.Enter))
+                mGraphics.ToggleFullScreen();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (currKS.IsKeyDown(Keys.P) && mPrevKS.IsKeyUp(Keys.P))
                 Pause();
 
-            switch (mCurrentState)
-            {
-                case GameState.Start:
-                    mStartScreen.Update();
-                    break;
-                case GameState.InGame:
-                    mGameScreen.Update(gameTime);
-                    break;
-                case GameState.End:
-                    mEndScreen.Update();
-                    break;
-            }
+            mPrevKS = currKS;
+
+            if (!mIsPaused)
+                switch (mCurrentState)
+                {
+                    case GameState.Start:
+                        mStartScreen.Update();
+                        break;
+                    case GameState.InGame:
+                        mGameScreen.Update(gameTime);
+                        break;
+                    case GameState.End:
+                        mEndScreen.Update();
+                        break;
+                }
 
             base.Update(gameTime);
         }

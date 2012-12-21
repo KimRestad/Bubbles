@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -34,6 +35,9 @@ namespace Bubbles
         private bool mEnabled;
         private bool mMarked;
 
+        // Static variables.
+        private static SoundEffect sSound;
+
         public Button(OnClick onClickMethod, Rectangle position, string caption)
         {
             mOnClickMethod = onClickMethod;
@@ -56,7 +60,6 @@ namespace Bubbles
                                    mPosition.Y + (mPosition.Height - textSize.Y) * 0.5f);
             mTextShadowPos = mTextPos + new Vector2(2, 2);
         }
-
 
         /// <summary>
         /// Updates the button only if it is visible. If it is clicked, the OnClick method provided
@@ -116,7 +119,8 @@ namespace Bubbles
 
         private void OnClick()
         {
-
+            if (sSound != null)
+                sSound.Play();
         }
 
         /// <summary>
@@ -167,6 +171,11 @@ namespace Bubbles
                 if (mMarked)
                     mTint = mHighlight;
             }
+        }
+
+        public static void Initialize()
+        {
+            sSound = Core.Content.Load<SoundEffect>(@"Sounds\button");
         }
     }
 }

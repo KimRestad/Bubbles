@@ -22,44 +22,60 @@ namespace Bubbles
             }
         }
 
+        private struct DrawText
+        {
+            public string Text;
+            public Vector2 DrawPos;
+
+            public DrawText(string text, Vector2 position)
+            {
+                Text = text;
+                DrawPos = position;
+            }
+        }
+
         // Constants
         private const int C_MAX_LIST_COUNT = 9;
 
         // Highscore board and sign
         private Texture2D mHSSign;
         private Texture2D mHSBoard;
-        private SpriteFont mHSTextFont;
+        private SpriteFont mHSFont;
+        private SpriteFont mSignFont;
         private Rectangle mSignPos;
         private Rectangle mBoardPos;
-        private Vector2 mSignTextPos;
         private Vector2 mBoardNamePos;
         private Vector2 mBoardScorePos;
-        private string mSignText;
+        private DrawText mSignText;
         private List<HighscorePair> mHighscores;
         private int mHighlightIndex;
 
         // Score information
-        private string mScoreText;
+        private DrawText mWinningText;
+        private DrawText mScorePresText;
+        private DrawText mScoreText;
         private SpriteFont mTextFont;
+        private Color mWinningColour;
         private Color mTextColour;
-        private Vector2 mTextPos;
-        private Vector2 mScoreTextPos;
-        private string mScore;
         private bool mGameWasWon;
+        private float mScorePresScale = 0.8f;
 
         // Highscore information
         private Difficulty mDifficulty;
         private Level mLevel;
 
-        // Buttons
+        // Other
         List<Button> mButtons;
+        Texture2D mBackground;
 
         public EndScreen()
         {
             // Load chalk board textures and fonts.
-            mHSBoard = Core.Content.Load<Texture2D>(@"Textures/chalkBoard");
-            mHSSign = Core.Content.Load<Texture2D>(@"Textures/sign");
-            mHSTextFont = Core.Content.Load<SpriteFont>(@"Fonts/chalk");
+            mHSBoard = Core.Content.Load<Texture2D>(@"Textures\chalkBoard");
+            mHSSign = Core.Content.Load<Texture2D>(@"Textures\sign");
+            mHSFont = Core.Content.Load<SpriteFont>(@"Fonts\chalk");
+            mSignFont = Core.Content.Load<SpriteFont>(@"Fonts\button");
+            mBackground = Core.Content.Load<Texture2D>(@"Textures\bricks");
 
             // Calculate chalk board, sign and text positions.
             float scale = 1.5f;
@@ -75,10 +91,12 @@ namespace Bubbles
             mBoardScorePos = new Vector2(mBoardPos.X +  mBoardPos.Width - textOffset.X, mBoardNamePos.Y);
 
             // Set the score information text variables.
-            mScoreText = "Your final score:\n";
-            mTextFont = Core.Content.Load<SpriteFont>(@"Fonts/button");
-            mTextPos = new Vector2((mBoardPos.X - mTextFont.MeasureString(mScoreText).X) * 0.5f, 192);
-            mTextColour = Color.Turquoise;
+            mTextFont = Core.Content.Load<SpriteFont>(@"Fonts/endText");
+            mScorePresText.Text = "Final score:";
+            mScorePresText.DrawPos = new Vector2((mBoardPos.X - 
+                                                 mTextFont.MeasureString(mScorePresText.Text).X * 
+                                                 mScorePresScale) * 0.5f, 220);
+            mTextColour = Color.Black;
 
             // Calculate positions and create the buttons.
             int btnWidth = 384;
@@ -99,16 +117,36 @@ namespace Bubbles
         {
             Core.IsMouseVisible = true;
 
-            mScore = score.ToString();
             mGameWasWon = gameWasWon;
             mDifficulty = difficulty;
             mLevel = level;
 
-            Vector2 textSize = mTextFont.MeasureString(mScore);
-            mScoreTextPos = new Vector2((mBoardPos.X - textSize.X) * 0.5f, mTextPos.Y + textSize.Y);
-            mSignText = mDifficulty.ToString() + ": " + mLevel.ToString();
-            textSize = mTextFont.MeasureString(mSignText);
-            mSignTextPos = new Vector2(mSignPos.X + (mSignPos.Width - textSize.X) * 0.5f,
+            // Set up winning presentation text.
+            if (mGameWasWon)
+            {
+                mWinningColour = Color.Gold;
+                mWinningText.Text = "YOU WON!!!";
+            }
+            else
+            {
+                mWinningColour = Color.Red;
+                mWinningText.Text = "YOU LOST";
+            }
+
+            Vector2 textSize = mTextFont.MeasureString(mWinningText.Text);
+            mWinningText.DrawPos = new Vector2((mBoardPos.X - textSize.X) * 0.5f,
+                                               mScorePresText.DrawPos.Y - 32 - textSize.Y);
+
+            // Set up score presentation text.
+            mScoreText.Text = score.ToString();
+            textSize = mTextFont.MeasureString(mScoreText.Text) * mScorePresScale;
+            mScoreText.DrawPos = new Vector2((mBoardPos.X - textSize.X) * 0.5f, 
+                                             mScorePresText.DrawPos.Y + textSize.Y - 12);
+            
+            // Set up sign text.
+            mSignText.Text = mDifficulty.ToString() + ": " + mLevel.ToString();
+            textSize = mSignFont.MeasureString(mSignText.Text);
+            mSignText.DrawPos = new Vector2(mSignPos.X + (mSignPos.Width - textSize.X) * 0.5f,
                                        mSignPos.Y + (mSignPos.Height - textSize.Y) * 0.5f);
 
             LoadHighscore(score);
@@ -123,31 +161,45 @@ namespace Bubbles
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            for (int x = 0; x < Core.ClientBounds.Width; x += mBackground.Width)
+            {
+                spriteBatch.Draw(mBackground, new Vector2(x, 0), Color.White);
+            }
+
             // Draw chalk board and sign.
             spriteBatch.Draw(mHSSign, mSignPos, Color.White);
             spriteBatch.Draw(mHSBoard, mBoardPos, Color.White);
-            spriteBatch.DrawString(mTextFont, mSignText, mSignTextPos + new Vector2(1, 1), Color.White * 0.5f);
-            spriteBatch.DrawString(mTextFont, mSignText, mSignTextPos, Color.Black * 0.85f);
+            spriteBatch.DrawString(mSignFont, mSignText.Text, mSignText.DrawPos + new Vector2(1, 1), Color.White * 0.5f);
+            spriteBatch.DrawString(mSignFont, mSignText.Text, mSignText.DrawPos, Color.Black * 0.85f);
 
             // Draw the high scores on the chalk board.
             float scale = 0.8f;
-            int textheight = (int)(mHSTextFont.MeasureString("Highscore").Y * scale);
+            int textheight = (int)(mHSFont.MeasureString("Highscore").Y * scale);
             for (int i = 0; i < mHighscores.Count; i++)
             {
                 Color textColour = Color.White;
                 if(i == mHighlightIndex)
                     textColour = Color.Yellow;
 
-                spriteBatch.DrawString(mHSTextFont, mHighscores[i].Name, mBoardNamePos + new Vector2(0, i * textheight),
+                spriteBatch.DrawString(mHSFont, mHighscores[i].Name, mBoardNamePos + new Vector2(0, i * textheight),
                                        textColour, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
-                spriteBatch.DrawString(mHSTextFont, mHighscores[i].Score, 
-                                       mBoardScorePos + new Vector2(-mHSTextFont.MeasureString(mHighscores[i].Score).X, i * textheight),
+                spriteBatch.DrawString(mHSFont, mHighscores[i].Score, 
+                                       mBoardScorePos + new Vector2(-mHSFont.MeasureString(mHighscores[i].Score).X, i * textheight),
                                        textColour, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
             }
 
             // Draw score text.
-            spriteBatch.DrawString(mTextFont, mScoreText, mTextPos, mTextColour);
-            spriteBatch.DrawString(mTextFont, mScore, mScoreTextPos, mTextColour);
+            spriteBatch.DrawString(mTextFont, mWinningText.Text, mWinningText.DrawPos + new Vector2(1, 1),
+                                   Color.Black);
+            spriteBatch.DrawString(mTextFont, mWinningText.Text, mWinningText.DrawPos, mWinningColour);
+            spriteBatch.DrawString(mTextFont, mScorePresText.Text, mScorePresText.DrawPos + new Vector2(1, 1),
+                                   Color.White, 0.0f, Vector2.Zero, mScorePresScale, SpriteEffects.None, 0.0f);
+            spriteBatch.DrawString(mTextFont, mScorePresText.Text, mScorePresText.DrawPos, mTextColour,
+                                   0.0f, Vector2.Zero, mScorePresScale, SpriteEffects.None, 0.0f);
+            spriteBatch.DrawString(mTextFont, mScoreText.Text, mScoreText.DrawPos + new Vector2(1, 1),
+                                   Color.White, 0.0f, Vector2.Zero, mScorePresScale, SpriteEffects.None, 0.0f);
+            spriteBatch.DrawString(mTextFont, mScoreText.Text, mScoreText.DrawPos, mTextColour,
+                                   0.0f, Vector2.Zero, mScorePresScale, SpriteEffects.None, 0.0f);
 
             // Draw the buttons.
             foreach (Button btn in mButtons)
@@ -177,7 +229,7 @@ namespace Bubbles
             {
                 string[] split = line.Split('|');
 
-                if (newScore > int.Parse(split[1]) && mHighlightIndex < 0)
+                if (mGameWasWon && newScore > int.Parse(split[1]) && mHighlightIndex < 0)
                 {
                     mHighscores.Add(new HighscorePair(name, newScore.ToString()));
                     mHighlightIndex = mHighscores.Count - 1;
