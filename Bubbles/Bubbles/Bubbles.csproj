@@ -29,7 +29,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -128,6 +128,7 @@
     <Compile Include="GameObjects\Aim.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="Highscore.cs" />
     <Compile Include="LevelInformation.cs" />
     <Compile Include="Screens\ChoiceScreen.cs" />
     <Compile Include="Screens\CreditsScreen.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Screens\HighscoreScreen.cs" />
     <Compile Include="Screens\NextLevelScreen.cs" />
     <Compile Include="Screens\OverlayScreen.cs" />
     <Compile Include="Screens\PauseScreen.cs" />

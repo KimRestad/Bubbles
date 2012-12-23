@@ -52,11 +52,9 @@ namespace Bubbles
 
             mButtons = new List<Button>();
             mButtons.Add(new Button(BtnPlayClicked, new Rectangle(x, buttonStartY, buttonWidth, buttonHeight), "Play"));
-            mButtons.Add(new Button(BtnCreditsClicked, new Rectangle(x, buttonStartY + buttonStrideY, buttonWidth, buttonHeight), "Highscore"));
+            mButtons.Add(new Button(BtnHSClicked, new Rectangle(x, buttonStartY + buttonStrideY, buttonWidth, buttonHeight), "Highscore"));
             mButtons.Add(new Button(BtnCreditsClicked, new Rectangle(x, buttonStartY + buttonStrideY*2, buttonWidth, buttonHeight), "Credits"));
             mButtons.Add(new Button(BtnExitClicked, new Rectangle(x, buttonStartY + buttonStrideY * 3, buttonWidth, buttonHeight), "Exit"));
-
-            mButtons[1].Enabled = false;
         }
 
         public void Update()
@@ -94,6 +92,11 @@ namespace Bubbles
         private void BtnPlayClicked()
         {
             mGameChoices.Visible = true;
+        }
+
+        private void BtnHSClicked()
+        {
+            Core.ShowHighscore();
         }
 
         private void BtnCreditsClicked()

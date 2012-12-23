@@ -197,7 +197,7 @@ namespace Bubbles
                     sColours.Insert(0, Color.Aqua);                 // Turquoise
                     goto case 5;
                 case 7:
-                    sColours.Insert(0, new Color(255, 110, 0));     // Orange
+                    sColours.Insert(0, new Color(255, 90, 0));     // Orange
                     goto case 6;
                 case 8:
                     sColours.Insert(0, Color.LightPink);            // Pink

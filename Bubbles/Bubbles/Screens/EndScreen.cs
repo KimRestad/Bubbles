@@ -10,18 +10,6 @@ namespace Bubbles
 {
     public class EndScreen
     {
-        private struct HighscorePair
-        {
-            public string Name;
-            public string Score;
-
-            public HighscorePair(string name, string score)
-            {
-                Name = name;
-                Score = score;
-            }
-        }
-
         private struct DrawText
         {
             public string Text;
@@ -34,21 +22,16 @@ namespace Bubbles
             }
         }
 
-        // Constants
-        private const int C_MAX_LIST_COUNT = 9;
-
         // Highscore board and sign
         private Texture2D mHSSign;
         private Texture2D mHSBoard;
-        private SpriteFont mHSFont;
         private SpriteFont mSignFont;
         private Rectangle mSignPos;
         private Rectangle mBoardPos;
         private Vector2 mBoardNamePos;
         private Vector2 mBoardScorePos;
         private DrawText mSignText;
-        private List<HighscorePair> mHighscores;
-        private int mHighlightIndex;
+        private HighscoreList mHighscores;
 
         // Score information
         private DrawText mWinningText;
@@ -73,7 +56,6 @@ namespace Bubbles
             // Load chalk board textures and fonts.
             mHSBoard = Core.Content.Load<Texture2D>(@"Textures\chalkBoard");
             mHSSign = Core.Content.Load<Texture2D>(@"Textures\sign");
-            mHSFont = Core.Content.Load<SpriteFont>(@"Fonts\chalk");
             mSignFont = Core.Content.Load<SpriteFont>(@"Fonts\button");
             mBackground = Core.Content.Load<Texture2D>(@"Textures\bricks");
 
@@ -106,11 +88,11 @@ namespace Bubbles
             int btnPadding = btnHeight + 32;
 
             mButtons = new List<Button>();
-            mButtons.Add(new Button(BtnMenuClick, new Rectangle(btnX, btnBottomY - btnPadding * 2, btnWidth, btnHeight), "Return to Menu"));
-            mButtons.Add(new Button(BtnMenuClick, new Rectangle(btnX, btnBottomY - btnPadding, btnWidth, btnHeight), "All Highscores"));
+            mButtons.Add(new Button(BtnMenuClick, new Rectangle(btnX, btnBottomY - btnPadding * 2, btnWidth, btnHeight),
+                                    "Return to Menu"));
+            mButtons.Add(new Button(BtnHighscoreClick, new Rectangle(btnX, btnBottomY - btnPadding, btnWidth, btnHeight), 
+                                    "All Highscores"));
             mButtons.Add(new Button(BtnExitClick, new Rectangle(btnX, btnBottomY, btnWidth, btnHeight), "Exit Game"));
-
-            mButtons[1].Enabled = false;
         }
 
         public void SetInfo(Difficulty difficulty, Level level, int score, bool gameWasWon)
@@ -149,8 +131,8 @@ namespace Bubbles
             mSignText.DrawPos = new Vector2(mSignPos.X + (mSignPos.Width - textSize.X) * 0.5f,
                                        mSignPos.Y + (mSignPos.Height - textSize.Y) * 0.5f);
 
-            LoadHighscore(score);
-            SaveHighscore();
+            mHighscores = new HighscoreList(mDifficulty, mLevel, gameWasWon ? score : -1);
+            mHighscores.SaveToFile();
         }
 
         public void Update()
@@ -173,20 +155,7 @@ namespace Bubbles
             spriteBatch.DrawString(mSignFont, mSignText.Text, mSignText.DrawPos, Color.Black * 0.85f);
 
             // Draw the high scores on the chalk board.
-            float scale = 0.8f;
-            int textheight = (int)(mHSFont.MeasureString("Highscore").Y * scale);
-            for (int i = 0; i < mHighscores.Count; i++)
-            {
-                Color textColour = Color.White;
-                if(i == mHighlightIndex)
-                    textColour = Color.Yellow;
-
-                spriteBatch.DrawString(mHSFont, mHighscores[i].Name, mBoardNamePos + new Vector2(0, i * textheight),
-                                       textColour, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
-                spriteBatch.DrawString(mHSFont, mHighscores[i].Score, 
-                                       mBoardScorePos + new Vector2(-mHSFont.MeasureString(mHighscores[i].Score).X, i * textheight),
-                                       textColour, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
-            }
+            mHighscores.Draw(spriteBatch, 0.8f, mBoardNamePos, mBoardScorePos);
 
             // Draw score text.
             spriteBatch.DrawString(mTextFont, mWinningText.Text, mWinningText.DrawPos + new Vector2(1, 1),
@@ -206,123 +175,19 @@ namespace Bubbles
                 btn.Draw(spriteBatch);
         }
 
-        private void LoadHighscore(int newScore)
+        private void BtnMenuClick()
         {
-            mHighscores = new List<HighscorePair>();
-            string filename = GetFilename();
-            string name = DateTime.Today.ToString("yyyy-MM-dd");
-            mHighlightIndex = -1;
-
-            if (!File.Exists(filename))
-            {
-                mHighscores.Add(new HighscorePair(name, newScore.ToString()));
-                mHighlightIndex = 0;
-                return;
-            }
-
-            FileStream file = new FileStream(filename, FileMode.Open);
-            StreamReader reader = new StreamReader(file);
-
-            string line = reader.ReadLine();
-
-            while (line != null && mHighscores.Count < C_MAX_LIST_COUNT)
-            {
-                string[] split = line.Split('|');
-
-                if (mGameWasWon && newScore > int.Parse(split[1]) && mHighlightIndex < 0)
-                {
-                    mHighscores.Add(new HighscorePair(name, newScore.ToString()));
-                    mHighlightIndex = mHighscores.Count - 1;
-
-                    if (mHighscores.Count == C_MAX_LIST_COUNT)
-                        break;
-                }
-
-                mHighscores.Add(new HighscorePair(split[0], split[1]));
-                line = reader.ReadLine();
-            }
-
-            reader.Close();
-            file.Close();
-
-            // If the new high score is not on the list and the list is not full, add it anyway.
-            if (mHighlightIndex == -1 && mHighscores.Count < C_MAX_LIST_COUNT)
-            {
-                mHighscores.Add(new HighscorePair(name, newScore.ToString()));
-                mHighlightIndex = mHighscores.Count - 1;
-            }
+            Core.ReturnToMenu();
         }
 
-        private void SaveHighscore()
+        private void BtnHighscoreClick()
         {
-            string filename = GetFilename();
-
-            Directory.CreateDirectory(Path.GetDirectoryName(filename));
-            FileStream file = new FileStream(filename, FileMode.Create);
-            StreamWriter writer = new StreamWriter(file);
-
-            foreach (HighscorePair pair in mHighscores)
-            {
-                writer.WriteLine(pair.Name + "|" + pair.Score);
-            }
-
-            writer.Close();
-            file.Close();
-        }
-
-        private string GetFilename()
-        {
-            string filename = "Content/Data/";
-
-            switch (mDifficulty)
-            {
-                case Difficulty.Easy:
-                    filename += "easy";
-                    break;
-                case Difficulty.Normal:
-                    filename += "normal";
-                    break;
-                case Difficulty.Hard:
-                    filename += "hard";
-                    break;
-            }
-
-            switch (mLevel)
-            {
-                case Level.Deca:
-                    filename += "Deca.txt";
-                    break;
-                case Level.Hecto:
-                    filename += "Hecto.txt";
-                    break;
-                case Level.Kilo:
-                    filename += "Kilo.txt";
-                    break;
-                case Level.Mega:
-                    filename += "Mega.txt";
-                    break;
-                case Level.Giga:
-                    filename += "Giga.txt";
-                    break;
-                case Level.Tera:
-                    filename += "Tera.txt";
-                    break;
-                case Level.All:
-                    filename += "All.txt";
-                    break;
-            }
-
-            return filename;
+            Core.ShowHighscore();
         }
 
         private void BtnExitClick()
         {
             Core.Exit();
-        }
-
-        private void BtnMenuClick()
-        {
-            Core.ReturnToMenu();
         }
     }
 }

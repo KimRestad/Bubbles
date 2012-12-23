@@ -41,6 +41,12 @@ namespace Bubbles
             sGame.GameScreen.StartGame(levelDifficulty, levelToPlay);
         }
 
+        public static void ShowHighscore()
+        {
+            sGame.GameState = GameState.Highscore;
+            sGame.HighscoreScreen.CreateHighscoreLists();
+        }
+
         /// <summary>
         /// Game is over. Pass on score and whether the game was won
         /// </summary>

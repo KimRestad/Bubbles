@@ -16,6 +16,7 @@ namespace Bubbles
     {
         Start,
         InGame,
+        Highscore,
         End
     }
 
@@ -33,6 +34,7 @@ namespace Bubbles
         private GameState mCurrentState;
         private StartScreen mStartScreen;
         private GameScreen mGameScreen;
+        private HighscoreScreen mHSScreen;
         private EndScreen mEndScreen;
         
         private bool mIsPaused;
@@ -69,6 +71,7 @@ namespace Bubbles
             mCurrentState = GameState.Start;
             mStartScreen = new StartScreen();
             mGameScreen = new GameScreen();
+            mHSScreen = new HighscoreScreen();
             mEndScreen = new EndScreen();
 
             IsMouseVisible = true;
@@ -134,6 +137,9 @@ namespace Bubbles
                     case GameState.InGame:
                         mGameScreen.Update(gameTime);
                         break;
+                    case GameState.Highscore:
+                        mHSScreen.Update(gameTime);
+                        break;
                     case GameState.End:
                         mEndScreen.Update();
                         break;
@@ -159,6 +165,9 @@ namespace Bubbles
                     break;
                 case GameState.InGame:
                     mGameScreen.Draw(mSpriteBatch);
+                    break;
+                case GameState.Highscore:
+                    mHSScreen.Draw(mSpriteBatch);
                     break;
                 case GameState.End:
                     mEndScreen.Draw(mSpriteBatch);
@@ -201,6 +210,11 @@ namespace Bubbles
         public GameScreen GameScreen
         {
             get { return mGameScreen; }
+        }
+
+        public HighscoreScreen HighscoreScreen
+        {
+            get { return mHSScreen; }
         }
 
         public EndScreen EndScreen
