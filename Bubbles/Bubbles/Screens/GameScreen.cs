@@ -44,10 +44,6 @@ namespace Bubbles
         private KeyboardState mPrevKeyboard;
         private NextLevelScreen mNextLvlScreen;
         private Rectangle mBounds;
-        
-        // DEBUG
-        private string mDebugString = "";
-        private SpriteFont mDebugFont;
 
         public GameScreen()
         {
@@ -73,10 +69,6 @@ namespace Bubbles
                                          mChalkBoardPosition.Y + mChalkBoardPosition.Height - padding - textHeight);
 
             mBtnMenu = new Button(BtnMenuClick, new Rectangle(mChalkBoardPosition.X, 660, mChalkBoardPosition.Width, 64), "Return to menu");
-
-            // DEBUG
-            mDebugFont = Core.Content.Load<SpriteFont>(@"Fonts\default");
-            mDebugString = "Keys: 'F2' starts a new game, 'A' adds a new row of balls and 'ESC' quits. AddRowTime: ";
         }
 
         public void StartGame(Difficulty levelDifficulty, Level levelToPlay, int startScore = 0)
@@ -192,7 +184,7 @@ namespace Bubbles
             MouseState ms = Mouse.GetState();
             Rectangle mouseRect = new Rectangle(ms.X, ms.Y, 1, 1);
             
-            if (mBounds.Intersects(mouseRect)) // TODO: Include board walls
+            if (mBounds.Intersects(mouseRect))
                 Core.IsMouseVisible = false;
             else
                 Core.IsMouseVisible = true;
@@ -203,6 +195,8 @@ namespace Bubbles
             else if ((currKeyboard.IsKeyDown(Keys.S) && mPrevKeyboard.IsKeyUp(Keys.S)) ||
                 (currKeyboard.IsKeyDown(Keys.F8) && mPrevKeyboard.IsKeyUp(Keys.F8)))
                 mBoard.ToggleSound();
+            else if (currKeyboard.IsKeyDown(Keys.F1) && mPrevKeyboard.IsKeyUp(Keys.F1))
+                Ball.ShowShapes = !Ball.ShowShapes;
 
             mPrevKeyboard = currKeyboard;
         }

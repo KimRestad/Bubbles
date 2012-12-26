@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Bubbles
 {
@@ -48,8 +49,10 @@ namespace Bubbles
         private Level mLevel;
 
         // Other
-        List<Button> mButtons;
-        Texture2D mBackground;
+        private List<Button> mButtons;
+        private Texture2D mBackground;
+        private KeyboardState mPrevKeyboard;
+        private int mButtonIndex;
 
         public EndScreen()
         {
@@ -93,6 +96,8 @@ namespace Bubbles
             mButtons.Add(new Button(BtnHighscoreClick, new Rectangle(btnX, btnBottomY - btnPadding, btnWidth, btnHeight), 
                                     "All Highscores"));
             mButtons.Add(new Button(BtnExitClick, new Rectangle(btnX, btnBottomY, btnWidth, btnHeight), "Exit Game"));
+
+            mButtonIndex = mButtons.Count - 1;
         }
 
         public void SetInfo(Difficulty difficulty, Level level, int score, bool gameWasWon)
@@ -137,6 +142,8 @@ namespace Bubbles
 
         public void Update()
         {
+            HandleKeyboard();
+
             foreach (Button btn in mButtons)
                 btn.Update();
         }
@@ -173,6 +180,33 @@ namespace Bubbles
             // Draw the buttons.
             foreach (Button btn in mButtons)
                 btn.Draw(spriteBatch);
+        }
+
+        private void HandleKeyboard()
+        {
+            KeyboardState currKeyboard = Keyboard.GetState();
+
+            if (currKeyboard.IsKeyDown(Keys.Down) && mPrevKeyboard.IsKeyUp(Keys.Down))
+            {
+                mButtonIndex = (mButtonIndex + 1) % mButtons.Count;
+                Vector2 newMousePos = mButtons[mButtonIndex].Center;
+                Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
+            }
+            else if (currKeyboard.IsKeyDown(Keys.Up) && mPrevKeyboard.IsKeyUp(Keys.Up))
+            {
+                if (mButtonIndex <= 0)
+                    mButtonIndex = mButtons.Count;
+                mButtonIndex--;
+                Vector2 newMousePos = mButtons[mButtonIndex].Center;
+                Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
+            }
+            else if (currKeyboard.IsKeyDown(Keys.Enter) && mPrevKeyboard.IsKeyUp(Keys.Enter))
+            {
+                if (mButtons[mButtonIndex].Hovered)
+                    mButtons[mButtonIndex].Click();
+            }
+
+            mPrevKeyboard = currKeyboard;
         }
 
         private void BtnMenuClick()

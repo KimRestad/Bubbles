@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Bubbles
 {
@@ -22,6 +23,8 @@ namespace Bubbles
         private Level mChosenLvl;
 
         private string mFilename = @"Content\Data\GamePreference";
+        private KeyboardState mPrevKeyboard;
+        private int mButtonIndex;
 
         public ChoiceScreen() 
             : base(new Point(896, 640), new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height), Color.Black, 0.75f)
@@ -59,6 +62,7 @@ namespace Bubbles
             mButtons.Add(new Button(BtnPlayClick, new Rectangle(offset.X + padding.X, offset.Y, size.X, size.Y), "Start Game"));
 
             LoadLastChoice();
+            mButtonIndex = mButtons.Count - 1;
         }
 
         public override void Update()
@@ -84,6 +88,33 @@ namespace Bubbles
 
             spriteBatch.DrawString(mFont, mDiffText, mDiffTextPos, Color.Yellow);
             spriteBatch.DrawString(mFont, mLvlText, mLvlTextPos, Color.Yellow);
+        }
+
+        private void HandleInput()
+        {
+            KeyboardState currKeyboard = Keyboard.GetState();
+
+            if (currKeyboard.IsKeyDown(Keys.Down) && mPrevKeyboard.IsKeyUp(Keys.Down))
+            {
+                mButtonIndex = (mButtonIndex + 1) % mButtons.Count;
+                Vector2 newMousePos = mButtons[mButtonIndex].Center;
+                Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
+            }
+            else if (currKeyboard.IsKeyDown(Keys.Up) && mPrevKeyboard.IsKeyUp(Keys.Up))
+            {
+                if (mButtonIndex <= 0)
+                    mButtonIndex = mButtons.Count;
+                mButtonIndex--;
+                Vector2 newMousePos = mButtons[mButtonIndex].Center;
+                Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
+            }
+            else if (currKeyboard.IsKeyDown(Keys.Enter) && mPrevKeyboard.IsKeyUp(Keys.Enter))
+            {
+                if (mButtons[mButtonIndex].Hovered)
+                    mButtons[mButtonIndex].Click();
+            }
+
+            mPrevKeyboard = currKeyboard;
         }
 
         private void LoadLastChoice()

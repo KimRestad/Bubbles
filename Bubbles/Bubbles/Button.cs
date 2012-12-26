@@ -84,10 +84,7 @@ namespace Bubbles
             if (currMouse.LeftButton == ButtonState.Released && mPrevMouse.LeftButton == ButtonState.Pressed)
             {
                 if (mHovered)
-                {
-                    OnClick();
-                    mOnClickMethod();
-                }
+                    Click();
             }
 
             mPrevMouse = currMouse;
@@ -115,6 +112,12 @@ namespace Bubbles
                 spriteBatch.DrawString(mFont, mCaption, mTextPos, mTextColour * 0.6f);
             }
 
+        }
+
+        public void Click()
+        {
+            OnClick();
+            mOnClickMethod();
         }
 
         private void OnClick()
@@ -170,6 +173,15 @@ namespace Bubbles
                 mMarked = value;
                 if (mMarked)
                     mTint = mHighlight;
+            }
+        }
+
+        public Vector2 Center
+        {
+            get
+            {
+                return new Vector2(mPosition.X + mPosition.Width * 0.5f,
+                                   mPosition.Y + mPosition.Height * 0.5f);
             }
         }
 

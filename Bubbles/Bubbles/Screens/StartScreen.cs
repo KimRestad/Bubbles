@@ -21,8 +21,8 @@ namespace Bubbles
         private CreditsScreen mCredits;
 
         private List<Button> mButtons;
-
-        private MouseState mPrevMouse;
+        private KeyboardState mPrevKeyboard;
+        private int mButtonIndex;
 
         public StartScreen()
         {
@@ -55,18 +55,20 @@ namespace Bubbles
             mButtons.Add(new Button(BtnHSClicked, new Rectangle(x, buttonStartY + buttonStrideY, buttonWidth, buttonHeight), "Highscore"));
             mButtons.Add(new Button(BtnCreditsClicked, new Rectangle(x, buttonStartY + buttonStrideY*2, buttonWidth, buttonHeight), "Credits"));
             mButtons.Add(new Button(BtnExitClicked, new Rectangle(x, buttonStartY + buttonStrideY * 3, buttonWidth, buttonHeight), "Exit"));
+
+            mButtonIndex = mButtons.Count - 1;
         }
 
         public void Update()
         {
-            MouseState currMouse = Mouse.GetState();
-
             // Only update buttons if the choices window is not showing
             if (!mGameChoices.Visible && !mCredits.Visible)
+            {
                 foreach (Button btn in mButtons)
                     btn.Update();
-
-            mPrevMouse = currMouse;
+                
+                HandleInput();
+            }
 
             mGameChoices.Update();
             mCredits.Update();
@@ -74,12 +76,9 @@ namespace Bubbles
 
         public void Draw(SpriteBatch spritebatch)
         {
-            //spritebatch.Draw(mBackground, mBGPosition, Color.White);
-
             // Only draw buttons if the choices window is not showing
             if (!mGameChoices.Visible && !mCredits.Visible)
             {
-                // DEBUG
                 spritebatch.Draw(mBackground, mBGPosition, Color.White);
                 foreach (Button btn in mButtons)
                     btn.Draw(spritebatch);
@@ -87,6 +86,33 @@ namespace Bubbles
 
             mGameChoices.Draw(spritebatch);
             mCredits.Draw(spritebatch);
+        }
+
+        private void HandleInput()
+        {
+            KeyboardState currKeyboard = Keyboard.GetState();
+
+            if (currKeyboard.IsKeyDown(Keys.Down) && mPrevKeyboard.IsKeyUp(Keys.Down))
+            {
+                mButtonIndex = (mButtonIndex + 1) % mButtons.Count;
+                Vector2 newMousePos = mButtons[mButtonIndex].Center;
+                Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
+            }
+            else if (currKeyboard.IsKeyDown(Keys.Up) && mPrevKeyboard.IsKeyUp(Keys.Up))
+            {
+                if (mButtonIndex <= 0)
+                    mButtonIndex = mButtons.Count;
+                mButtonIndex--;
+                Vector2 newMousePos = mButtons[mButtonIndex].Center;
+                Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
+            }
+            else if (currKeyboard.IsKeyDown(Keys.Enter) && mPrevKeyboard.IsKeyUp(Keys.Enter))
+            {
+                if (mButtons[mButtonIndex].Hovered)
+                    mButtons[mButtonIndex].Click();
+            }
+
+            mPrevKeyboard = currKeyboard;
         }
 
         private void BtnPlayClicked()

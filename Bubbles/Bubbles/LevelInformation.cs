@@ -58,17 +58,17 @@ namespace Bubbles
             switch (level)
             {
                 case Level.Deca:
-                    return new LevelDetails(1.05f, C_NUM_BALLS_DECA, 0.08f, startNumRows);
+                    return new LevelDetails(1.05f, C_NUM_BALLS_DECA, 0.10f, startNumRows);
                 case Level.Hecto:
-                    return new LevelDetails(1.0f, C_NUM_BALLS_HECTO, 0.09f, startNumRows);
+                    return new LevelDetails(1.0f, C_NUM_BALLS_HECTO, 0.11f, startNumRows);
                 case Level.Kilo:
-                    return new LevelDetails(0.95f, C_NUM_BALLS_KILO, 0.10f, startNumRows);
+                    return new LevelDetails(0.95f, C_NUM_BALLS_KILO, 0.12f, startNumRows);
                 case Level.Mega:
-                    return new LevelDetails(0.9f, C_NUM_BALLS_MEGA, 0.11f, startNumRows);
+                    return new LevelDetails(0.9f, C_NUM_BALLS_MEGA, 0.13f, startNumRows);
                 case Level.Giga:
-                    return new LevelDetails(0.85f, C_NUM_BALLS_GIGA, 0.12f, startNumRows);
+                    return new LevelDetails(0.85f, C_NUM_BALLS_GIGA, 0.14f, startNumRows);
                 case Level.Tera:
-                    return new LevelDetails(0.8f, C_NUM_BALLS_TERA, 0.13f, startNumRows);
+                    return new LevelDetails(0.8f, C_NUM_BALLS_TERA, 0.15f, startNumRows);
             }
 
             return null;
@@ -80,17 +80,17 @@ namespace Bubbles
             switch (level)
             {
                 case Level.Deca:
-                    return new LevelDetails(0.85f, C_NUM_BALLS_DECA, 0.1f, startNumRows);
+                    return new LevelDetails(0.85f, C_NUM_BALLS_DECA, 0.14f, startNumRows);
                 case Level.Hecto:
-                    return new LevelDetails(0.80f, C_NUM_BALLS_HECTO, 0.12f, startNumRows);
+                    return new LevelDetails(0.80f, C_NUM_BALLS_HECTO, 0.16f, startNumRows);
                 case Level.Kilo:
-                    return new LevelDetails(0.75f, C_NUM_BALLS_KILO, 0.14f, startNumRows);
+                    return new LevelDetails(0.75f, C_NUM_BALLS_KILO, 0.18f, startNumRows);
                 case Level.Mega:
-                    return new LevelDetails(0.70f, C_NUM_BALLS_MEGA, 0.16f, startNumRows);
+                    return new LevelDetails(0.70f, C_NUM_BALLS_MEGA, 0.20f, startNumRows);
                 case Level.Giga:
-                    return new LevelDetails(0.65f, C_NUM_BALLS_GIGA, 0.18f, startNumRows);
+                    return new LevelDetails(0.65f, C_NUM_BALLS_GIGA, 0.22f, startNumRows);
                 case Level.Tera:
-                    return new LevelDetails(0.60f, C_NUM_BALLS_TERA, 0.2f, startNumRows);
+                    return new LevelDetails(0.60f, C_NUM_BALLS_TERA, 0.24f, startNumRows);
             }
 
             return null;

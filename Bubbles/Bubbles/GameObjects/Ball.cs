@@ -25,7 +25,7 @@ namespace Bubbles
         // Appearance variables.
         private BallColour mColour;
         private Vector2 mOrigin;
-
+        
         // Behaviour variables.
         private BallState mState;
         private Vector2 mDirection;
@@ -37,10 +37,12 @@ namespace Bubbles
         #region StaticVariables
 
         // Appearance variables
-        private static Texture2D sTexture;
+        private static Texture2D sTexBall;
+        private static Texture2D[] sTexShapes;
         private static List<Color> sColours;
         private static Vector2 sSize;
         private static float sScale = 1.0f;
+        private static bool sShowShapes;
 
         // Constants
         public const float C_SPEED = 12.0f;
@@ -81,12 +83,19 @@ namespace Bubbles
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if(mState == BallState.Exploding)
-                spriteBatch.Draw(sTexture, mPosition, null, sColours[(int)mColour], 0.0f,
-                             mOrigin, sScale * mExplodeScale, SpriteEffects.None, 0.0f);
+            if (mState == BallState.Exploding)
+                spriteBatch.Draw(sTexBall, mPosition, null, sColours[(int)mColour], 0.0f,
+                                 mOrigin, sScale * mExplodeScale, SpriteEffects.None, 0.0f);
             else
-            spriteBatch.Draw(sTexture, mPosition, null, sColours[(int)mColour], 0.0f,
-                             mOrigin, sScale, SpriteEffects.None, 0.0f);
+            {
+                spriteBatch.Draw(sTexBall, mPosition, null, sColours[(int)mColour], 0.0f,
+                                 mOrigin, sScale, SpriteEffects.None, 0.0f);
+                if (sShowShapes && sTexShapes[(int)mColour] != null)
+                {
+                    spriteBatch.Draw(sTexShapes[(int)mColour], mPosition, null, Color.DarkGray,
+                                     0.0f, mOrigin, sScale, SpriteEffects.None, 0.0f);
+                }
+            }
         }
 
         public void Shoot(Vector2 direction)
@@ -182,6 +191,8 @@ namespace Bubbles
             sColours = new List<Color>();
             numColours = (int)MathHelper.Clamp(numColours, 4, 10);
 
+            sTexShapes = new Texture2D[numColours];
+
             switch (numColours)
             {
                 case 4:
@@ -189,30 +200,41 @@ namespace Bubbles
                     sColours.Insert(0, Color.LawnGreen);            // Green
                     sColours.Insert(0, Color.RoyalBlue);            // Blue
                     sColours.Insert(0, Color.Red);                  // Red
+                    sTexShapes[0] = Core.Content.Load<Texture2D>(@"Textures\shLineHor");
+                    sTexShapes[1] = Core.Content.Load<Texture2D>(@"Textures\shRomb");
+                    sTexShapes[2] = Core.Content.Load<Texture2D>(@"Textures\shTriangleUp");
+                    sTexShapes[3] = Core.Content.Load<Texture2D>(@"Textures\shSquare");
                     break;
                 case 5:
                     sColours.Insert(0, new Color(230, 0, 230));     // Purple
+                    sTexShapes[4] = Core.Content.Load<Texture2D>(@"Textures\shTriangleDown");
                     goto case 4;
                 case 6: 
                     sColours.Insert(0, Color.Aqua);                 // Turquoise
+                    sTexShapes[5] = Core.Content.Load<Texture2D>(@"Textures\shCircle");
                     goto case 5;
                 case 7:
                     sColours.Insert(0, new Color(255, 90, 0));     // Orange
+                    sTexShapes[6] = Core.Content.Load<Texture2D>(@"Textures\shStar");
                     goto case 6;
                 case 8:
                     sColours.Insert(0, Color.LightPink);            // Pink
+                    sTexShapes[7] = Core.Content.Load<Texture2D>(@"Textures\shLineVer");
                     goto case 7;
                 case 9:
-                    sColours.Insert(0, Color.DimGray);              // Black
+                    sColours.Insert(0, new Color(90, 90, 90));      // Black
+                    sTexShapes[8] = null;
                     goto case 8;
                 case 10:
                     sColours.Insert(0, Color.Green);                // Dark Green
+                    sTexShapes[9] = Core.Content.Load<Texture2D>(@"Textures\shPoint");
                     goto case 9;
             }
 
-            sTexture = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
-            sSize = new Vector2(sTexture.Width, sTexture.Height);
+            sTexBall = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
+            sSize = new Vector2(sTexBall.Width, sTexBall.Height);
             sScale = ballSize;
+            sShowShapes = true;
         }
         #endregion StaticMethods
 
@@ -224,9 +246,15 @@ namespace Bubbles
             set { sScale = value; }
         }
 
+        public static bool ShowShapes
+        {
+            get { return sShowShapes; }
+            set { sShowShapes = value; }
+        }
+
         public static Vector2 Size
         {
-            get { return new Vector2(sTexture.Width * sScale, sTexture.Height * sScale); }
+            get { return new Vector2(sTexBall.Width * sScale, sTexBall.Height * sScale); }
         }
 
         public static int ColourCount

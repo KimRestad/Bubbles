@@ -30,6 +30,8 @@ namespace Bubbles
         private HighscoreList[,] mHighscores;
         private Difficulty mCurrDiff;
         private MouseState mPrevMS;
+        private KeyboardState mPrevKeyboard;
+        private int mButtonIndex;
 
         public HighscoreScreen()
         {
@@ -94,34 +96,16 @@ namespace Bubbles
                                                         Core.ClientBounds.Height - btnHeight - btnY,
                                                         btnWidth, btnHeight),
                                     "Return to menu"));
+
+            mButtonIndex = mButtons.Count - 1;
             CreateHighscoreLists();
             BtnEasyClick();
         }
 
         public void Update(GameTime gametime)
         {
-            MouseState currMS = Mouse.GetState();
-
-            if(currMS.LeftButton == ButtonState.Pressed && mPrevMS.LeftButton == ButtonState.Released)
-            {
-                if (mFocusVisible)
-                    mFocusVisible = false;
-                else
-                {
-                    Rectangle mouseRect = new Rectangle(currMS.X, currMS.Y, 1, 1);
-                    for (int i = 0; i < mBoardPositions.Length; i++)
-                    {
-                        if (mBoardPositions[i].Intersects(mouseRect))
-                        {
-                            mFocusVisible = true;
-                            mFocusLvl = (Level)i;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            mPrevMS = currMS;
+            HandleKeyboard();
+            HandleMouse();
 
             foreach (Button btn in mButtons)
                 btn.Update();
@@ -183,6 +167,59 @@ namespace Bubbles
                     mHighscores[diff, lvl] = new HighscoreList((Difficulty)diff, (Level)lvl);
                 }
             }
+        }
+
+        private void HandleKeyboard()
+        {
+            KeyboardState currKeyboard = Keyboard.GetState();
+
+            if (currKeyboard.IsKeyDown(Keys.Down) && mPrevKeyboard.IsKeyUp(Keys.Down))
+            {
+                mButtonIndex = (mButtonIndex + 1) % mButtons.Count;
+                Vector2 newMousePos = mButtons[mButtonIndex].Center;
+                Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
+            }
+            else if (currKeyboard.IsKeyDown(Keys.Up) && mPrevKeyboard.IsKeyUp(Keys.Up))
+            {
+                if (mButtonIndex <= 0)
+                    mButtonIndex = mButtons.Count;
+                mButtonIndex--;
+                Vector2 newMousePos = mButtons[mButtonIndex].Center;
+                Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
+            }
+            else if (currKeyboard.IsKeyDown(Keys.Enter) && mPrevKeyboard.IsKeyUp(Keys.Enter))
+            {
+                if (mButtons[mButtonIndex].Hovered)
+                    mButtons[mButtonIndex].Click();
+            }
+
+            mPrevKeyboard = currKeyboard;
+        }
+
+        private void HandleMouse()
+        {
+            MouseState currMS = Mouse.GetState();
+
+            if (currMS.LeftButton == ButtonState.Pressed && mPrevMS.LeftButton == ButtonState.Released)
+            {
+                if (mFocusVisible)
+                    mFocusVisible = false;
+                else
+                {
+                    Rectangle mouseRect = new Rectangle(currMS.X, currMS.Y, 1, 1);
+                    for (int i = 0; i < mBoardPositions.Length; i++)
+                    {
+                        if (mBoardPositions[i].Intersects(mouseRect))
+                        {
+                            mFocusVisible = true;
+                            mFocusLvl = (Level)i;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            mPrevMS = currMS;
         }
 
         private void BtnEasyClick()
