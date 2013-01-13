@@ -199,6 +199,114 @@
       <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\buttonAlt.xnb</Output>
       <Time>2012-12-21T11:10:17.1702804+01:00</Time>
     </Item>
+    <Item>
+      <Source>Textures\shCircle.png</Source>
+      <Name>Textures\shCircle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shCircle.xnb</Output>
+      <Time>2012-12-25T20:55:43.0206181+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\shLineHor.png</Source>
+      <Name>Textures\shLineHor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shLineHor.xnb</Output>
+      <Time>2012-12-25T21:00:51.5252636+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\shLineVer.png</Source>
+      <Name>Textures\shLineVer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shLineVer.xnb</Output>
+      <Time>2012-12-25T21:01:20.1569012+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\shPoint.png</Source>
+      <Name>Textures\shPoint</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shPoint.xnb</Output>
+      <Time>2012-12-25T21:14:52.0673399+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\shRomb.png</Source>
+      <Name>Textures\shRomb</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shRomb.xnb</Output>
+      <Time>2012-12-25T21:04:32.0848789+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\shSquare.png</Source>
+      <Name>Textures\shSquare</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shSquare.xnb</Output>
+      <Time>2012-12-25T21:07:08.301814+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\shStar.png</Source>
+      <Name>Textures\shStar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shStar.xnb</Output>
+      <Time>2012-12-25T21:05:14.5503078+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\shTriangleDown.png</Source>
+      <Name>Textures\shTriangleDown</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shTriangleDown.xnb</Output>
+      <Time>2012-12-25T21:11:09.9346346+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\shTriangleUp.png</Source>
+      <Name>Textures\shTriangleUp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shTriangleUp.xnb</Output>
+      <Time>2012-12-25T21:11:23.1673915+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\chkBG.png</Source>
+      <Name>Textures\chkBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chkBG.xnb</Output>
+      <Time>2013-01-11T11:43:52.999838+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\chkChecked.png</Source>
+      <Name>Textures\chkChecked</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chkChecked.xnb</Output>
+      <Time>2013-01-11T11:48:04.9892509+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\chkNormal.png</Source>
+      <Name>Textures\chkNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chkNormal.xnb</Output>
+      <Time>2013-01-11T11:48:21.3911891+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

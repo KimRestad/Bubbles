@@ -12,6 +12,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Bubbles
 {
+    /// <summary>
+    /// The possible states for the game.
+    /// </summary>
     public enum GameState
     {
         Start,
@@ -25,20 +28,19 @@ namespace Bubbles
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        // Graphics variables
+        // Graphics variables.
         private GraphicsDeviceManager mGraphics;
         private SpriteBatch mSpriteBatch;
         private Color mBGColour;
 
-        // Gamestate variables
+        // Gamestate variables.
         private GameState mCurrentState;
         private StartScreen mStartScreen;
         private GameScreen mGameScreen;
         private HighscoreScreen mHSScreen;
         private EndScreen mEndScreen;
         
-        private bool mIsPaused;
-        private PauseScreen mPauseScreen;
+        // State variables.
         private KeyboardState mPrevKS;
 
         public Game1()
@@ -46,7 +48,7 @@ namespace Bubbles
             mGraphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            mBGColour = new Color(2, 84, 85);
+            mBGColour = new Color(20, 140, 120);
 
             // Minimum: Width ~1229; Height ~691
             mGraphics.PreferredBackBufferWidth = 1280;
@@ -62,17 +64,17 @@ namespace Bubbles
         /// </summary>
         protected override void Initialize()
         {
+            // Initialise the core and button classes.
             Core.Initialize(this);
             Button.Initialize();
 
-            mPauseScreen = new PauseScreen();
-            UnPause();
-
-            mCurrentState = GameState.Start;
+            // Create the different screens and initialise the game state.
             mStartScreen = new StartScreen();
             mGameScreen = new GameScreen();
             mHSScreen = new HighscoreScreen();
             mEndScreen = new EndScreen();
+
+            mCurrentState = GameState.Start;
 
             IsMouseVisible = true;
             
@@ -107,43 +109,42 @@ namespace Bubbles
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // If the game is not the active application or is paused, do not update (but keep drawing)
+            // If the game is not the active application do not update (but keep drawing)
             if (!IsActive)
             {
-                Pause();
+                // If the state is in game, pause the game.
+                if(mCurrentState == GameState.InGame)
+                    mGameScreen.Pause();
+                
                 return;
             }
 
-            if (Mouse.GetState().RightButton == ButtonState.Pressed)
-                mIsPaused = false;
-
+            // Global keys, Ctrl + Enter toggles full screen
             KeyboardState currKS = Keyboard.GetState();
 
             if ((currKS.IsKeyDown(Keys.LeftControl) || currKS.IsKeyDown(Keys.RightControl)) &&
                 currKS.IsKeyDown(Keys.Enter) && mPrevKS.IsKeyUp(Keys.Enter))
                 mGraphics.ToggleFullScreen();
-
-            if (currKS.IsKeyDown(Keys.P) && mPrevKS.IsKeyUp(Keys.P))
-                Pause();
-
+            
             mPrevKS = currKS;
 
-            if (!mIsPaused)
-                switch (mCurrentState)
-                {
-                    case GameState.Start:
-                        mStartScreen.Update();
-                        break;
-                    case GameState.InGame:
-                        mGameScreen.Update(gameTime);
-                        break;
-                    case GameState.Highscore:
-                        mHSScreen.Update(gameTime);
-                        break;
-                    case GameState.End:
-                        mEndScreen.Update();
-                        break;
-                }
+            // If the game is not paused, update the correct screen based on the game state.
+            
+            switch (mCurrentState)
+            {
+                case GameState.Start:
+                    mStartScreen.Update();
+                    break;
+                case GameState.InGame:
+                    mGameScreen.Update(gameTime);
+                    break;
+                case GameState.Highscore:
+                    mHSScreen.Update();
+                    break;
+                case GameState.End:
+                    mEndScreen.Update();
+                    break;
+            }
 
             base.Update(gameTime);
         }
@@ -157,7 +158,7 @@ namespace Bubbles
             GraphicsDevice.Clear(mBGColour);
 
             mSpriteBatch.Begin();
-
+            // Based on the game state, draw the correct screen.
             switch (mCurrentState)
             {
                 case GameState.Start:
@@ -174,27 +175,19 @@ namespace Bubbles
                     break;
             }
 
-            if (mIsPaused)
-                mPauseScreen.Draw(mSpriteBatch);
-
             mSpriteBatch.End();
 
             base.Draw(gameTime);
         }
 
-        private void Pause()
+        public bool Fullscreen
         {
-            if (mCurrentState == GameState.InGame)
+            get { return mGraphics.IsFullScreen; }
+            set
             {
-                mIsPaused = true;
-                mPauseScreen.Visible = true;
+                if (mGraphics.IsFullScreen != value)
+                    mGraphics.ToggleFullScreen();
             }
-        }
-
-        private void UnPause()
-        {
-            mIsPaused = false;
-            mPauseScreen.Visible = false;
         }
 
         public GameWindow GameWindow

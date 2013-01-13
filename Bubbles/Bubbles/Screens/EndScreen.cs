@@ -23,7 +23,7 @@ namespace Bubbles
             }
         }
 
-        // Highscore board and sign
+        // Highscore board and sign.
         private Texture2D mHSSign;
         private Texture2D mHSBoard;
         private SpriteFont mSignFont;
@@ -34,7 +34,7 @@ namespace Bubbles
         private DrawText mSignText;
         private HighscoreList mHighscores;
 
-        // Score information
+        // Score information.
         private DrawText mWinningText;
         private DrawText mScorePresText;
         private DrawText mScoreText;
@@ -44,16 +44,19 @@ namespace Bubbles
         private bool mGameWasWon;
         private float mScorePresScale = 0.8f;
 
-        // Highscore information
+        // Highscore information.
         private Difficulty mDifficulty;
         private Level mLevel;
 
-        // Other
+        // Other.
         private List<Button> mButtons;
         private Texture2D mBackground;
         private KeyboardState mPrevKeyboard;
         private int mButtonIndex;
 
+        /// <summary>
+        /// Create the end screen and contents.
+        /// </summary>
         public EndScreen()
         {
             // Load chalk board textures and fonts.
@@ -100,10 +103,19 @@ namespace Bubbles
             mButtonIndex = mButtons.Count - 1;
         }
 
+        /// <summary>
+        /// Set info for the end screen.
+        /// </summary>
+        /// <param name="difficulty">The difficulty played.</param>
+        /// <param name="level">The level played.</param>
+        /// <param name="score">The score achieved.</param>
+        /// <param name="gameWasWon">Whether the game was won.</param>
         public void SetInfo(Difficulty difficulty, Level level, int score, bool gameWasWon)
         {
+            // Make mouse visible.
             Core.IsMouseVisible = true;
 
+            // Save information.
             mGameWasWon = gameWasWon;
             mDifficulty = difficulty;
             mLevel = level;
@@ -136,10 +148,14 @@ namespace Bubbles
             mSignText.DrawPos = new Vector2(mSignPos.X + (mSignPos.Width - textSize.X) * 0.5f,
                                        mSignPos.Y + (mSignPos.Height - textSize.Y) * 0.5f);
 
+            // Load high score and save it to file.
             mHighscores = new HighscoreList(mDifficulty, mLevel, gameWasWon ? score : -1);
             mHighscores.SaveToFile();
         }
 
+        /// <summary>
+        /// Update the end screen with contents.
+        /// </summary>
         public void Update()
         {
             HandleKeyboard();
@@ -148,12 +164,15 @@ namespace Bubbles
                 btn.Update();
         }
 
+        /// <summary>
+        /// Draw the end screen with its contents.
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to use when drawing the screen.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
+            // Draw the brick background enough times to cover the whole background.
             for (int x = 0; x < Core.ClientBounds.Width; x += mBackground.Width)
-            {
                 spriteBatch.Draw(mBackground, new Vector2(x, 0), Color.White);
-            }
 
             // Draw chalk board and sign.
             spriteBatch.Draw(mHSSign, mSignPos, Color.White);
@@ -182,16 +201,21 @@ namespace Bubbles
                 btn.Draw(spriteBatch);
         }
 
+        /// <summary>
+        /// Handle input from the keyboard.
+        /// </summary>
         private void HandleKeyboard()
         {
             KeyboardState currKeyboard = Keyboard.GetState();
 
+            // If down key has just been pressed, increment the button index, keeping it within bounds, and move mouse.
             if (currKeyboard.IsKeyDown(Keys.Down) && mPrevKeyboard.IsKeyUp(Keys.Down))
             {
                 mButtonIndex = (mButtonIndex + 1) % mButtons.Count;
                 Vector2 newMousePos = mButtons[mButtonIndex].Center;
                 Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
             }
+            // If down key has just been pressed, decrement the button index, keeping it within bounds, and move mouse.
             else if (currKeyboard.IsKeyDown(Keys.Up) && mPrevKeyboard.IsKeyUp(Keys.Up))
             {
                 if (mButtonIndex <= 0)
@@ -200,6 +224,7 @@ namespace Bubbles
                 Vector2 newMousePos = mButtons[mButtonIndex].Center;
                 Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
             }
+            // If enter key has just been pressed and the chosen button is hovered, click it.
             else if (currKeyboard.IsKeyDown(Keys.Enter) && mPrevKeyboard.IsKeyUp(Keys.Enter))
             {
                 if (mButtons[mButtonIndex].Hovered)
@@ -209,16 +234,25 @@ namespace Bubbles
             mPrevKeyboard = currKeyboard;
         }
 
+        /// <summary>
+        /// Menu button click event. Show menu screen.
+        /// </summary>
         private void BtnMenuClick()
         {
             Core.ReturnToMenu();
         }
 
+        /// <summary>
+        /// Highscore button click event. Show highscore screen.
+        /// </summary>
         private void BtnHighscoreClick()
         {
             Core.ShowHighscore();
         }
 
+        /// <summary>
+        /// Exit button click event. Exit game.
+        /// </summary>
         private void BtnExitClick()
         {
             Core.Exit();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
@@ -22,6 +23,39 @@ namespace Bubbles
         {
             sGame = game;
             sRandom = new Random();
+
+            // Load preferences.
+            string filename = "Content/Data/preferences";
+
+            if (!File.Exists(filename))
+            {
+                // If the file does not exist, load defaults.
+                Fullscreen = false;
+                PlaySounds = true;
+                ShowShapes = false;
+                ShowLongAim = false;
+            }
+            else
+            {
+                // If the file exists, create the file and reader.
+                FileStream file = new FileStream(filename, FileMode.Open);
+                StreamReader reader = new StreamReader(file);
+
+                string[] setting = reader.ReadLine().Split(':');
+                Fullscreen = setting[1].ToLower() == "true" ? true : false;
+
+                setting = reader.ReadLine().Split(':');
+                PlaySounds = setting[1].ToLower() == "true" ? true : false;
+
+                setting = reader.ReadLine().Split(':');
+                ShowShapes = setting[1].ToLower() == "true" ? true : false;
+
+                setting = reader.ReadLine().Split(':');
+                ShowLongAim = setting[1].ToLower() == "true" ? true : false;
+
+                reader.Close();
+                file.Close();
+            }
         }
 
         /// <summary>
@@ -29,6 +63,24 @@ namespace Bubbles
         /// </summary>
         public static void Exit()
         {
+            // Save preferences.
+            string filename = "Content/Data/preferences";
+
+            // If the path does not exist, create it. Create the file and a reader.
+            Directory.CreateDirectory(Path.GetDirectoryName(filename));
+            FileStream file = new FileStream(filename, FileMode.Create);
+            StreamWriter writer = new StreamWriter(file);
+
+            // Write the preferences to the file, then close the writer and the file.
+            writer.WriteLine("Fullscreen:" + Fullscreen);
+            writer.WriteLine("Sounds:" + PlaySounds);
+            writer.WriteLine("Shapes:" + ShowShapes);
+            writer.WriteLine("HelpAim:" + ShowLongAim);
+
+            writer.Close();
+            file.Close();
+            
+            // End game.
             sGame.Exit();
         }
 
@@ -41,6 +93,9 @@ namespace Bubbles
             sGame.GameScreen.StartGame(levelDifficulty, levelToPlay);
         }
 
+        /// <summary>
+        /// Show the highscore screen.
+        /// </summary>
         public static void ShowHighscore()
         {
             sGame.GameState = GameState.Highscore;
@@ -58,6 +113,9 @@ namespace Bubbles
             sGame.EndScreen.SetInfo(sGame.GameScreen.Difficulty, sGame.GameScreen.Level, score, won);
         }
 
+        /// <summary>
+        /// Return to main menu.
+        /// </summary>
         public static void ReturnToMenu()
         {
             sGame.GameState = GameState.Start;
@@ -99,11 +157,29 @@ namespace Bubbles
             get { return sGame.UserResolution; }
         }
 
+        /// <summary>
+        /// Get or set whether the mouse is visible.
+        /// </summary>
         public static bool IsMouseVisible
         {
             get { return sGame.IsMouseVisible; }
             set { sGame.IsMouseVisible = value; }
         }
+
+        /// <summary>
+        /// Get or set whether the game is in fullscreen.
+        /// </summary>
+        public static bool Fullscreen
+        {
+            get { return sGame.Fullscreen; }
+            set { sGame.Fullscreen = value; }
+        }
+
+        public static bool PlaySounds { get; set; }
+
+        public static bool ShowShapes { get; set; }
+
+        public static bool ShowLongAim { get; set; }
 
         #endregion Properties
     }

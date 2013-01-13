@@ -11,21 +11,25 @@ namespace Bubbles
 {
     public class HighscoreScreen
     {
+        // Fonts and textures.
         private Texture2D mTexBoard;
         private Texture2D mTexSign;
         private SpriteFont mFontChalk;
         private SpriteFont mFontSign;
 
+        // Large chalk board ("focus board") variables.
         private Rectangle mFocusBoardPosition;
         private bool mFocusVisible;
         private Level mFocusLvl;
 
+        // Board and sign variables
         private Rectangle[] mBoardPositions;
         private int mSignYOffset;
         private int mSignHeight;
         private Vector2 mSignCenterOffset;
         private Vector2 mBoardCenterOffset;
 
+        // Information and interface variables.
         private List<Button> mButtons;
         private HighscoreList[,] mHighscores;
         private Difficulty mCurrDiff;
@@ -42,7 +46,7 @@ namespace Bubbles
             mFontSign = Core.Content.Load<SpriteFont>(@"Fonts\button");
 
             // Save positions for board, relative sign and relative text.
-            int signPad = 8;
+            int signPad = 4;
             mSignHeight = 40;
             mSignYOffset = -(mSignHeight + signPad);
 
@@ -53,11 +57,11 @@ namespace Bubbles
                                                 width, height);
            
             mBoardPositions = new Rectangle[7];
-            Point padding = new Point(64, 80);
+            Point padding = new Point(64, 64);
             width = (int)((Core.ClientBounds.Width - padding.X * 5) * 0.25f);
             height = (int)(((float)width / mTexBoard.Width) * mTexBoard.Height);
             int xPos = padding.X;
-            int yPos = 128 - mSignYOffset;
+            int yPos = 112 - mSignYOffset;
 
             for (int lvl = 0; lvl < mBoardPositions.Length; ++lvl)
             {
@@ -102,7 +106,10 @@ namespace Bubbles
             BtnEasyClick();
         }
 
-        public void Update(GameTime gametime)
+        /// <summary>
+        /// Update the highscore screen
+        /// </summary>
+        public void Update()
         {
             HandleKeyboard();
             HandleMouse();
@@ -111,16 +118,39 @@ namespace Bubbles
                 btn.Update();
         }
 
+        /// <summary>
+        /// Draw the highscore screen. Either draws the rows of highscore boards or the focus board.
+        /// </summary>
+        /// <param name="spritebatch">The sprite batch to use when drawing the screen.</param>
         public void Draw(SpriteBatch spritebatch)
         {
             if (mFocusVisible)
             {
+                // Draw the focus board.
                 Vector2 nameOffset = new Vector2(mFocusBoardPosition.X + 40, mFocusBoardPosition.Y + 30);
                 Vector2 scoreOffset = new Vector2(mFocusBoardPosition.X + mFocusBoardPosition.Width - 40,
                                                   nameOffset.Y);
 
                 spritebatch.Draw(mTexBoard, mFocusBoardPosition, Color.White);
                 mHighscores[(int)mCurrDiff, (int)mFocusLvl].Draw(spritebatch, 0.8f, nameOffset, scoreOffset);
+
+                // Draw the sign and text.
+                Rectangle signPos = new Rectangle(mFocusBoardPosition.X, mFocusBoardPosition.Y - 80,
+                                                  mFocusBoardPosition.Width, 64);
+                string text = mCurrDiff.ToString() + ": " + mFocusLvl.ToString();
+                Vector2 textSize = mFontSign.MeasureString(text);
+                Vector2 textPos = new Vector2(signPos.X + (signPos.Width - textSize.X) * 0.5f,
+                                              signPos.Y + (signPos.Height - textSize.Y) * 0.5f);
+
+                spritebatch.Draw(mTexSign, signPos, Color.White);
+                spritebatch.DrawString(mFontSign, text, textPos + new Vector2(1, 1), Color.White * 0.5f);
+                spritebatch.DrawString(mFontSign, text, textPos, Color.Black * 0.85f);
+
+                // Draw information text.
+                text = "Click any mouse button to return";
+                textPos = mButtons[mButtons.Count - 1].Center - mFontSign.MeasureString(text) * 0.5f;
+                spritebatch.DrawString(mFontSign, text, textPos + new Vector2(2,2), Color.Black);
+                spritebatch.DrawString(mFontSign, text, textPos, Color.Goldenrod);
             }
             else
             {
@@ -129,12 +159,20 @@ namespace Bubbles
                 {
                     // Draw board with highest score.
                     string text = mHighscores[(int)mCurrDiff, i].GetFirstScore();
-                    Vector2 textSize = mFontChalk.MeasureString(text);
-                    Vector2 textPos = new Vector2(pos.X + mBoardCenterOffset.X - textSize.X * 0.5f,
+                    Vector2 textSize = mFontChalk.MeasureString(text) * 0.5f;
+                    Vector2 textPos = new Vector2(pos.X + mBoardCenterOffset.X - textSize.X,
                                                   pos.Y + mBoardCenterOffset.Y - textSize.Y);
 
                     spritebatch.Draw(mTexBoard, pos, Color.White);
                     spritebatch.DrawString(mFontChalk, text, textPos, Color.White);
+
+                    // Draw information text.
+                    text = "Best score:";
+                    textSize = mFontSign.MeasureString(text) * 0.7f;    // Scale of text is 0.7
+                    textPos = new Vector2(pos.X + mBoardCenterOffset.X - textSize.X * 0.5f,
+                                          pos.Y + textSize.Y);
+                    spritebatch.DrawString(mFontChalk, text, textPos, Color.White, 0.0f, Vector2.Zero, 0.7f,
+                                           SpriteEffects.None, 0.0f);
 
                     // Draw sign and sign text.
                     Rectangle signPos = new Rectangle(pos.X, pos.Y + mSignYOffset,
@@ -150,12 +188,22 @@ namespace Bubbles
 
                     ++i;
                 }
-            }
 
-            foreach (Button btn in mButtons)
-                btn.Draw(spritebatch);
+                // Draw the information text.
+                string info = "Click on a chalk board to see the full high score list";
+                Vector2 infoPos = new Vector2(Core.ClientBounds.Width * 0.5f, 660f) - mFontSign.MeasureString(info) * 0.5f;
+                spritebatch.DrawString(mFontSign, info, infoPos + new Vector2(2, 2), Color.Black);
+                spritebatch.DrawString(mFontSign, info, infoPos, Color.Goldenrod);
+
+                // Draw the buttons.
+                foreach (Button btn in mButtons)
+                    btn.Draw(spritebatch);
+            }            
         }
 
+        /// <summary>
+        /// Load all the highscore lists.
+        /// </summary>
         public void CreateHighscoreLists()
         {
             mHighscores = new HighscoreList[3, 7];
@@ -168,17 +216,22 @@ namespace Bubbles
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Handle keyboard input.
+        /// </summary>
         private void HandleKeyboard()
         {
             KeyboardState currKeyboard = Keyboard.GetState();
 
+            // If down key has just been pressed, increment the button index, keeping it within bounds, and move mouse.
             if (currKeyboard.IsKeyDown(Keys.Down) && mPrevKeyboard.IsKeyUp(Keys.Down))
             {
                 mButtonIndex = (mButtonIndex + 1) % mButtons.Count;
                 Vector2 newMousePos = mButtons[mButtonIndex].Center;
                 Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
             }
+            // If down key has just been pressed, decrement the button index, keeping it within bounds, and move mouse.
             else if (currKeyboard.IsKeyDown(Keys.Up) && mPrevKeyboard.IsKeyUp(Keys.Up))
             {
                 if (mButtonIndex <= 0)
@@ -187,6 +240,7 @@ namespace Bubbles
                 Vector2 newMousePos = mButtons[mButtonIndex].Center;
                 Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
             }
+            // If enter key has just been pressed and the chosen button is hovered, click it.
             else if (currKeyboard.IsKeyDown(Keys.Enter) && mPrevKeyboard.IsKeyUp(Keys.Enter))
             {
                 if (mButtons[mButtonIndex].Hovered)
@@ -196,11 +250,16 @@ namespace Bubbles
             mPrevKeyboard = currKeyboard;
         }
 
+        /// <summary>
+        /// Handle mouse input.
+        /// </summary>
         private void HandleMouse()
         {
             MouseState currMS = Mouse.GetState();
 
-            if (currMS.LeftButton == ButtonState.Pressed && mPrevMS.LeftButton == ButtonState.Released)
+            // If a mouse button is pressed, switch between showing the focus board and overview.
+            if (currMS.LeftButton == ButtonState.Pressed && mPrevMS.LeftButton == ButtonState.Released ||
+                currMS.RightButton == ButtonState.Pressed && mPrevMS.RightButton == ButtonState.Released)
             {
                 if (mFocusVisible)
                     mFocusVisible = false;
@@ -222,6 +281,9 @@ namespace Bubbles
             mPrevMS = currMS;
         }
 
+        /// <summary>
+        /// Easy button click event. Mark the easy button and unmark the others.
+        /// </summary>
         private void BtnEasyClick()
         {
             mCurrDiff = Difficulty.Easy;
@@ -231,6 +293,9 @@ namespace Bubbles
             mButtons[2].Marked = false;
         }
 
+        /// <summary>
+        /// Normal button click event. Mark the normal button and unmark the others.
+        /// </summary>
         private void BtnNormalClick()
         {
             mCurrDiff = Difficulty.Normal;
@@ -240,6 +305,9 @@ namespace Bubbles
             mButtons[2].Marked = false;
         }
 
+        /// <summary>
+        /// Hard button click event. Mark the hard button and unmark the others.
+        /// </summary>
         private void BtnHardClick()
         {
             mCurrDiff = Difficulty.Hard;
@@ -249,6 +317,9 @@ namespace Bubbles
             mButtons[1].Marked = false;
         }
 
+        /// <summary>
+        /// Return to menu button click event. Return to main menu.
+        /// </summary>
         private void BtnMenuReturnClick()
         {
             Core.ReturnToMenu();

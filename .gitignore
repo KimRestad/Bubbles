@@ -1,14 +1,2 @@
-# Ignore compiled files
-Bubbles\Bubbles\bin
-Bubbles\Bubbles\obj
-Bubbles\Bubbles\publish
-
-# Ignore graphics work files
-Bubbles\BubblesBubbles\BubblesContent\Textures\Old Images
-Bubbles\BubblesContent\Textures\Raw Images
-
-# Ignore saved data
-Bubbles\Bubbles\bin\*
-
 # Ignore Visual Studio session files
 *.suo

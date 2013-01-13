@@ -9,13 +9,18 @@ namespace Bubbles
 {
     class PauseScreen : OverlayScreen
     {
+        // Text variables.
         private SpriteFont mFont;
         private Vector2 mTextPosition;
         private string mText;
 
+        /// <summary>
+        /// Create and initialise the pause screen.
+        /// </summary>
         public PauseScreen()
             : base(new Rectangle(0, 100, Core.ClientBounds.Width, 300), Color.Black, 0.75f)
         {
+            // Load font and save text and its position.
             mFont = Core.Content.Load<SpriteFont>("Fonts/credits");
             mText = "GAME PAUSED!\nRight click to unpause.";
             Vector2 textSize = mFont.MeasureString(mText);
@@ -23,6 +28,10 @@ namespace Bubbles
                                         mPosition.Y + (mPosition.Height - textSize.Y) * 0.5f);
         }
 
+        /// <summary>
+        /// Draw the screen if it is visible.
+        /// </summary>
+        /// <param name="spritebatch">The sprite batch to use when drawing the screen.</param>
         public override void Draw(SpriteBatch spritebatch)
         {
             if (!Visible)

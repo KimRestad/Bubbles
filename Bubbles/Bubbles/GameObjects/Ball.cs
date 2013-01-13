@@ -8,11 +8,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Bubbles
 {
+    /// <summary>
+    /// The possible colours for a ball. Count gives the total number of valid colours.
+    /// </summary>
     enum BallColour
     {
         Red, Blue, Green, Yellow, Purple, Turquoise, Orange, Pink, Black, DarkGreen, Count
     }
 
+    /// <summary>
+    /// The possible states for a ball.
+    /// </summary>
     enum BallState
     {
         Still, Shot, Falling, Exploding, Dead
@@ -35,23 +41,27 @@ namespace Bubbles
         #endregion Variables
 
         #region StaticVariables
+        
+        // Constants.
+        public const float C_SPEED = 0.8f;
+        //public const BallColour C_NON_SHOOTABLE_COLOUR = BallColour.Red;
 
-        // Appearance variables
+        // Appearance variables.
         private static Texture2D sTexBall;
         private static Texture2D[] sTexShapes;
         private static List<Color> sColours;
         private static Vector2 sSize;
         private static float sScale = 1.0f;
-        private static bool sShowShapes;
-
-        // Constants
-        public const float C_SPEED = 12.0f;
-        //public const BallColour C_NON_SHOOTABLE_COLOUR = BallColour.Red;
 
         #endregion StaticVariables
         
         #region Methods
 
+        /// <summary>
+        /// Creates a new ball. Ball class must be initialised by calling Ball.Initialise or an exception is thrown.
+        /// </summary>
+        /// <param name="colour">The colour of the ball. Is clamped to a valid colour.</param>
+        /// <param name="position">The position of the ball.</param>
         public Ball(BallColour colour, Vector2 position)
         {
             if (sColours.Count <= 0)
@@ -65,15 +75,22 @@ namespace Bubbles
             mPosition = position;
         }
 
-        public void Update(Board board)
+        /// <summary>
+        /// Updates the ball based on the state.
+        /// </summary>
+        /// <param name="board">The board the ball is moving in.</param>
+        /// <param name="gameTime">The game time.</param>
+        public void Update(Board board, GameTime gameTime)
         {
+            float dt = gameTime.ElapsedGameTime.Milliseconds;
+
             switch (mState)
             {
                 case BallState.Shot:
-                    Move(ref board);
+                    Move(ref board, dt);
                     break;
                 case BallState.Falling:
-                    AnimateJump(ref board);
+                    AnimateJump(ref board, dt);
                     break;
                 case BallState.Exploding:
                     AnimateExplosion();
@@ -81,16 +98,22 @@ namespace Bubbles
             }
         }
 
+        /// <summary>
+        /// Draws the ball or the animation. If specified, the helper shape is drawn on the ball.
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch used when drawing the ball.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
+            // If the ball is currently exploding, draw explosion animation
             if (mState == BallState.Exploding)
                 spriteBatch.Draw(sTexBall, mPosition, null, sColours[(int)mColour], 0.0f,
                                  mOrigin, sScale * mExplodeScale, SpriteEffects.None, 0.0f);
+            // Else draw the ball and, if specified, the helper shape.
             else
             {
                 spriteBatch.Draw(sTexBall, mPosition, null, sColours[(int)mColour], 0.0f,
                                  mOrigin, sScale, SpriteEffects.None, 0.0f);
-                if (sShowShapes && sTexShapes[(int)mColour] != null)
+                if (Core.ShowShapes && sTexShapes[(int)mColour] != null)
                 {
                     spriteBatch.Draw(sTexShapes[(int)mColour], mPosition, null, Color.DarkGray,
                                      0.0f, mOrigin, sScale, SpriteEffects.None, 0.0f);
@@ -98,6 +121,10 @@ namespace Bubbles
             }
         }
 
+        /// <summary>
+        /// Shoot the ball in the specified direction.
+        /// </summary>
+        /// <param name="direction">The direction to shoot the ball in.</param>
         public void Shoot(Vector2 direction)
         {
             mState = BallState.Shot;
@@ -105,7 +132,11 @@ namespace Bubbles
             mDirection.Normalize();
         }
 
-        public void StartAnimation(bool goLeft)
+        /// <summary>
+        /// Start the "jump"-animation to the left or right based on the goLeft parameter.
+        /// </summary>
+        /// <param name="goLeft">Specifies whether the ball should jump left or right.</param>
+        public void StartJumpAnimation(bool goLeft)
         {
             mState = BallState.Falling;
             if (goLeft)
@@ -116,28 +147,44 @@ namespace Bubbles
             mDirection.Normalize();
         }
 
+        /// <summary>
+        /// Start the explosion animation.
+        /// </summary>
         public void StartExploding()
         {
             mState = BallState.Exploding;
             mExplodeScale = 1.0f;
         }
 
-        private void Move(ref Board board)
+        /// <summary>
+        /// Move the ball in its direction checking for collisions. If it hits a wall, the x-direction is reversed.
+        /// If it hits the roof or a stationary ball, it is stopped.
+        /// </summary>
+        /// <param name="board">The board the ball is moving in.</param>
+        /// <param name="dt">The elapsed milliseconds since last frame.</param>
+        private void Move(ref Board board, float dt)
         {
-            mPosition += mDirection * C_SPEED;
+            mPosition += mDirection * C_SPEED * dt;
 
             if (mPosition.X - Size.X * 0.5f < (board.InnerBounds.X) ||
                 mPosition.X + Size.X * 0.5f > (board.InnerBounds.X + board.InnerBounds.Width))
                 mDirection.X = -mDirection.X;
 
-            if (board.Collision(this) && mState == BallState.Shot)
+            if (board.Collision(this, dt) && mState == BallState.Shot)
                 mState = BallState.Still;
         }
 
-        private void AnimateJump(ref Board board)
+        /// <summary>
+        /// Add gravity to the direction and update the position with direction. If a wall, the roof or the floor
+        /// is hit, the ball dies.
+        /// </summary>
+        /// <param name="board">The board the ball is moving in.</param>
+        /// <param name="dt">The elapsed milliseconds since last frame.</param>
+        private void AnimateJump(ref Board board, float dt)
         {
+            // Update direction with a gravity and update position with direction.
             mDirection += new Vector2(0, 0.05f);
-            mPosition += mDirection * C_SPEED;
+            mPosition += mDirection * C_SPEED * dt;
 
             // If the ball hits any of the walls, it is dead.
             if (mPosition.X - Size.X * 0.5f < (board.InnerBounds.X) ||
@@ -150,6 +197,9 @@ namespace Bubbles
                 mState = BallState.Dead;
         }
 
+        /// <summary>
+        /// Animate the explosion. If the animation is finished, the ball is dead.
+        /// </summary>
         private void AnimateExplosion()
         {
             mExplodeScale -= 0.05f;
@@ -161,22 +211,34 @@ namespace Bubbles
 
         #region Properties
 
+        /// <summary>
+        /// Get or set the ball's position.
+        /// </summary>
         public Vector2 Position
         {
             get { return mPosition; }
             set { mPosition = value; }
         }
 
+        /// <summary>
+        /// Read only. Returns the ball's current state.
+        /// </summary>
         public BallState State
         {
             get { return mState; }
         }
 
+        /// <summary>
+        /// Read only. Returns the ball's current direction.
+        /// </summary>
         public Vector2 Direction
         {
             get { return mDirection; }
         }
 
+        /// <summary>
+        /// Read only. Returns the ball's colour.
+        /// </summary>
         public BallColour Colour
         {
             get { return mColour; }
@@ -186,13 +248,20 @@ namespace Bubbles
         #endregion Properties
 
         #region StaticMethods
-        public static void Initialize(int numColours, float ballSize)
+
+        /// <summary>
+        /// Initialises the Ball class with the specifed number of colours and ball size.
+        /// </summary>
+        /// <param name="numColours">The number of colours the ball class should use.</param>
+        /// <param name="ballSize">The scale of the balls, where 1.0 is 64x64 px.</param>
+        public static void Initialise(int numColours, float ballSize)
         {
             sColours = new List<Color>();
             numColours = (int)MathHelper.Clamp(numColours, 4, 10);
 
             sTexShapes = new Texture2D[numColours];
 
+            // Add the correct amount of colours to the colours list and shapes to the shape array.
             switch (numColours)
             {
                 case 4:
@@ -231,32 +300,35 @@ namespace Bubbles
                     goto case 9;
             }
 
+            // Load the ball texture, set whether to show shapes and save ball size and scale.
             sTexBall = Core.Content.Load<Texture2D>(@"Textures\ballWhite");
             sSize = new Vector2(sTexBall.Width, sTexBall.Height);
             sScale = ballSize;
-            sShowShapes = true;
         }
         #endregion StaticMethods
 
         #region StaticProperties
 
+        /// <summary>
+        /// Gets or sets the scale of the balls.
+        /// </summary>
         public static float Scale
         {
             get { return sScale; }
             set { sScale = value; }
         }
 
-        public static bool ShowShapes
-        {
-            get { return sShowShapes; }
-            set { sShowShapes = value; }
-        }
-
+        /// <summary>
+        /// Read only. Returns a vector representing the x and y size of the balls.
+        /// </summary>
         public static Vector2 Size
         {
             get { return new Vector2(sTexBall.Width * sScale, sTexBall.Height * sScale); }
         }
 
+        /// <summary>
+        /// Read only. Returns the number of colours in play.
+        /// </summary>
         public static int ColourCount
         {
             get { return sColours.Count; }

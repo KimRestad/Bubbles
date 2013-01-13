@@ -11,6 +11,9 @@ namespace Bubbles
 {
     class ChoiceScreen : OverlayScreen
     {
+        // Constants
+        private const string C_FILENAME = @"Content\Data\gameSetup";
+
         // Text variables.
         private Vector2 mDiffTextPos;
         private Vector2 mLvlTextPos;
@@ -18,22 +21,29 @@ namespace Bubbles
         private string mLvlText;
         private SpriteFont mFont;
 
+        // Button variables.
         private List<Button> mButtons;
+        private int mButtonIndex;           // Used when using arrow keys to choose button.
+
+        // Game choice variables.
         private Difficulty mChosenDiff;
         private Level mChosenLvl;
-
-        private string mFilename = @"Content\Data\GamePreference";
+        
+        // State variables.
         private KeyboardState mPrevKeyboard;
-        private int mButtonIndex;
-
+        
+        /// <summary>
+        /// Create a choice screen.
+        /// </summary>
         public ChoiceScreen() 
             : base(new Point(896, 640), new Rectangle(0, 0, Core.ClientBounds.Width, Core.ClientBounds.Height), Color.Black, 0.75f)
         {
+            // Initialise information text and font.
             mDiffText = "CHOOSE A DIFFICULTY";
             mLvlText = "CHOOSE ONE OR ALL LEVELS TO PLAY";
             mFont = Core.Content.Load<SpriteFont>("Fonts/credits");
 
-            // Create the buttons
+            // Create the buttons.
             Point size = new Point(256, 64);
             Point offset = new Point((int)(mPosition.X + (mPosition.Width - size.X) * 0.5f), (int)mPosition.Y + 96);
             Point padding = new Point(size.X + 16, size.Y + 16);
@@ -48,7 +58,7 @@ namespace Bubbles
             mLvlTextPos = new Vector2(mPosition.X + (mPosition.Width - mFont.MeasureString(mLvlText).X) * 0.5f, offset.Y - 64);
 
             mButtons.Add(new Button(BtnDecaClick, new Rectangle(offset.X - padding.X, offset.Y, size.X, size.Y), "Deca"));
-            mButtons.Add(new Button(BtnHektoClick, new Rectangle(offset.X, offset.Y, size.X, 64), "Hekto"));
+            mButtons.Add(new Button(BtnHectoClick, new Rectangle(offset.X, offset.Y, size.X, 64), "Hekto"));
             mButtons.Add(new Button(BtnKiloClick, new Rectangle(offset.X + padding.X, offset.Y, size.X, size.Y), "Kilo"));
 
             mButtons.Add(new Button(BtnMegaClick, new Rectangle(offset.X - padding.X, offset.Y + padding.Y, size.X, size.Y), "Mega"));
@@ -58,13 +68,17 @@ namespace Bubbles
             mButtons.Add(new Button(BtnAllClick, new Rectangle(offset.X, offset.Y + padding.Y * 2, size.X, size.Y), "All"));
 
             offset.Y += padding.Y * 3 + 32;
-            mButtons.Add(new Button(BtnExitClick, new Rectangle(offset.X - padding.X, offset.Y, size.X, size.Y), "Close"));
+            mButtons.Add(new Button(BtnCloseClick, new Rectangle(offset.X - padding.X, offset.Y, size.X, size.Y), "Close"));
             mButtons.Add(new Button(BtnPlayClick, new Rectangle(offset.X + padding.X, offset.Y, size.X, size.Y), "Start Game"));
 
+            // Load preference and initialise button index variable.
             LoadLastChoice();
             mButtonIndex = mButtons.Count - 1;
         }
 
+        /// <summary>
+        /// Update the screen if it is visible.
+        /// </summary>
         public override void Update()
         {
             if (!Visible)
@@ -74,8 +88,14 @@ namespace Bubbles
 
             foreach (Button btn in mButtons)
                 btn.Update();
+
+            HandleInput();
         }
 
+        /// <summary>
+        /// Draw the screen and its contents if the screen is visible.
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to use when drawing the screen.</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!Visible)
@@ -83,23 +103,30 @@ namespace Bubbles
 
             base.Draw(spriteBatch);
             
+            // Draw buttons.
             foreach (Button btn in mButtons)
                 btn.Draw(spriteBatch);
 
+            // Draw information text.
             spriteBatch.DrawString(mFont, mDiffText, mDiffTextPos, Color.Yellow);
             spriteBatch.DrawString(mFont, mLvlText, mLvlTextPos, Color.Yellow);
         }
 
+        /// <summary>
+        /// Handle input from the keyboard.
+        /// </summary>
         private void HandleInput()
         {
             KeyboardState currKeyboard = Keyboard.GetState();
 
+            // If down key has just been pressed, increment the button index, keeping it within bounds, and move mouse.
             if (currKeyboard.IsKeyDown(Keys.Down) && mPrevKeyboard.IsKeyUp(Keys.Down))
             {
                 mButtonIndex = (mButtonIndex + 1) % mButtons.Count;
                 Vector2 newMousePos = mButtons[mButtonIndex].Center;
                 Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
             }
+            // If down key has just been pressed, decrement the button index, keeping it within bounds, and move mouse.
             else if (currKeyboard.IsKeyDown(Keys.Up) && mPrevKeyboard.IsKeyUp(Keys.Up))
             {
                 if (mButtonIndex <= 0)
@@ -108,6 +135,7 @@ namespace Bubbles
                 Vector2 newMousePos = mButtons[mButtonIndex].Center;
                 Mouse.SetPosition((int)newMousePos.X, (int)newMousePos.Y);
             }
+            // If enter key has just been pressed and the chosen button is hovered, click it.
             else if (currKeyboard.IsKeyDown(Keys.Enter) && mPrevKeyboard.IsKeyUp(Keys.Enter))
             {
                 if (mButtons[mButtonIndex].Hovered)
@@ -117,18 +145,23 @@ namespace Bubbles
             mPrevKeyboard = currKeyboard;
         }
 
+        /// <summary>
+        /// Load the game setup preference (what was chosen last time).
+        /// </summary>
         private void LoadLastChoice()
         {
-            if(!File.Exists(mFilename))
+            // If the file does not exist, choose difficulty Easy and level Deca.
+            if(!File.Exists(C_FILENAME))
             {
                 mButtons[0].Marked = true;
                 mButtons[3].Marked = true;
                 return;
             }
 
-            FileStream file = new FileStream(mFilename, FileMode.Open);
+            FileStream file = new FileStream(C_FILENAME, FileMode.Open);
             StreamReader reader = new StreamReader(file);
 
+            // Read difficulty and choose it.
             string line = reader.ReadLine();
             if (line != null && line.Contains("Difficulty:"))
             {
@@ -140,6 +173,8 @@ namespace Bubbles
                 else if (line == "Hard")
                     BtnHardClick();
             }
+
+            // Read level and choose it.
             line = reader.ReadLine();
             if (line != null && line.Contains("Level:"))
             {
@@ -147,7 +182,7 @@ namespace Bubbles
                 if (line == "Deca")
                     BtnDecaClick();
                 else if (line == "Hecto")
-                    BtnHektoClick();
+                    BtnHectoClick();
                 else if (line == "Kilo")
                     BtnKiloClick();
                 else if (line == "Mega")
@@ -164,12 +199,17 @@ namespace Bubbles
             file.Close();
         }
 
+        /// <summary>
+        /// Save the chosen setup until next time.
+        /// </summary>
         private void SaveChoice()
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(mFilename));
-            FileStream file = new FileStream(mFilename, FileMode.Create);
+            // If the directory does not exist, create it, then create file and writer.
+            Directory.CreateDirectory(Path.GetDirectoryName(C_FILENAME));
+            FileStream file = new FileStream(C_FILENAME, FileMode.Create);
             StreamWriter writer = new StreamWriter(file);
 
+            // Write chosen difficulty and level to file, then close writer and file.
             writer.WriteLine("Difficulty:" + mChosenDiff.ToString());
             writer.WriteLine("Level:" + mChosenLvl.ToString());
 
@@ -177,6 +217,9 @@ namespace Bubbles
             file.Close();
         }
 
+        /// <summary>
+        /// Easy button click event. Mark this button, unmarking previously marked difficulty button.
+        /// </summary>
         private void BtnEasyClick()
         {
             mChosenDiff = Difficulty.Easy;
@@ -185,6 +228,9 @@ namespace Bubbles
             mButtons[2].Marked = false;
         }
 
+        /// <summary>
+        /// Normal button click event. Mark this button, unmarking previously marked difficulty button.
+        /// </summary>
         private void BtnNormalClick()
         {
             mChosenDiff = Difficulty.Normal;
@@ -192,7 +238,10 @@ namespace Bubbles
             mButtons[0].Marked = false;
             mButtons[2].Marked = false;
         }
-
+        
+        /// <summary>
+        /// Hard button click event. Mark this button, unmarking previously marked difficulty button.
+        /// </summary>
         private void BtnHardClick()
         {
             mChosenDiff = Difficulty.Hard;
@@ -201,6 +250,9 @@ namespace Bubbles
             mButtons[1].Marked = false;
         }
 
+        /// <summary>
+        /// Unmark all level buttons.
+        /// </summary>
         private void BtnUnmarkLevel()
         {
             for (int i = 3; i < mButtons.Count - 2; ++i)
@@ -209,6 +261,9 @@ namespace Bubbles
             }
         }
 
+        /// <summary>
+        /// Deca button click event. Mark this button, unmarking previously marked level button.
+        /// </summary>
         private void BtnDecaClick()
         {
             BtnUnmarkLevel();
@@ -216,13 +271,19 @@ namespace Bubbles
             mChosenLvl = Level.Deca;
         }
 
-        private void BtnHektoClick()
+        /// <summary>
+        /// Hecto button click event. Mark this button, unmarking previously marked level button.
+        /// </summary>
+        private void BtnHectoClick()
         {
             BtnUnmarkLevel();
             mButtons[4].Marked = true;
             mChosenLvl = Level.Hecto;
         }
 
+        /// <summary>
+        /// Kilo button click event. Mark this button, unmarking previously marked level button.
+        /// </summary>
         private void BtnKiloClick()
         {
             BtnUnmarkLevel();
@@ -230,6 +291,9 @@ namespace Bubbles
             mChosenLvl = Level.Kilo;
         }
 
+        /// <summary>
+        /// Mega button click event. Mark this button, unmarking previously marked level button.
+        /// </summary>
         private void BtnMegaClick()
         {
             BtnUnmarkLevel();
@@ -237,6 +301,9 @@ namespace Bubbles
             mChosenLvl = Level.Mega;
         }
 
+        /// <summary>
+        /// Giga button click event. Mark this button, unmarking previously marked level button.
+        /// </summary>
         private void BtnGigaClick()
         {
             BtnUnmarkLevel();
@@ -244,6 +311,9 @@ namespace Bubbles
             mChosenLvl = Level.Giga;
         }
 
+        /// <summary>
+        /// Tera button click event. Mark this button, unmarking previously marked level button.
+        /// </summary>
         private void BtnTeraClick()
         {
             BtnUnmarkLevel();
@@ -251,6 +321,9 @@ namespace Bubbles
             mChosenLvl = Level.Tera;
         }
 
+        /// <summary>
+        /// All button click event. Mark this button, unmarking previously marked level button.
+        /// </summary>
         private void BtnAllClick()
         {
             BtnUnmarkLevel();
@@ -258,6 +331,9 @@ namespace Bubbles
             mChosenLvl = Level.All;
         }
 
+        /// <summary>
+        /// Play button click event. Save choice and start game.
+        /// </summary>
         private void BtnPlayClick()
         {
             SaveChoice();
@@ -265,7 +341,10 @@ namespace Bubbles
             Core.StartGame(mChosenDiff, mChosenLvl);
         }
 
-        private void BtnExitClick()
+        /// <summary>
+        /// Close button click event. Hide this window.
+        /// </summary>
+        private void BtnCloseClick()
         {
             Visible = false;
         }

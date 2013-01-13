@@ -40,17 +40,20 @@ namespace Bubbles
 
         public Button(OnClick onClickMethod, Rectangle position, string caption)
         {
+            // Save click method and initialise state variables.
             mOnClickMethod = onClickMethod;
             mHovered = false;
             mVisible = true;
             mEnabled = true;
             mMarked = false;
 
+            // Load texture and save information about its appearance.
             mBackground = Core.Content.Load<Texture2D>("Textures/button");
             mPosition = position;
             mTint = Color.White;
             mHighlight = new Color(2, 84, 85, 255);
 
+            // Save caption, its colour, position and load the font.
             mCaption = caption;
             mTextColour = Color.Ivory;
             mFont = Core.Content.Load<SpriteFont>("Fonts/button");
@@ -165,6 +168,9 @@ namespace Bubbles
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the button is marked or not.
+        /// </summary>
         public bool Marked
         {
             get { return mMarked; }
@@ -176,6 +182,9 @@ namespace Bubbles
             }
         }
 
+        /// <summary>
+        /// Read only. Returns the center position of the button.
+        /// </summary>
         public Vector2 Center
         {
             get
@@ -185,6 +194,9 @@ namespace Bubbles
             }
         }
 
+        /// <summary>
+        /// Initialise the button class. Loads the button click sound.
+        /// </summary>
         public static void Initialize()
         {
             sSound = Core.Content.Load<SoundEffect>(@"Sounds\button");

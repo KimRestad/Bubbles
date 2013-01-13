@@ -11,8 +11,8 @@ namespace Bubbles
     class Board
     {
         /// <summary>
-        /// A row at the board. Consists of all the balls in that row and a type specifying whethet the row is
-        /// at whole indexes or half (it is offset from the row above and under)
+        /// A row on the board. Consists of all the balls in that row and a type specifying whether the row is
+        /// at whole indexes or half (i.e. it is offset from the row above and under).
         /// </summary>
         private class BoardRow
         {
@@ -27,34 +27,7 @@ namespace Bubbles
             }
         }
 
-        // Function variables
-        private List<BoardRow> mBalls;
-        private List<Ball> mRemovedBalls;
-        private int[] mColumns = new int[2];
-        private Rectangle mInnerBounds;
-        private int[] mColoursInPlay = new int[(int)BallColour.Count];
-        private int mNumberOfBalls;
-        private int mMaxRows;
-
-        // Score variables
-        private int mScore;
-        private float mAddRowTime;
-        private float mAddRowModifier;
-
-        // Graphics variables
-        private Vector2 mOffset;
-        private Texture2D mWallTopTex;
-        private Texture2D mWallSideTex;
-        private Rectangle mWallLeftRect;
-        private Rectangle mWallRightRect;
-        private Rectangle mWallTopRect;
-
-        // Sound variables
-        private SoundEffect mSoundPop;
-        private SoundEffect mSoundDangling;
-        
-        // Static variables
-        private static bool sPlaySounds = true;
+        #region Variables
 
         // Constants
         private const int C_WALL_THICKNESS = 40;
@@ -62,11 +35,41 @@ namespace Bubbles
         private const int C_DANGLING_POINTS = 15;
         private const float C_TIME_BONUS_PC = 1.25f; // Time bonus % of time modifier gotten from dangling balls
 
+        // Function variables.
+        private List<BoardRow> mBalls;
+        private List<Ball> mAnimatingBalls;
+        private int[] mColumns = new int[2];
+        private Rectangle mInnerBounds;
+        private int[] mColoursInPlay = new int[(int)BallColour.Count];
+        private int mNumberOfBalls;
+        private int mMaxRows;
+
+        // Score variables.
+        private int mScore;
+        private float mAddRowTime;
+        private float mAddRowModifier;
+
+        // Graphics variables.
+        private Vector2 mOffset;
+        private Texture2D mWallTopTex;
+        private Texture2D mWallSideTex;
+        private Rectangle mWallLeftRect;
+        private Rectangle mWallRightRect;
+        private Rectangle mWallTopRect;
+
+        // Sound variables.
+        private SoundEffect mSoundPop;
+        private SoundEffect mSoundDangling;
+
+        #endregion Variables
+
         #region Methods
+
         /// <summary>
-        /// Create the board that contains all the balls and takes care of the collision checking
+        /// Create the board that contains all the rows of balls. 
         /// </summary>
-        /// <param name="bounds">The boundaries of the board</param>
+        /// <param name="bounds">The boundaries of the board.</param>
+        /// <param name="startScore">Optional. The starting score of the board.</param>
         public Board(Rectangle bounds, int startScore = 0)
         {
             // Load wall textures
@@ -109,79 +112,87 @@ namespace Bubbles
 
             mOffset = new Vector2(bounds.X + xOffset + C_WALL_THICKNESS, bounds.Y + C_WALL_THICKNESS);
             mBalls = new List<BoardRow>();
-            mRemovedBalls = new List<Ball>();
+            mAnimatingBalls = new List<Ball>();
 
             mSoundPop = Core.Content.Load<SoundEffect>(@"Sounds\bubblePop");
             mSoundDangling = Core.Content.Load<SoundEffect>(@"Sounds\dangling");
         }
 
         /// <summary>
-        /// Update the board.
+        /// Update the board and remove dead balls.
         /// </summary>
-        public void Update()
+        /// <param name="gameTime">The game time.</param>
+        public void Update(GameTime gameTime)
         {
-            for (int i = 0; i < mRemovedBalls.Count; ++i)
+            for (int i = 0; i < mAnimatingBalls.Count; ++i)
             {
-                mRemovedBalls[i].Update(this);
-                if (mRemovedBalls[i].State == BallState.Dead)
+                mAnimatingBalls[i].Update(this, gameTime);
+                if (mAnimatingBalls[i].State == BallState.Dead)
                 {
-                    mRemovedBalls.RemoveAt(i);
+                    mAnimatingBalls.RemoveAt(i);
                     --i;
                 }
             }
         }
 
         /// <summary>
-        /// Draw all the balls on the board
+        /// Draw all the balls on the board, the animating balls and the walls.
         /// </summary>
-        /// <param name="spriteBatch">The sprite batch with which to draw the balls</param>
+        /// <param name="spriteBatch">The sprite batch used when drawing the ball.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
+            // Draw walls.
             spriteBatch.Draw(mWallTopTex, mWallTopRect, Color.White);
             spriteBatch.Draw(mWallSideTex, mWallLeftRect, Color.White);
             spriteBatch.Draw(mWallSideTex, mWallRightRect, Color.White);
 
+            // Draw balls in rows and animating balls.
             foreach (BoardRow row in mBalls)
                 foreach (Ball ball in row.Row)
                     if (ball != null)
                         ball.Draw(spriteBatch);
 
-            foreach (Ball b in mRemovedBalls)
+            foreach (Ball b in mAnimatingBalls)
                 b.Draw(spriteBatch);
         }
 
         /// <summary>
-        /// Check for a collision between the moving ball and all the balls on the board
+        /// Check for a collision between the moving ball and all the balls on the board.
         /// </summary>
-        /// <param name="movingBall">The moving ball to check for a collision against</param>
-        /// <returns>True if the movingBall collided with a ball on the board, else false</returns>
-        public bool Collision(Ball movingBall)
+        /// <param name="movingBall">The moving ball to check for a collision against.</param>
+        /// <param name="dt">The elapsed milliseconds since last frame.</param>
+        /// <returns>True if the movingBall collided with a ball on the board, else false.</returns>
+        public bool Collision(Ball movingBall, float dt)
         {
-            // If the ball hits the roof, there is a collision. Handle it and quit method returning true
+            // If the ball hits the roof, there is a collision. Handle it and quit method returning true.
             if (movingBall.Position.Y - Ball.Size.Y * 0.5 < (mOffset.Y))
             {
-                HandleCollision(movingBall);
+                HandleCollision(movingBall, dt);
                 return true;
             }
 
-            // Go through all the rows and all the positions in each row to check for a collision
+            // Go through all the rows and all the positions in each row to check for a collision.
             for (int row = mBalls.Count - 1; row >= 0; --row)
             {
+                // If the ball's top is below the y position of this row, there can be no collision on
+                // this or any rows above it.
+                if (movingBall.Position.Y - Ball.Size.Y > CalculateYPosition(row))
+                    break;
+
                 for(int col = 0; col < mBalls[row].Row.Count; ++col)
                 {
-                    // If the position is empty, continue the loop
+                    // If the position is empty, continue the loop.
                     if (mBalls[row].Row[col] == null)
                         continue;
 
-                    // Calculate the distance between the ball at the position and the moving ball
+                    // Calculate the distance between the ball at the position and the moving ball.
                     Vector2 distance = mBalls[row].Row[col].Position - movingBall.Position;
 
-                    // If the distance is shorter than the ball diameter multiplied by 0.7f
-                    // (so that the moving balls can pass sligthly through the static ones)
-                    // Handle collision and quit method
+                    // If the distance is shorter than the ball diameter multiplied by 0.7f (so that the moving 
+                    // balls can pass sligthly through the static ones) - handle collision and quit method.
                     if (distance.Length() < Ball.Size.X * 0.7f)
                     {
-                        HandleCollision(movingBall);
+                        HandleCollision(movingBall, dt);
 
                         return true;
                     }
@@ -193,26 +204,24 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Generates a random 
-        /// 
-        /// colour from the ones on the board. If there are no balls on the board, a random
-        /// color is chosen from the ones allowed on the board (set at initialization of the balls)
+        /// Generates a random colour from the ones on the board. If there are no balls on the board, a random
+        /// color is chosen from the ones allowed on the board (set at initialization of the balls).
         /// </summary>
         /// <returns>A random, valid ball colour</returns>
         public BallColour GenerateColourInPlay()
         {
             BallColour randomCol;
 
-            // If there are balls on the board, make sure the colour generated is 
-            // in play, and that it is not of the non shootable colour else
-            // generate random colour from the ones set for the game.
+            // If there are balls on the board, make sure the colour generated is in play, and that it is not of 
+            // the non shootable colour else generate random colour from the ones set for the game.
             if (mNumberOfBalls > 0)
             {
                 do
                 {
                     randomCol = (BallColour)Core.RandomGen.Next(Ball.ColourCount);
                 } while (mColoursInPlay[(int)randomCol] == 0); // || 
-                         //randomCol == Ball.C_NON_SHOOTABLE_COLOUR); // Infinite loop when only non shootable colour left
+                        //randomCol == Ball.C_NON_SHOOTABLE_COLOUR); 
+                        // Infinite loop when only non shootable colour left
             }
             else
                 randomCol = (BallColour)Core.RandomGen.Next(Ball.ColourCount);
@@ -225,11 +234,12 @@ namespace Bubbles
         /// </summary>
         public void ToggleSound()
         {
-            sPlaySounds = !sPlaySounds;
+            Core.PlaySounds = !Core.PlaySounds;
         }
 
         /// <summary>
-        /// Add a row of random balls to the top of the board
+        /// Add a row of random balls to the top of the board. The row will be scaled (i.e. the end is cut off or it 
+        /// is padded with null) to fit the row size where it is to be inserted.
         /// </summary>
         public void AddRowTop()
         {
@@ -237,8 +247,8 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Add a new row to the bottom of the board.The row will be scaled 
-        /// (ie the end is cut off or it is padded with null) to fit the row where it is inserted.
+        /// Add a new row to the bottom of the board. The row will be scaled (i.e. the end is cut off or it is 
+        /// padded with null) to fit the row size where it is to be inserted.
         /// </summary>
         /// <param name="balls">The new list of balls to add</param>
         private void AddRowBottom(List<Ball> balls)
@@ -247,17 +257,19 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Add a row to the board, at the top or at the bottom as specified by atTop
+        /// Add a row to the board, either cutting off the end or padding it with null so that the length corresponds
+        /// to the length of the row where it is to be insertetd. The row is inserted at the top or at the bottom 
+        /// as specified by atTop.
         /// </summary>
-        /// <param name="balls">The new list of balls to add<</param>
+        /// <param name="balls">The new list of balls to add.</param>
         /// <param name="atTop">If true, the new row will be added at the top, if false it
-        /// will be added at the bottom</param>
+        /// will be added at the bottom.</param>
         private void AddRow(List<Ball> balls, bool atTop)
         {
             // The max number of balls is set to the maximum number for the top or bottom row based on atTop
             int rowMax = atTop ? mColumns[(int)NextTypeTop] : mColumns[(int)NextTypeBottom];
 
-            // If the number of balls in the list is not equal to the allowed number, fix it
+            // If the number of balls in the list is not equal to the row length where it is to be inserted - fix it.
             if (balls.Count != rowMax)
             {
                 for (int i = balls.Count; i < rowMax; ++i)
@@ -269,8 +281,7 @@ namespace Bubbles
                     balls.RemoveRange(rowMax, balls.Count - rowMax);
             }
 
-            // Insert row at the top or bottom based on atTop, if at top - update all the positions
-
+            // Insert row at the top or bottom based on atTop, if at top - update all the positions.
             BoardRow newRow;
             if (atTop)
             {
@@ -284,17 +295,16 @@ namespace Bubbles
                 mBalls.Insert(mBalls.Count, newRow);
             }
 
-            // Update the number of balls array with the newly added balls
+            // Update the number of balls array with the newly added balls.
             foreach (Ball ball in newRow.Row)
             {
                 if(ball != null)
                     ChangeNumberOfBalls(ball.Colour, true);
             }
-
         }
 
         /// <summary>
-        /// Update the positions for all the balls on the board to correspond to their place on the board
+        /// Update the positions for all the balls on the board to correspond to the cell they are in.
         /// </summary>
         private void UpdatePositions()
         {
@@ -306,41 +316,42 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Handle collision: find out which cell the moving ball ends up in and add it to that cell
+        /// Handle collision: find out which cell the moving ball ends up in and add it to that cell.
         /// </summary>
-        /// <param name="movingBall">The moving ball that collides with the board</param>
-        private void HandleCollision(Ball movingBall)
+        /// <param name="movingBall">The moving ball that collides with the board.</param>
+        /// <param name="dt">The elapsed milliseconds since last frame.</param>
+        private void HandleCollision(Ball movingBall, float dt)
         {
-            // Get the cell closest to the current position
+            // Get the cell closest to the current position.
             Point cell = CalculateCell(movingBall.Position);
             
-            // If the requested cell is in an existing row, make sure the cell is empty, else
-            // adjust position backwards along the direction it came in and request new cell
+            // If the requested cell is in an existing row, make sure the cell is empty, else adjust position 
+            // backwards along its direction and request new cell.
             if(cell.Y < mBalls.Count)
                 while(HasBall(cell))
                 {
-                    movingBall.Position += Ball.C_SPEED * -movingBall.Direction;
+                    movingBall.Position += -movingBall.Direction * Ball.C_SPEED * dt;
                     cell = CalculateCell(movingBall.Position);
                     
                     if (cell.Y == mBalls.Count)
                         break;
                 }
 
-            // Calculate the ball's new position based on the cell it is in
+            // Calculate the ball's new position based on the cell it is in.
             movingBall.Position = CalculatePosition(cell);
 
-            // If the ball is in a new row, create the new row
+            // If the ball is in a new row, create the new row.
             if (cell.Y == mBalls.Count)
                 AddRowBottom(GenerateNullRow(mColumns[(int)NextTypeBottom]));
 
-            // Add ball to the requested cell and update the number of balls
+            // Add ball to the requested cell and update the number of balls.
             mBalls[cell.Y].Row[cell.X] = movingBall;
             ChangeNumberOfBalls(movingBall.Colour, true);
 
-            // Get a sequence of all the balls connected to the shot ball, that have the same colour as the shot ball
+            // Get a sequence of all the balls connected to the shot ball, that have the same colour as the shot ball.
             List<Point> sequence = GetSequence(cell);
 
-            // If sequence is of at last 3 balls, remove all balls in the sequence
+            // If sequence is of at last 3 balls, remove all balls in the sequence.
             if (sequence.Count > 2)
             {
                 RemoveBalls(ref sequence);
@@ -354,15 +365,14 @@ namespace Bubbles
                 mAddRowTime = 1.0f;
             }
 
-            // TODO: Add logic for when a new row is added.
             mAddRowTime -= mAddRowModifier;
         }
 
         /// <summary>
-        /// Generate a new empty list of the requested size filled with null
+        /// Generate a new empty list of the requested size filled with null.
         /// </summary>
-        /// <param name="size">The size of the list</param>
-        /// <returns>An empty list of the requested size filled with null</returns>
+        /// <param name="size">The size of the list.</param>
+        /// <returns>An empty list of the requested size filled with null.</returns>
         private List<Ball> GenerateNullRow(int size)
         {
             List<Ball> returnList = new List<Ball>(size);
@@ -374,15 +384,16 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Generate a new list of the requested size filled with random balls
+        /// Generate a new list of the requested size filled with random balls.
         /// </summary>
-        /// <param name="size">The size of the list</param>
-        /// <returns>A list of the requested size filled with random balls</returns>
+        /// <param name="size">The size of the list.</param>
+        /// <returns>A list of the requested size filled with random balls.</returns>
         private List<Ball> GenerateRandomRow(int size)
         {
             List<Ball> returnList = new List<Ball>();
 
-            // Generate a new row. The colours are randomized from the ones allowed (set at initialization of the balls)
+            // Generate a new row. The colours are randomized from the ones allowed (set at initialization of the 
+            // balls).
             for (int i = 0; i < size; ++i)
             {
                 returnList.Add(new Ball((BallColour)Core.RandomGen.Next(Ball.ColourCount), Vector2.Zero));
@@ -392,44 +403,45 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Get a list of all the cells that are neighbours to the chosen cell (maximum 6 cells) regardless of whether there
-        /// is something in the cell or not.
+        /// Get a list of all the cells that are neighbours to the chosen cell (maximum 6 cells) regardless of whether
+        /// there is something in the cell or not.
         /// </summary>
-        /// <param name="cell">The cell to get the neighbours of</param>
-        /// <returns>A list of points indicating which cells are neighbours to the chosen cell (maximum size is 6)</returns>
+        /// <param name="cell">The cell to get the neighbours of.</param>
+        /// <returns>A list of points indicating which cells are neighbours to the chosen cell (maximum size is 6).
+        /// </returns>
         private List<Point> GetNeighbours(Point cell)
         {
             List<Point> returnList = new List<Point>();
 
-            // If the cell x or y indices are invalid (out of bounds) return the empty list
+            // If the cell x or y indices are invalid (out of bounds) return the empty list.
             if (cell.Y >= mBalls.Count || cell.Y < 0 || cell.X < 0 || cell.X >= mColumns[(int)mBalls[cell.Y].RowType])
                 return returnList;
 
-            // Save the lower, upper and max index of the rows above and below the current (based on row type)
+            // Save the lower, upper and max index of the rows above and below the current (based on row type).
             int otherRowsLower = (int)mBalls[cell.Y].RowType - 1;
             int otherRowsUpper = (int)mBalls[cell.Y].RowType;
             int maxIndexOthers = mColumns[(int)CalculateRowType(cell.Y + 1)];
 
-            // Only add the indices from the row above if the current row is not the top row
+            // Only add the indices from the row above if the current row is not the top row.
             if (cell.Y > 0)
             {
-                // Only add indices if they are within the bounds
+                // Only add indices if they are within the bounds.
                 if (cell.X + otherRowsLower >= 0)
                     returnList.Add(new Point(cell.X + otherRowsLower, cell.Y - 1));
                 if (cell.X + otherRowsUpper < maxIndexOthers)
                     returnList.Add(new Point(cell.X + otherRowsUpper, cell.Y - 1));
             }
 
-            // Only add indices on same row if they are within the bounds
+            // Only add indices on same row if they are within the bounds.
             if (cell.X > 0)
                 returnList.Add(new Point(cell.X - 1, cell.Y));
             if (cell.X + 1 < mColumns[(int)mBalls[cell.Y].RowType])
                 returnList.Add(new Point(cell.X + 1, cell.Y));
 
-            // Only add the indices from the row below if the current row is not the bottom row
+            // Only add the indices from the row below if the current row is not the bottom row.
             if (cell.Y + 1 < mBalls.Count)
             {
-                // Only add indices if they are within the bounds
+                // Only add indices if they are within the bounds.
                 if (cell.X + otherRowsLower >= 0)
                     returnList.Add(new Point(cell.X + otherRowsLower, cell.Y + 1));
                 if (cell.X + otherRowsUpper < maxIndexOthers)
@@ -440,41 +452,45 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Get a sequence of cells that are connected to and cointains balls of the same colour as the start cell
+        /// Get a sequence of cells that are connected to and cointains balls of the same colour as the start cell.
         /// </summary>
-        /// <param name="startCell">The cell where the sequence starts</param>
-        /// <returns>A list of cells connected to and containing balls with the same colour as the start cell</returns>
+        /// <param name="startCell">The cell where the sequence starts.</param>
+        /// <returns>A list of cells connected to and containing balls with the same colour as the start cell.
+        /// </returns>
         private List<Point> GetSequence(Point startCell)
         {
-            // If there is no ball in the start cell, exit function
+            // If there is no ball in the start cell, exit function.
             if (!HasBall(startCell))
                 return null;
 
-            // Create a new list and add the start cell to it
+            // Create a new list and add the start cell to it.
             List<Point> returnList = new List<Point>();
             returnList.Add(startCell);
 
-            // Create lists to contain the neighbours at the current "radius" from the start cell
+            // Create lists to contain the neighbours at the current "radius" from the start cell.
             List<Point> neighbours = GetNeighbours(startCell);
             List<Point> nextNeighbours = new List<Point>();
 
-            // Continue the search as long as there are unchecked neighbours
+            // Continue the search as long as there are unchecked neighbours.
             while (neighbours.Count > 0)
             {
-                // Check each neighbour
+                // Check each neighbour.
                 foreach (Point neighbourPoint in neighbours)
                 {
-                    // If the neighbouring cell contains a ball and is not already on the returnlist, check if it is of the same colour as the ball in the start cell
+                    // If the neighbouring cell contains a ball and is not already on the returnlist, check if it is 
+                    // of the same colour as the ball in the start cell.
                     if (HasBall(neighbourPoint) && !returnList.Contains(neighbourPoint))
-                        if (mBalls[neighbourPoint.Y].Row[neighbourPoint.X].Colour == mBalls[startCell.Y].Row[startCell.X].Colour)
+                        if (mBalls[neighbourPoint.Y].Row[neighbourPoint.X].Colour == 
+                            mBalls[startCell.Y].Row[startCell.X].Colour)
                         {
-                            // If the correct colour, add all its neighbours to the list of neighbours to check and add cell to the return list
+                            // If the correct colour, add all its neighbours to the list of neighbours to check and 
+                            // add cell to the return list.
                             nextNeighbours.AddRange(GetNeighbours(neighbourPoint));
                             returnList.Add(neighbourPoint);
                         }
                 }
 
-                // Move all neighbours to be checked to the neighbour list and clear the temporary list
+                // Move all neighbours to be checked to the neighbour list and clear the temporary list.
                 neighbours.Clear();
                 neighbours.AddRange(nextNeighbours);
                 nextNeighbours.Clear();
@@ -484,10 +500,10 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Returns whether the specified cell contains a ball or not
+        /// Returns whether the specified cell contains a ball or not.
         /// </summary>
-        /// <param name="cell">The cell to search</param>
-        /// <returns>True if there is a ball in the cell, else false</returns>
+        /// <param name="cell">The cell to search.</param>
+        /// <returns>True if there is a ball in the cell, else false.</returns>
         private bool HasBall(Point cell)
         {
             int maxIndex = mColumns[(int)CalculateRowType(cell.Y)];
@@ -499,10 +515,10 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Calculate the position on the screen that is in the middle of the cell
+        /// Calculate the position on the screen that is in the middle of the cell.
         /// </summary>
-        /// <param name="cell">The cell to get the center position for</param>
-        /// <returns>The center position in cell</returns>
+        /// <param name="cell">The cell to get the center position for.</param>
+        /// <returns>The center position in cell.</returns>
         private Vector2 CalculatePosition(Point cell)
         {
             // Calculate the xPos from what column we're at and then add 0.5 or 1 (based on the row type)
@@ -510,18 +526,26 @@ namespace Bubbles
             float xPos = (cell.X * Ball.Size.X) +
                          (Ball.Size.X * 0.5f * (1 + (int)CalculateRowType(cell.Y) % 2)) + mOffset.X;
 
-            // Calculate the yPox from what row we're at times 85% of the ball height add a half height 
-            // to account for the origin being in the middle of the ball. Add the y-offset
-            float yPos = (cell.Y * 0.85f * Ball.Size.Y) + (Ball.Size.Y * 0.5f) + mOffset.Y;
-
-            return new Vector2(xPos, yPos);
+            return new Vector2(xPos, CalculateYPosition(cell.Y));
         }
 
         /// <summary>
-        /// Calculate what cell a position belongs to
+        /// Calculate the y position based on the row index.
         /// </summary>
-        /// <param name="position">The position to find the cell for</param>
-        /// <returns>The cell the position belongs to</returns>
+        /// <param name="rowIndex">The index of the row to calculate the y position for.</param>
+        /// <returns>The y position of the row with the specified index.</returns>
+        private float CalculateYPosition(int rowIndex)
+        {
+            // Calculate the yPox from what row we're at times 85% of the ball height add a half height 
+            // to account for the origin being in the middle of the ball. Add the y-offset
+            return (rowIndex * 0.85f * Ball.Size.Y) + (Ball.Size.Y * 0.5f) + mOffset.Y;
+        }
+
+        /// <summary>
+        /// Calculate what cell a position belongs to.
+        /// </summary>
+        /// <param name="position">The position to find the cell for.</param>
+        /// <returns>The cell the position belongs to.</returns>
         private Point CalculateCell(Vector2 position)
         {
             // First subtract the offset from the position, then divide this 0-based position by ball height.
@@ -554,10 +578,10 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Get the row type for an arbitrary row from index 0 to the number of rows plus one (a new row)
+        /// Get the row type for an arbitrary row from index 0 to the number of rows plus one (a new row).
         /// </summary>
-        /// <param name="row">The row for which the type is requested</param>
-        /// <returns>The typ for the requested row</returns>
+        /// <param name="row">The row for which the type is requested.</param>
+        /// <returns>The typ for the requested row.</returns>
         private BoardRow.Type CalculateRowType(int row)
         {
             // Initialize the type to Whole (to use if there are no rows)
@@ -573,9 +597,8 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Start at the bottom and scan for balls, if there is a ball, this row and
-        /// all above contain at least one ball, so return. If the whole row is empty,
-        /// delete it.
+        /// Start at the bottom and scan for balls, if there is a ball, this row and all above contain at least one 
+        /// ball, so return. If the whole row is empty, delete it.
         /// </summary>
         private void ClearEmptyRows()
         {
@@ -593,19 +616,22 @@ namespace Bubbles
         /// Checks the cleared cells for neighbours, then checks all neighbour to see if there is a sequence not
         /// connected to the roof. If there is, those balls are removed.
         /// </summary>
-        /// <param name="clearedCells">The cells that were just cleared, that might have caused dangling balls</param>
+        /// <param name="clearedCells">The cells that were just cleared, that might have caused dangling balls.</param>
         private void ClearDanglingBalls(ref List<Point> clearedCells)
         {
             List<Point> allNeighbours = new List<Point>();
 
+            // Get all the neighbours for all the cells in the cleared cells list.
             foreach (Point cell in clearedCells)
             {
                 allNeighbours.AddRange(GetNeighbours(cell));
             }
 
+            // Get the set of neighbours (meaning no duplicates).
             IEnumerable<Point> neighbours = allNeighbours.Distinct<Point>();
             List<Point> checkedCells = new List<Point>();
 
+            // Go through all neighbours to check if they are connecgted to the roof.
             foreach (Point cell in neighbours)
             {
                 if (!checkedCells.Contains(cell))
@@ -613,11 +639,13 @@ namespace Bubbles
                     List<Point> newCheckedCells = new List<Point>();
                     bool isConnected = IsConnectedToRoof(cell, ref newCheckedCells);
 
+                    // If the ball is not connected add its cell to the checked, unconnected cells list.
                     if(!isConnected)
                         checkedCells.AddRange(newCheckedCells);
                 }
             }
 
+            // Remove the balls that are in the checked, unconnected cells list.
             RemoveDanglingBalls(ref checkedCells);
         }
 
@@ -626,61 +654,61 @@ namespace Bubbles
         /// or not. The checkedCells list contains all the searched cells, i.e. the return value applies to all
         /// cells in this list.
         /// </summary>
-        /// <param name="startCell">The cell to start the search from</param>
-        /// <param name="checkedCells">A list containing all already searched cells</param>
-        /// <returns>True if the roof was reached, else false</returns>
+        /// <param name="startCell">The cell to start the search from.</param>
+        /// <param name="checkedCells">A list containing all already searched cells.</param>
+        /// <returns>True if the roof was reached, else false.</returns>
         private bool IsConnectedToRoof(Point startCell, ref List<Point> checkedCells)
         {
             checkedCells.Add(startCell);
 
-            // Escape condition: if on the top row, it is connected to roof
+            // Escape condition: if on the top row, it is connected to roof.
             if (startCell.Y == 0)
                 return true;
 
-            // Save the index of the upper left and upper right balls
+            // Save the index of the upper left and upper right balls.
             int leftDiffIndex = (int)mBalls[startCell.Y].RowType - 1;
             int rightDiffIndex = (int)mBalls[startCell.Y].RowType;
             int upDownMaxIndex = mColumns[(int)CalculateRowType(startCell.Y + 1)];
 
-            // Escape condition: if on the second row and either of the cells above contain balls, it is connected to roof
+            // Escape condition: if on the second row and either of the cells above contain balls, it is connected to
+            // roof.
             if (startCell.Y == 1)
                 if (HasBall(new Point(startCell.X + leftDiffIndex, startCell.Y - 1)) ||
                     HasBall(new Point(startCell.X + rightDiffIndex, startCell.Y - 1)))
                     return true;
 
-            // Else check all surrounding balls, top (left, right), (left, right), down (left, right)
-            
-            // Check top left
+            // Else check all surrounding balls, top (left, right), (left, right), down (left, right).
+            // Check top left.
             Point currPoint = new Point(startCell.X + leftDiffIndex, startCell.Y - 1);
 
-            if (currPoint.X >= 0) // Make sure index is valid
+            if (currPoint.X >= 0) // Make sure index is valid.
                 if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
                 {
                     if(IsConnectedToRoof(currPoint, ref checkedCells))
                         return true;
                 }
 
-            // Check top right
+            // Check top right.
             currPoint = new Point(startCell.X + rightDiffIndex, startCell.Y - 1);
 
-            if (currPoint.X < upDownMaxIndex) // Make sure index is valid
+            if (currPoint.X < upDownMaxIndex) // Make sure index is valid.
                 if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
                 {
                     if (IsConnectedToRoof(currPoint, ref checkedCells))
                         return true;
                 }
 
-            // Check left
+            // Check left.
             currPoint = new Point(startCell.X - 1, startCell.Y);
 
-            if (currPoint.X >= 0) // Make sure index is valid
+            if (currPoint.X >= 0) // Make sure index is valid.
                 if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
                 {
                     if (IsConnectedToRoof(currPoint, ref checkedCells))
                         return true;
                 }
 
-            // Check right
+            // Check right.
             currPoint = new Point(startCell.X + 1, startCell.Y);
 
             if (currPoint.X < mColumns[(int)mBalls[currPoint.Y].RowType])
@@ -690,23 +718,23 @@ namespace Bubbles
                         return true;
                 }
 
-            // Only check below row if this one is not the bottom row
+            // Only check below row if this one is not the bottom row.
             if (startCell.Y + 1 < mBalls.Count)
             {
-                // Check bottom left
+                // Check bottom left.
                 currPoint = new Point(startCell.X + leftDiffIndex, startCell.Y + 1);
 
-                if (currPoint.X >= 0) // Make sure index is valid
+                if (currPoint.X >= 0) // Make sure index is valid.
                     if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
                     {
                         if (IsConnectedToRoof(currPoint, ref checkedCells))
                             return true;
                     }
 
-                // Check bottom right
+                // Check bottom right.
                 currPoint = new Point(startCell.X + rightDiffIndex, startCell.Y + 1);
 
-                if (currPoint.X < upDownMaxIndex) // Make sure index is valid
+                if (currPoint.X < upDownMaxIndex) // Make sure index is valid.
                     if (HasBall(currPoint) && !checkedCells.Contains(currPoint))
                     {
                         if (IsConnectedToRoof(currPoint, ref checkedCells))
@@ -720,26 +748,28 @@ namespace Bubbles
         /// <summary>
         /// Remove all the balls in the cell list by setting their cells to null.
         /// </summary>
-        /// <param name="cells">The list of cells to clear</param>
+        /// <param name="cells">The list of cells to clear.</param>
         private void RemoveBalls(ref List<Point> cells)
         {
             foreach (Point ballCell in cells)
             {
-                // If the cell contains a ball to be removed, add points for it and update the number of balls
+                // Only if the cell contains a ball.
                 if (HasBall(ballCell))
                 {
+                    // Add points and start animation.
                     Ball currBall = mBalls[ballCell.Y].Row[ballCell.X];
 
                     mScore += C_BALL_POINTS;
                     ChangeNumberOfBalls(currBall.Colour, false);
                     currBall.StartExploding();
-                    mRemovedBalls.Add(currBall);
+                    mAnimatingBalls.Add(currBall);
 
-                    if(sPlaySounds)
+                    // If sounds are on, play the sound for dangling balls.
+                    if (Core.PlaySounds)
                         mSoundPop.Play();
                 }
 
-                // Clear cell
+                // Clear cell.
                 mBalls[ballCell.Y].Row[ballCell.X] = null;
             }
         }
@@ -747,27 +777,32 @@ namespace Bubbles
         /// <summary>
         /// Remove all the balls in the cell list by setting their cells to null.
         /// </summary>
-        /// <param name="cells">The list of "dangling ball" cells to clear</param>
+        /// <param name="cells">The list of "dangling ball" cells to clear.</param>
         private void RemoveDanglingBalls(ref List<Point> cells)
         {
             foreach (Point cell in cells)
             {
-                // If the cell contains a ball to be removed, add points for it and update the number of balls
+                // Only if the cell contains a ball to be removed.
                 if (HasBall(cell))
                 {
+                    // Add score and time.
                     mScore += C_DANGLING_POINTS;
                     mAddRowTime += mAddRowModifier * C_TIME_BONUS_PC;
-                    if (mAddRowTime > 1.0f)     // Make sure time never exceeds 1.
-                        mAddRowTime = 1.0f;
 
+                    // Make sure time never exceeds 1 + modifier.
+                    if (mAddRowTime > 1.0f + mAddRowModifier)
+                        mAddRowTime = 1.0f + mAddRowModifier;
+
+                    // Start ball animation, add it to animating balls list and update number of balls.
                     Ball currBall = mBalls[cell.Y].Row[cell.X];
                     int rowTotal = mColumns[(int)mBalls[cell.Y].RowType];                  
 
-                    currBall.StartAnimation((bool)(((float)cell.X / rowTotal) < 0.5f));
-                    mRemovedBalls.Add(currBall);
+                    currBall.StartJumpAnimation((bool)(((float)cell.X / rowTotal) < 0.5f));
+                    mAnimatingBalls.Add(currBall);
                     ChangeNumberOfBalls(currBall.Colour, false);
 
-                    if (sPlaySounds)
+                    // If sounds are on, play the sound for dangling balls.
+                    if (Core.PlaySounds)
                         mSoundDangling.Play();
                 }
 
@@ -778,25 +813,24 @@ namespace Bubbles
 
         /// <summary>
         /// Increase or decrease, as indicated by the increase parameter, the number of balls of a certain
-        /// colour, specified by colour, that is still in play.
+        /// colour, specified by the parameter colour, that is still in play.
         /// </summary>
-        /// <param name="colour">The colour of the added or removed ball</param>
-        /// <param name="increase">Whether a ball of the specified was added or removed. True if it was 
-        /// added, else false</param>
-        private void ChangeNumberOfBalls(BallColour colour, bool increase)
+        /// <param name="colour">The colour of the added or removed ball.</param>
+        /// <param name="wasAdded">Whether a ball of the specified was added or removed. True if it was 
+        /// added, else false.</param>
+        private void ChangeNumberOfBalls(BallColour colour, bool wasAdded)
         {
-            // Based on whether the ball was added or removed, update the colours in play
-            // and the total number of balls in the game variables
-            if (increase)
-            {
-                mColoursInPlay[(int)colour]++;
-                mNumberOfBalls++;
-            }
+            // Based on whether the ball was added or removed, update the colours in play and the total number of 
+            // balls in the game variables.
+            int modifier = 0;
+
+            if (wasAdded)
+                modifier = 1;
             else
-            {
-                mColoursInPlay[(int)colour]--;
-                mNumberOfBalls--;
-            }
+                modifier = -1;
+
+            mColoursInPlay[(int)colour] += modifier;
+            mNumberOfBalls += modifier;
         }
 
         #endregion Methods
@@ -804,7 +838,7 @@ namespace Bubbles
         #region Properties
 
         /// <summary>
-        /// Read only. Get the inner bounds rectangle (excluding the walls)
+        /// Read only. Get the inner bounds rectangle (excluding the walls).
         /// </summary>
         public Rectangle InnerBounds
         {
@@ -812,7 +846,7 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Read only. The current score at the board
+        /// Read only. The current score at the board.
         /// </summary>
         public int Score
         {
@@ -820,7 +854,7 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Read only. The time (in percent) until a new row is added
+        /// Read only. The time (in percent) until a new row is added.
         /// </summary>
         public float AddRowTime
         {
@@ -828,7 +862,7 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Read only. The number of balls left on the board
+        /// Read only. The number of balls left on the board.
         /// </summary>
         public int BallsLeft
         {
@@ -844,7 +878,7 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Read only. Get the number of rows on the board
+        /// Read only. Get the number of rows on the board.
         /// </summary>
         private int RowCount
         {
@@ -852,7 +886,7 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Read only. Get the type of the row below the current last row
+        /// Read only. Get the type of the row below the current last row.
         /// </summary>
         private BoardRow.Type NextTypeBottom
         {
@@ -868,7 +902,7 @@ namespace Bubbles
         }
 
         /// <summary>
-        /// Read only. Get the type of the row above the current top row
+        /// Read only. Get the type of the row above the current top row.
         /// </summary>
         private BoardRow.Type NextTypeTop
         {
