@@ -14,12 +14,6 @@ Content\Textures\wallTop.xnb
 Content\Textures\bricks.xnb
 Content\Textures\chalkBoard.xnb
 Content\Textures\sign.xnb
-Content\Sounds\bubblePop.xnb
-Content\Sounds\bubblePopAlt.xnb
-Content\Sounds\dangling.xnb
-Content\Sounds\danglingAlt.xnb
-Content\Sounds\button.xnb
-Content\Sounds\buttonAlt.xnb
 Content\Textures\shCircle.xnb
 Content\Textures\shLineHor.xnb
 Content\Textures\shLineVer.xnb
@@ -32,3 +26,9 @@ Content\Textures\shTriangleUp.xnb
 Content\Textures\chkBG.xnb
 Content\Textures\chkChecked.xnb
 Content\Textures\chkNormal.xnb
+Content\Sounds\bubblePop.xnb
+Content\Sounds\bubblePopAlt.xnb
+Content\Sounds\dangling.xnb
+Content\Sounds\danglingAlt.xnb
+Content\Sounds\button.xnb
+Content\Sounds\buttonAlt.xnb

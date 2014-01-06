@@ -146,60 +146,6 @@
       <Time>2012-12-21T11:10:17.2782866+01:00</Time>
     </Item>
     <Item>
-      <Source>Sounds\bubblePop.wav</Source>
-      <Name>Sounds\bubblePop</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePop.xnb</Output>
-      <Time>2012-12-21T11:10:17.1672802+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Sounds\bubblePopAlt.wav</Source>
-      <Name>Sounds\bubblePopAlt</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePopAlt.xnb</Output>
-      <Time>2012-12-21T11:10:17.1682803+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Sounds\dangling.wav</Source>
-      <Name>Sounds\dangling</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\dangling.xnb</Output>
-      <Time>2012-12-21T11:10:17.1722805+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Sounds\danglingAlt.wav</Source>
-      <Name>Sounds\danglingAlt</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\danglingAlt.xnb</Output>
-      <Time>2012-12-21T11:10:17.1742806+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Sounds\button.wav</Source>
-      <Name>Sounds\button</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\button.xnb</Output>
-      <Time>2012-12-21T11:10:17.1692803+01:00</Time>
-    </Item>
-    <Item>
-      <Source>Sounds\buttonAlt.wav</Source>
-      <Name>Sounds\buttonAlt</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\buttonAlt.xnb</Output>
-      <Time>2012-12-21T11:10:17.1702804+01:00</Time>
-    </Item>
-    <Item>
       <Source>Textures\shCircle.png</Source>
       <Name>Textures\shCircle</Name>
       <Importer>TextureImporter</Importer>
@@ -307,10 +253,64 @@
       <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chkNormal.xnb</Output>
       <Time>2013-01-11T11:48:21.3911891+01:00</Time>
     </Item>
+    <Item>
+      <Source>Sounds\bubblePop.wav</Source>
+      <Name>Sounds\bubblePop</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePop.xnb</Output>
+      <Time>2012-12-21T11:10:17.1672802+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Sounds\bubblePopAlt.wav</Source>
+      <Name>Sounds\bubblePopAlt</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePopAlt.xnb</Output>
+      <Time>2012-12-21T11:10:17.1682803+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Sounds\dangling.wav</Source>
+      <Name>Sounds\dangling</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\dangling.xnb</Output>
+      <Time>2012-12-21T11:10:17.1722805+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Sounds\danglingAlt.wav</Source>
+      <Name>Sounds\danglingAlt</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\danglingAlt.xnb</Output>
+      <Time>2012-12-21T11:10:17.1742806+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Sounds\button.wav</Source>
+      <Name>Sounds\button</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\button.xnb</Output>
+      <Time>2012-12-21T11:10:17.1692803+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Sounds\buttonAlt.wav</Source>
+      <Name>Sounds\buttonAlt</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\buttonAlt.xnb</Output>
+      <Time>2012-12-21T11:10:17.1702804+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
-      <TargetProfile>HiDef</TargetProfile>
+      <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
       <RootDirectory>C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\BubblesContent\</RootDirectory>

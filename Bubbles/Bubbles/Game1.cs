@@ -51,7 +51,7 @@ namespace Bubbles
             mBGColour = new Color(20, 140, 120);
 
             // Minimum: Width ~1229; Height ~691
-            mGraphics.PreferredBackBufferWidth = 1280;
+            mGraphics.PreferredBackBufferWidth = 1024;
             mGraphics.PreferredBackBufferHeight = 768;
             mGraphics.ApplyChanges();
         }

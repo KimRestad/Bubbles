@@ -1,0 +1,154 @@
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGame.resources
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsMain.resources
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGraphics.resources
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballBlue.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballRed.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.pdb
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGame.resources
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGraphics.resources
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsMain.resources
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe
+D:\My Documents\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.pdb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.pdb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.pdb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallSide.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallTop.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aimArrow.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe.manifest
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Bubbles.application
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe.manifest
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\Bubbles.application
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb
+D:\Kim\Skola\BTH - Civspel\Programming projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallSide.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallTop.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGame.resources
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsGraphics.resources
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.SettingsMain.resources
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.pdb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallSide.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallTop.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe.manifest
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Bubbles.application
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Bubbles.exe
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Bubbles.pdb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.exe.manifest
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.application
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\credits.xnb
+D:\My Documents\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\sign.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\credits.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\sign.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePop.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePopAlt.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\dangling.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\danglingAlt.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\endText.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\button.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\buttonAlt.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\BalloonBlast.exe.manifest
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\BalloonBlast.application
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\BalloonBlast.exe
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\bin\x86\Debug\BalloonBlast.pdb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\BalloonBlast.exe.manifest
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\BalloonBlast.application
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\BalloonBlast.exe
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\Bubbles\Bubbles\Bubbles\obj\x86\Debug\BalloonBlast.pdb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\default.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\button.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\chalk.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\credits.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Fonts\endText.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\aim.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\whitepixel.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\ballWhite.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\background2big.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\button.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallSide.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\wallTop.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\bricks.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chalkBoard.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\sign.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePop.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\bubblePopAlt.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\dangling.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\danglingAlt.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\button.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Sounds\buttonAlt.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\BalloonBlast.exe.manifest
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\BalloonBlast.application
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\BalloonBlast.exe
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\BalloonBlast.pdb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\BalloonBlast.exe.manifest
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\BalloonBlast.application
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\BalloonBlast.exe
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\BalloonBlast.pdb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shCircle.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shLineHor.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shLineVer.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shPoint.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shRomb.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shSquare.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shStar.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shTriangleDown.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\shTriangleUp.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chkBG.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chkChecked.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\bin\x86\Debug\Content\Textures\chkNormal.xnb
+C:\Users\Kimsie\Documents\Visual Studio 2010\Projects\BalloonBlast\Bubbles\Bubbles\obj\x86\Debug\Bubbles.csprojResolveAssemblyReference.cache
